@@ -63,50 +63,331 @@ subsection shows that the analogy is an identity.
 \subsection{The kernel is the sum of irreducible diagrams}
 \label{sec:nz-irreducible}
 
-\begin{theorem}\label{thm:irreducible}
-For the projector \eqref{eq:P}, the NZ kernel is the sum of all diagrams of
-\cref{sec:lec4} that cannot be cut between two consecutive vertices without cutting a
-line, with the outermost vertices at $0$ and $\tau$:
+This subsection is the heart of the course, so we go slowly. The claim is that the
+formal object $K(\tau)$ of \cref{eq:NZ}, with the full Liouvillian inside
+$\ee^{\Qc\Lc\tau}$, is exactly the sum of the ``irreducible'' real-time diagrams of
+\cref{sec:lec4}, and that the NZ equation is the Dyson resummation of the reducible
+ones. We first fix the vocabulary, then prove three lemmas, then the theorem, then its
+converse (the Dyson resummation), and finally check everything explicitly at fourth and
+sixth order.
+
+\subsubsection{Vocabulary: strings, gaps, cuts, pairings}
+
+Throughout, $\Lc_0=\Lc_S+\Lc_B$ and $\tilde\Lc_I(t)=\ee^{-\Lc_0t}\Lc_I\ee^{\Lc_0t}$ is the interaction-picture
+vertex, $\tilde\Lc_I(t)=-i[\tilde S^\qu(t)\tilde B^\cl(t)+\tilde S^\cl(t)\tilde B^\qu(t)]$ by \cref{eq:LIcq}.
+
+\begin{definition}[Wick string]
+For ordered times $t_0>t_1>\dots>t_{k}$ and a system operator $X$, the \emph{Wick
+string} is the superoperator
 \begin{equation}
-  K(\tau)=\sum_{n\ge1}\;\int_{\tau>t_1>\dots>t_{2n-2}>0}\ \sum_{\text{irreducible pairings of }\{\tau,t_1,\dots,t_{2n-2},0\}}
-  \big(\text{vertices}\times\text{lines}\big).
+  W(t_0,\dots,t_k)X\equiv\Tr_B\!\Big[\tilde\Lc_I(t_0)\tilde\Lc_I(t_1)\cdots\tilde\Lc_I(t_k)\,\big(X\otimes\rhoB\big)\Big].
+  \label{eq:wick-string}
 \end{equation}
+Its $k$ \emph{gaps} are the intervals $(t_{j+1},t_j)$ between consecutive vertices,
+$j=0,\dots,k-1$. By Wick's theorem \eqref{eq:wick} applied to the bath factors (every
+vertex carries exactly one bath superoperator), $W$ is a sum over \emph{pairings}
+$\pi$ of the $k+1$ vertices (so $k+1$ must be even, otherwise $W=0$):
+\begin{equation}
+  W(t_0,\dots,t_k)=\sum_{\pi}W_\pi(t_0,\dots,t_k),\qquad
+  W_\pi=\prod_{\text{vertices}}\big(-i\,\tilde S^{a_j}(t_j)\big)\prod_{(ij)\in\pi}D^{\bar a_i\bar a_j}(t_i,t_j),
+  \label{eq:wick-sum}
+\end{equation}
+where $a_j\in\{\cl,\qu\}$ is the system index at vertex $j$, $\bar a_j$ the opposite index,
+and the sum over the $a_j$ is understood. $W_\pi$ is what we called a \emph{diagram}
+in \cref{sec:lec4}; the Feynman rules there are just \cref{eq:wick-sum} with
+\cref{eq:LO} inserted (recall $D^{\qu\qu}=0$ and $D^{\qu\cl}(t_i,t_j)=0$ for $t_i>t_j$, which
+kills many assignments).
+\end{definition}
+
+\begin{definition}[Cuts, reducibility]
+A pairing $\pi$ \emph{crosses} gap $j$ if some pair $(il)\in\pi$ has $i\le j<l$, i.e.\ one
+vertex before the gap and one after it. A gap not crossed by $\pi$ is a \emph{cut} of
+$\pi$. Write $U(\pi)\subseteq\{0,\dots,k-1\}$ for the set of cuts of $\pi$. A pairing is
+\emph{irreducible} if $U(\pi)=\varnothing$ (every gap is crossed by at least one line) and
+\emph{reducible} otherwise.
+\end{definition}
+
+At a cut, the vertices to the left and to the right are paired only among
+themselves; the bath, which was in $\rhoB$ at the start, is ``back in $\rhoB$'' there in
+the sense that no bath correlation connects the two sides. The first lemma makes this
+precise.
+
+\subsubsection{Three lemmas}
+
+\begin{lemma}[A $\Pc$ in a gap factorizes the string]\label{lem:P-cut}
+Inserting $\Pc$ in gap $j$ of a Wick string gives the product of the two sub-strings,
+\begin{equation}
+  \Tr_B\!\Big[\tilde\Lc_I(t_0)\cdots\tilde\Lc_I(t_j)\;\Pc\;\tilde\Lc_I(t_{j+1})\cdots\tilde\Lc_I(t_k)\,(X\otimes\rhoB)\Big]
+  =W(t_0,\dots,t_j)\,W(t_{j+1},\dots,t_k)\,X ,
+\end{equation}
+and therefore equals $\sum_{\pi:\,j\in U(\pi)}W_\pi$, the sum over pairings that have a
+cut at gap $j$. More generally, inserting $\Pc$ in every gap of a set $\mathcal C$ gives
+$\sum_{\pi:\,\mathcal C\subseteq U(\pi)}W_\pi$.
+\end{lemma}
+\begin{proof}
+By definition $\Pc Y=\rhoB\otimes\Tr_BY$. Apply it to
+$Y=\tilde\Lc_I(t_{j+1})\cdots\tilde\Lc_I(t_k)(X\otimes\rhoB)$: $\Tr_BY=W(t_{j+1},\dots,t_k)X$ is a system
+operator, and $\Pc Y=\big(W(t_{j+1},\dots,t_k)X\big)\otimes\rhoB$. The remaining string acts on
+this factorized operator, which gives the first statement. For the second, apply Wick's
+theorem to each factor: the left factor is a sum over pairings of $\{0,\dots,j\}$, the
+right factor a sum over pairings of $\{j+1,\dots,k\}$, and their product is the sum over
+pairings of $\{0,\dots,k\}$ that pair no vertex on the left with one on the right, i.e.\
+those with a cut at $j$. The value of each such pairing is the same whether computed in
+the full string or in the product, because the contraction $D^{ab}(t_i,t_l)$ of a pair
+depends only on the two times and indices, and the time ordering is the same. The
+statement for a set $\mathcal C$ follows by induction on $|\mathcal C|$.
+\end{proof}
+
+\begin{lemma}[Expansion of $\ee^{\Qc\Lc\tau}$]\label{lem:expansion}
+With $\Pc$ of \cref{eq:P}, $[\Pc,\Lc_0]=0$, and for every $s$
+\begin{equation}
+  \ee^{\Qc\Lc_0s}=\Pc+\Qc\,\ee^{\Lc_0s},\qquad\text{hence}\qquad \ee^{\Qc\Lc_0s}\,\Qc=\Qc\,\ee^{\Lc_0s}=\ee^{\Lc_0s}\,\Qc .
+  \label{eq:expQL0}
+\end{equation}
+Consequently
+\begin{equation}
+  \ee^{\Qc\Lc\tau}\,\Qc=\sum_{m\ge0}\int_{\tau>s_1>\dots>s_m>0}\!\!
+  \Qc\,\ee^{\Lc_0(\tau-s_1)}\,\Qc\Lc_I\,\ee^{\Lc_0(s_1-s_2)}\,\Qc\Lc_I\cdots\ee^{\Lc_0(s_{m-1}-s_m)}\,\Qc\Lc_I\,\ee^{\Lc_0s_m}\,\Qc ,
+  \label{eq:expQL}
+\end{equation}
+i.e.\ the ordinary Dyson series in $\Lc_I$ with free propagation $\ee^{\Lc_0\Delta s}$ between
+vertices and a factor $\Qc$ in every gap (and at both ends).
+\end{lemma}
+\begin{proof}
+$[\Pc,\Lc_S]=0$ because $\Lc_S$ acts on the system factor only:
+$\Pc\Lc_SY=\rhoB\otimes\Tr_B(-i[H_S,Y])=-i[H_S,\rhoB\otimes\Tr_BY]=\Lc_S\Pc Y$. And
+$\Pc\Lc_B=0$ (trace of a bath commutator) while $\Lc_B\Pc Y=-i[H_B,\rhoB]\otimes\Tr_BY=0$ (stationary
+$\rhoB$); so $\Pc\Lc_B=\Lc_B\Pc=0$. Hence $\Qc$ commutes with $\Lc_0$ and
+$(\Qc\Lc_0)^n=\Qc^n\Lc_0^n=\Qc\Lc_0^n$ for $n\ge1$, which gives
+$\ee^{\Qc\Lc_0s}=1+\Qc(\ee^{\Lc_0s}-1)=\Pc+\Qc\ee^{\Lc_0s}$. Multiplying by $\Qc$ on the right and using
+$\Pc\Qc=0$, $\Qc^2=\Qc$ gives \cref{eq:expQL0}. For \cref{eq:expQL}, write
+$\Qc\Lc=\Qc\Lc_0+\Qc\Lc_I$ and expand $\ee^{(\Qc\Lc_0+\Qc\Lc_I)\tau}$ in the usual Dyson series with
+``free'' part $\ee^{\Qc\Lc_0s}$ and ``perturbation'' $\Qc\Lc_I$; every $\ee^{\Qc\Lc_0\Delta s}$ is
+adjacent to a $\Qc$ (from a neighbouring $\Qc\Lc_I$ or from the final $\Qc$), so
+\cref{eq:expQL0} replaces it by $\ee^{\Lc_0\Delta s}$ with a $\Qc$ kept in the gap.
+\end{proof}
+
+\begin{lemma}[Inclusion--exclusion]\label{lem:incl-excl}
+For any finite set $U$, $\sum_{\mathcal C\subseteq U}(-1)^{|\mathcal C|}=\delta_{U,\varnothing}$.
+\end{lemma}
+\begin{proof}
+$\sum_{\mathcal C\subseteq U}(-1)^{|\mathcal C|}=\prod_{u\in U}(1-1)=0^{|U|}$, which is $1$ for $U=\varnothing$ and $0$ otherwise.
+\end{proof}
+
+\subsubsection{The theorem}
+
+\begin{theorem}[NZ kernel $=$ irreducible diagrams]\label{thm:irreducible}
+For the projector \eqref{eq:P} and a Gaussian bath with $\avg B=0$,
+\begin{equation}
+  K(\tau)=\ee^{\Lc_S\tau}\sum_{m\ge0}\int_{\tau>s_1>\dots>s_m>0}\ \sum_{\pi\ \mathrm{irreducible}}W_\pi(\tau,s_1,\dots,s_m,0),
+  \label{eq:K-irred}
+\end{equation}
+where the inner sum runs over the irreducible pairings of the $m+2$ vertices at
+$\tau,s_1,\dots,s_m,0$ (so only even $m$ contribute). In words: $K(\tau)$ is the sum of all
+diagrams with outermost vertices at $0$ and $\tau$ that cannot be cut between two
+consecutive vertices without cutting a line, dressed with the free system propagation
+that brings the interaction-picture string back to the Schr\"odinger picture.
 \end{theorem}
 
 \begin{proof}
-Expand $\ee^{\Qc\Lc\tau}$ in powers of $\Lc_I$. Since $\Qc$ commutes with $\Lc_0=\Lc_S+\Lc_B$
-(because $\Pc$ does), $\ee^{\Qc\Lc_0s}\Qc=\Qc\ee^{\Lc_0s}$, and the $m$-th order term is
+\emph{Step 1: reduce $K$ to a Wick string with $\Qc$'s in the gaps.} Insert
+\cref{eq:expQL} into $K(\tau)X=\Tr_B[\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I(X\otimes\rhoB)]$. The two end
+factors of $\Qc$ can be dropped: on the right, $\Qc\Lc_I\Pc=\Lc_I\Pc-\Pc\Lc_I\Pc=\Lc_I\Pc$ by
+\cref{eq:P-facts}; on the left, $\Tr_B[\Lc_I\Qc Y]=\Tr_B[\Lc_IY]-\Tr_B[\Lc_I\Pc Y]$ and
+$\Tr_B[\Lc_I(\rhoB\otimes Z)]=-i\Tr_B[(SB\otimes\rhoB Z-\dots)]\propto\avg B=0$. What remains is
 \begin{equation}
-  \int_{\tau>s_1>\dots>s_m>0}\Qc\,\ee^{\Lc_0(\tau-s_1)}\,\Qc\Lc_I\,\ee^{\Lc_0(s_1-s_2)}\,\Qc\Lc_I\cdots\Qc\Lc_I\,\ee^{\Lc_0s_m}\,\Qc .
+  K(\tau)X=\sum_{m\ge0}\int_{\tau>s_1>\dots>s_m>0}\Tr_B\!\Big[\Lc_I\,\ee^{\Lc_0(\tau-s_1)}\,\Qc\Lc_I\,\ee^{\Lc_0(s_1-s_2)}\,\Qc\Lc_I\cdots\Qc\Lc_I\,\ee^{\Lc_0s_m}\,\Qc\,\Lc_I\,(X\otimes\rhoB)\Big].
 \end{equation}
-Sandwiched between the outer $\Tr_B[\Lc_I\cdots]$ and $\Lc_I(X\otimes\rhoB)$, this is the
-free (interaction-picture) Wick string of $m+2$ vertices with a factor $\Qc=1-\Pc$ inserted
-in every gap between consecutive vertices. Now expand the product of the $(1-\Pc)$'s. A
-term with $\Pc$ inserted in a given set $\mathcal C$ of gaps equals, by the definition of
-$\Pc$, the Wick string in which the bath is traced and reset to $\rhoB$ at each gap in
-$\mathcal C$; by Wick's theorem that is exactly the sum of the pairings in which \emph{no
-line crosses any gap in $\mathcal C$}. Hence
+Note that there is one $\Qc$ in each of the $m+1$ gaps between the $m+2$ vertices (the
+two $\Qc$'s that were adjacent in the first gap, $\Lc_I\Qc\ee^{\Lc_0(\tau-s_1)}\Qc\Lc_I$, merge into one
+because $\Qc$ commutes with $\ee^{\Lc_0 s}$ and $\Qc^2=\Qc$; we then dropped the outer one).
+
+\emph{Step 2: go to the interaction picture.} Write
+$\ee^{\Lc_0(s_{j-1}-s_j)}=\ee^{\Lc_0s_{j-1}}\ee^{-\Lc_0s_j}$ and move all $\ee^{\pm\Lc_0s}$ next to the vertices,
+using $[\Qc,\ee^{\Lc_0s}]=0$: the string becomes
+$\ee^{\Lc_0\tau}\,\tilde\Lc_I(\tau)\,\Qc\,\tilde\Lc_I(s_1)\,\Qc\cdots\Qc\,\tilde\Lc_I(s_m)\,\Qc\,\tilde\Lc_I(0)$. The leftover
+$\ee^{\Lc_0\tau}$ sits directly under $\Tr_B$, and $\Tr_B[\ee^{\Lc_0\tau}Y]=\ee^{\Lc_S\tau}\Tr_B[\ee^{\Lc_B\tau}Y]=\ee^{\Lc_S\tau}\Tr_BY$
+because $\ee^{\Lc_B\tau}$ is a unitary conjugation on the bath factor, which the partial trace
+does not see. Hence
 \begin{equation}
-  \sum_{\mathcal C}(-1)^{|\mathcal C|}\ \#\{\text{pairings with no line across any gap in }\mathcal C\}
-  =\#\{\text{pairings with a line across \emph{every} gap}\}
+  K(\tau)X=\ee^{\Lc_S\tau}\sum_{m\ge0}\int_{\tau>s_1>\dots>s_m>0}
+  \Tr_B\!\Big[\tilde\Lc_I(\tau)\,\Qc\,\tilde\Lc_I(s_1)\,\Qc\,\tilde\Lc_I(s_2)\cdots\Qc\,\tilde\Lc_I(s_m)\,\Qc\,\tilde\Lc_I(0)\,(X\otimes\rhoB)\Big],
+  \label{eq:K-Qstring}
 \end{equation}
-by inclusion--exclusion, and the right-hand side is the set of irreducible pairings.
+a Wick string of $m+2$ vertices with $\Qc=1-\Pc$ in each of its $m+1$ gaps.
+
+\emph{Step 3: expand the $\Qc$'s.} $\prod_{j=0}^{m}(1-\Pc_j)=\sum_{\mathcal C\subseteq\{0,\dots,m\}}(-1)^{|\mathcal C|}\prod_{j\in\mathcal C}\Pc_j$,
+where $\Pc_j$ denotes $\Pc$ inserted in gap $j$. By \cref{lem:P-cut}, the term with the
+set $\mathcal C$ equals $\sum_{\pi:\,\mathcal C\subseteq U(\pi)}W_\pi$. Therefore
+\begin{equation}
+  \Tr_B\big[\cdots\Qc\cdots\Qc\cdots\big]
+  =\sum_{\mathcal C}(-1)^{|\mathcal C|}\sum_{\pi:\,\mathcal C\subseteq U(\pi)}W_\pi
+  =\sum_{\pi}W_\pi\sum_{\mathcal C\subseteq U(\pi)}(-1)^{|\mathcal C|}
+  =\sum_{\pi}W_\pi\,\delta_{U(\pi),\varnothing},
+\end{equation}
+where we exchanged the two finite sums and used \cref{lem:incl-excl}. Only pairings
+with no cut survive, which is \cref{eq:K-irred}.
 \end{proof}
 
-Irreducibility is defined with respect to the reference state $\rhoB$ in $\Pc$: a cut is a
-moment at which the bath is \emph{exactly} back in $\rhoB$. A different projector (a
-correlated reference state, or Mori's operator projector of \cref{sec:lec8}) gives a
-different kernel. The theorem is the real-time version of the statement that the
-self-energy is one-particle irreducible; in the superoperator language it goes back to
-Schoeller and Sch\"on~\cite{SchoellerSchon1994,Schoeller2000} for fermionic reservoirs and
-is the basis of real-time renormalization group methods~\cite{Schoeller2009,Keil2001}; see
-also~\cite{LeijnseWegewijs2008,Timm2008} for the explicit comparison with NZ at fourth
-order. Two consequences:
-\begin{itemize}[itemsep=1pt]
-\item $K(0)=K^{(2)}(0)$ exactly: at $\tau=0$ there is no room for internal vertices.
-\item $K$ is of order $g^2$ while $\Pi$ is of order $1$; perturbation theory for $K$ is
-  perturbation theory for the exponent, which is why NZ at low order already
-  captures long-time exponential decay that no finite-order expansion of $\Pi$ can.
+\begin{remark}
+The three ingredients are worth separating. (i) $\Pc$ \emph{factorizes} a string
+(\cref{lem:P-cut}); this uses only the form $\Pc=\rhoB\otimes\Tr_B$. (ii) The exponential
+$\ee^{\Qc\Lc\tau}$ puts a $\Qc$ in every gap (\cref{lem:expansion}); this uses only
+$[\Pc,\Lc_0]=0$. (iii) Inclusion--exclusion converts ``$\Qc$ in every gap'' into ``no cut
+anywhere''; this is pure combinatorics. Gaussianity enters only in identifying the
+factorized strings with sums over pairings. For a non-Gaussian bath the same three steps
+go through with pairings replaced by partitions into cumulants, and the result is that
+$K$ is the sum of diagrams in which every gap is crossed by at least one cumulant
+block~\cite{Schoeller2009}. For fermionic reservoirs each $W_\pi$ acquires the sign of the
+permutation that brings paired operators next to each other; nothing else changes.
+\end{remark}
+
+\subsubsection{The converse: the NZ equation as a Dyson resummation}
+
+The theorem identifies $K$. The complementary statement is that the NZ equation
+rebuilds the \emph{full} map from $K$ by summing the reducible diagrams, which is what one
+means by a Dyson equation.
+
+\begin{proposition}[Unique decomposition into irreducible blocks]\label{prop:blocks}
+Every pairing $\pi$ of the vertices $t_0>t_1>\dots>t_k$ decomposes uniquely as a sequence
+of irreducible pairings of consecutive blocks of vertices, the blocks being separated by
+the cuts of $\pi$. Conversely, concatenating irreducible pairings of consecutive blocks
+gives a pairing whose cuts are exactly the block boundaries.
+\end{proposition}
+\begin{proof}
+Let $U(\pi)=\{j_1<\dots<j_r\}$. The vertices between consecutive cuts form blocks; no
+line connects different blocks (that is what a cut means), so $\pi$ restricted to a
+block is a pairing of that block; and that restriction has no cut, because a cut inside
+a block would be a cut of $\pi$ not in $U(\pi)$. Uniqueness: the blocks are determined by
+$U(\pi)$, which is determined by $\pi$. The converse is immediate.
+\end{proof}
+
+Now expand the full map $\Pi(t)=\Tr_B[\ee^{\Lc t}(\cdot\otimes\rhoB)]$ in the Dyson series
+\eqref{eq:dyson-super} and apply Wick's theorem: in the Schr\"odinger picture, every
+term is a product of free propagators $\ee^{\Lc_S\Delta t}$ and diagrams $W_\pi$. Group the
+terms by the cuts of $\pi$ using \cref{prop:blocks}: a term with $r$ cuts is a product of
+$r+1$ irreducible blocks, each of which is (after the time integrations over its interior
+vertices) a factor $K(\tau_\ell)$ with $\tau_\ell$ the duration of the block, separated by free
+propagation across the cuts. Summing over the number of blocks and over the positions of
+the block boundaries,
+\begin{equation}
+  \Pi(t)=\Pi_0(t)+\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,\Pi_0(t-t_1)K(t_1-t_2)\Pi_0(t_2)
+  +\int\!\!\int\!\!\int\!\!\int\Pi_0K\Pi_0K\Pi_0+\dots ,\qquad \Pi_0(t)=\ee^{\Lc_St},
+  \label{eq:dyson-time}
+\end{equation}
+which is the iterated solution of $\Pi(t)=\Pi_0(t)+\int_0^t\dd t_1\int_0^{t_1}\dd t_2\,\Pi_0(t-t_1)K(t_1-t_2)\Pi(t_2)$,
+i.e.\ of the NZ equation $\dot\Pi=\Lc_S\Pi+\int K\,\Pi$. In Laplace space this is
+\cref{eq:Dyson}, $\hat\Pi=(z-\Lc_S-\hat K)^{-1}=\hat\Pi_0+\hat\Pi_0\hat K\hat\Pi_0+\hat\Pi_0\hat K\hat\Pi_0\hat K\hat\Pi_0+\dots$, a
+geometric series in $\hat K\hat\Pi_0$. The geometric series is precisely the statement that
+reducible diagrams are products of irreducible ones with free propagation in between; the
+time integrations over block boundaries turn the products into convolutions, and
+convolutions into products of Laplace transforms. One point deserves emphasis: a given
+term of the series \eqref{eq:dyson-time} with $r+1$ blocks is not ``of order $g^{2(r+1)}$''
+in any useful sense, because each $K$ contains all orders. The expansion parameter of
+\cref{eq:dyson-time} is the number of returns of the bath to $\rhoB$, not the coupling.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[>=Stealth,scale=0.95]
+  \tikzset{v/.style={circle,fill=black,inner sep=1.3pt}}
+  \draw[->] (0,0)--(9.4,0) node[right,font=\small] {$t$};
+  \foreach \x/\n in {0.5/5,1.6/4,2.6/3,4.2/2,5.6/1,7.0/0} \node[v,label=below:{\footnotesize $t_\n$}] at (\x,0) {};
+  \draw[thick,ForestGreen] (0.5,0) .. controls (0.8,1.0) and (2.3,1.0) .. (2.6,0);
+  \draw[thick,ForestGreen] (1.6,0) .. controls (2.3,1.4) and (3.5,1.4) .. (4.2,0);
+  \draw[thick,ForestGreen] (5.6,0) .. controls (5.9,0.9) and (6.7,0.9) .. (7.0,0);
+  \draw[dashed,red] (4.9,-0.5)--(4.9,1.5) node[above,font=\footnotesize,red] {cut (gap 1)};
+  \node[font=\footnotesize] at (2.35,-0.75) {irreducible block $K(t_2-t_5)$};
+  \node[font=\footnotesize] at (6.3,-0.75) {block $K(t_0-t_1)$};
+  \node[font=\footnotesize,anchor=west] at (0.0,1.9) {$\pi=(t_5t_3)(t_4t_2)(t_1t_0)$: gaps $4,3,2$ crossed, gap $1$ not, gap $0$ crossed};
+\end{tikzpicture}
+\caption{A sixth-order pairing with exactly one cut. By \cref{prop:blocks} it is the
+product of a fourth-order irreducible (crossed) block and a second-order block, with free
+propagation $\ee^{\Lc_S(t_1-t_2)}$ across the cut. In the NZ equation this term is generated
+by $\int\!\!\int\Pi_0K^{(4)}\Pi_0K^{(2)}\Pi_0$; in the kernel it is removed by the $\Pc$ inserted in
+gap~1.}
+\label{fig:cut}
+\end{figure}
+
+\subsubsection{Explicit checks at fourth and sixth order}
+
+\begin{exbox}[Example 5.1: fourth order]
+Take $m=2$ in \cref{eq:K-Qstring}: vertices at $\tau>s_1>s_2>0$, three gaps, and
+$\prod_{j=0}^{2}(1-\Pc_j)$ has eight terms. Most vanish identically, for a reason that is
+general: a $\Pc$ in gap $j$ splits the string into a left part with $j+1$ vertices and a
+right part with $m+1-j$ vertices, and each part is a Wick string of its own, which
+vanishes if it has an odd number of vertices. Hence $\Pc_0$ and $\Pc_2$ (one vertex on one
+side) give zero, and so does any set $\mathcal C$ containing them. Only $\mathcal C=\varnothing$ and
+$\mathcal C=\{1\}$ survive:
+\begin{align}
+  K^{(4)}(\tau)&=\ee^{\Lc_S\tau}\!\int_{\tau>s_1>s_2>0}\Big\{W(\tau,s_1,s_2,0)-W(\tau,s_1)\,W(s_2,0)\Big\}\notag\\
+  &=\ee^{\Lc_S\tau}\!\int_{\tau>s_1>s_2>0}\Big\{\big[W_{(\tau s_1)(s_20)}+W_{(\tau s_2)(s_10)}+W_{(\tau0)(s_1s_2)}\big]-W_{(\tau s_1)(s_20)}\Big\}\notag\\
+  &=\ee^{\Lc_S\tau}\!\int_{\tau>s_1>s_2>0}\Big\{W_{\text{crossed}}+W_{\text{nested}}\Big\},
+\end{align}
+exactly the two irreducible fourth-order diagrams of \cref{fig:fourth-order}. The
+subtraction of the reducible pairing is not an approximation imposed by hand; it is the
+single $\Pc$ that survives in the middle gap. For $\theta=0$ on the coherence, with all
+vertices equal to $-2i$ and every line a noise line, this is
+$16\int_{\tau>s_1>s_2>0}[S(\tau-s_2)S(s_1)+S(\tau)S(s_1-s_2)]$, the crossed and nested integrals
+of \cref{eq:dephasing-4th}.
+
+The identity can be checked numerically to the letter. In the pseudomode representation
+(\cref{sec:numerics}) both $K(\tau)$, as $\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$, and $K^{(4)}(\tau)$, as the
+double integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$, are
+finite matrices. For the Lorentzian bath at $\theta=\pi/4$ one finds, e.g.\ at $\tau=1/\omega_0$,
+$\max|K-K^{(2)}|=4.1\times10^{-4}$ and $\max|K-K^{(2)}-K^{(4)}|=4\times10^{-6}$ at $g=0.1$, and
+$2.6\times10^{-5}$ versus $6\times10^{-7}$ at $g=0.05$: the residual is of order $g^6$ (and
+dominated by the quadrature error), as it must be.
+\end{exbox}
+
+\begin{exbox}[Example 5.2: sixth order, and the count of irreducible diagrams]
+With $m=4$ there are five gaps, numbered $0$ to $4$ from the latest vertex. The parity
+argument kills every $\mathcal C$ that contains gap $0$, $2$ or $4$ (a $\Pc$ there leaves an
+odd number of vertices on one side). The surviving sets are $\varnothing$, $\{1\}$, $\{3\}$ and
+$\{1,3\}$:
+\begin{equation}
+  K^{(6)}=\ee^{\Lc_S\tau}\!\int\Big\{W_6-W_2W_4-W_4W_2+W_2W_2W_2\Big\},
+\end{equation}
+where $W_6$ is the full six-vertex string ($15$ pairings), $W_2W_4$ the pairings with a cut
+after the first two vertices ($1\times3=3$ pairings), $W_4W_2$ those with a cut before the
+last two ($3$ pairings), and $W_2W_2W_2$ the single pairing with both cuts. Counting:
+$15-3-3+1=10$ irreducible pairings, which matches the sequence $1,2,10,74,\dots$ of
+irreducible chord diagrams quoted in \cref{ex:4-3}. The reducible ones are $5=15-10$:
+the pairing with two cuts, and the $2+2$ pairings with exactly one cut (an irreducible
+fourth-order block next to a second-order one, as in \cref{fig:cut}). Note that the
+inclusion--exclusion signs are needed to avoid double-subtracting the pairing with two
+cuts, which appears in both $W_2W_4$ and $W_4W_2$.
+\end{exbox}
+
+\subsubsection{What the theorem does and does not say}
+
+\begin{itemize}[itemsep=2pt]
+\item \textbf{Irreducibility is relative to $\Pc$.} A cut is a moment at which the bath
+  is \emph{exactly} back in the reference state $\rhoB$. Change the reference state (a
+  correlated projector, a projector onto populations only as in \cref{sec:lec7}, Mori's
+  operator projector of \cref{sec:lec8}) and both the ``free'' propagation and the set
+  of diagrams that count as reducible change with it. The kernel is not a property of
+  the model alone but of the model and the projector.
+\item \textbf{$K(0)=K^{(2)}(0)$ exactly.} At $\tau=0$ there is no room for internal vertices,
+  so only $m=0$ contributes. This fixes the short-time behaviour of every quantity
+  to all orders (used in \cref{sec:lec10}).
+\item \textbf{$K$ is small; $\Pi$ is not.} $K$ starts at order $g^2$ while $\Pi$ starts at
+  order $1$. Truncating $K$ and then solving \cref{eq:NZ} resums an infinite class of
+  diagrams of $\Pi$: all products of the kept irreducible blocks. This is why a
+  second-order kernel can describe long-time exponential decay, which no finite-order
+  truncation of $\Pi$ itself can (a polynomial in $t$ does not decay).
+\item \textbf{Truncating $K$ is not the same as truncating $\Gc$.} The TCL generator of
+  \cref{sec:lec6} resums a \emph{different} class of diagrams at the same nominal order;
+  the two agree at second order and differ from fourth order on~\cite{Timm2008,LeijnseWegewijs2008}.
+\item \textbf{The theorem is representation-independent.} It is the real-time, Liouville-space
+  version of ``the self-energy is one-particle irreducible''. In the fermionic
+  reservoir context the identification is due to Schoeller and
+  Sch\"on~\cite{SchoellerSchon1994,Schoeller2000}; it is the starting point of the
+  real-time renormalization group~\cite{Schoeller2009,Keil2001}, and the explicit
+  fourth-order comparison with the NZ expansion is in~\cite{LeijnseWegewijs2008,Timm2008}.
+  Historically, Zwanzig~\cite{Zwanzig1964} already showed that the projection-operator
+  master equation coincides with the resummed perturbation series of Prigogine's school
+  and of van Hove; the present diagrammatic form is the modern version of that
+  identity.
 \end{itemize}
 
 \subsection{Second order: Born, Redfield, secular, Bloch}
@@ -134,7 +415,7 @@ the first term of the irreducible series. The approximations one layers on top a
   step, Redfield can violate positivity at short times.
 \end{enumerate}
 
-\begin{exbox}[Example 5.1: the Bloch equations for the qubit]
+\begin{exbox}[Example 5.3: the Bloch equations for the qubit]
 Apply \cref{eq:redfield} to the kernel \eqref{eq:K2-bloch}. The rotation $\ee^{-\Lc_S\tau}$ acts
 on the \emph{input}: $(x_x,x_y)\mapsto(\cos\,x_x+\sin\,x_y,\,-\sin\,x_x+\cos\,x_y)$. Multiplying out
 and keeping the secular terms (the $\tau$-integrals of products such as
@@ -205,7 +486,7 @@ coupling-induced shift of the steady state.}
 \end{figure}
 
 \Cref{fig:dynamics} compares the three second-order schemes with the exact solution.
-Three lessons: (i) at weak coupling all agree, and the Markovian rates of Example~5.1 are
+Three lessons: (i) at weak coupling all agree, and the Markovian rates of Example~5.3 are
 quantitatively right after a transient of duration $\sim1/\gamma$; (ii) the Born kernel used
 \emph{nonlocally} (NZ2) is the \emph{worst} of the three at stronger coupling, overshooting
 to unphysical states, a well-known pathology~\cite{SmirneVacchini2010}; (iii) the exact
@@ -214,26 +495,24 @@ equilibrium, which the second-order schemes can only approximate.
 
 \subsection{Beyond second order}
 
-The fourth-order kernel is the sum of the crossed and nested diagrams of
+Example~5.1 gives the fourth-order kernel as the crossed and nested diagrams of
 \cref{fig:fourth-order}, each with its full vertex structure (all assignments of
 $\cl/\qu$ consistent with the rules, i.e.\ $\qu\qu$ lines carrying $S$ and $\qu\cl$ lines
-carrying $-i\chi$). Written out,
+carrying $-i\chi$). In the Schr\"odinger picture, with $V_t\in\{-iS^\qu,-iS^\cl\}$ the vertex at
+time $t$ and free propagators $\ee^{\Lc_S\Delta t}$ between vertices,
 \begin{equation}
-  K^{(4)}(\tau)=\int_{\tau>t_1>t_2>0}\Big\{V_\tau V_{t_1}V_{t_2}V_0\Big\}_{\text{crossed }(\tau t_2)(t_10)}
-  +\Big\{V_\tau V_{t_1}V_{t_2}V_0\Big\}_{\text{nested }(\tau0)(t_1t_2)},
+  K^{(4)}(\tau)=\int_{\tau>t_1>t_2>0}\Big\{V_\tau\,\ee^{\Lc_S(\tau-t_1)}V_{t_1}\ee^{\Lc_S(t_1-t_2)}V_{t_2}\ee^{\Lc_St_2}V_0\Big\}_{\text{crossed }(\tau t_2)(t_10)\ +\ \text{nested }(\tau0)(t_1t_2)} .
 \end{equation}
-where $V_{t}$ denotes the vertex at time $t$ (either $-iS^\qu$ or $-iS^\cl$ according to the
-line it belongs to),
-with free propagators between vertices in the Schr\"odinger picture. For
-$\theta=0$ on the coherence it reduces to the crossed and nested integrals of
+For $\theta=0$ on the coherence it reduces to the crossed and nested integrals of
 \cref{eq:dephasing-4th} times $16$. Explicit fourth-order kernels for the spin-boson model
 were worked out in the TCL form by Breuer, Kappler and
 Petruccione~\cite{BreuerKapplerPetruccione2001}; in the NZ form the bookkeeping is easiest
 in Laplace space~\cite{Timm2008}. \Cref{fig:kernels} (left) shows the exact kernel of the
 Lorentzian model, extracted numerically from the pseudomode representation as
-$\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$, against $K^{(2)}$: the higher orders shift the oscillation
-frequency inside the kernel (a self-consistent Lamb shift) and change its damping, but
-$K(0)=K^{(2)}(0)$ exactly, as the theorem requires.
+$\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ (which is \cref{eq:NZ} evaluated literally, with the
+pseudomode's Markovian Liouvillian playing the role of $\Lc$), against $K^{(2)}$: the higher
+orders shift the oscillation frequency inside the kernel (a self-consistent Lamb shift)
+and change its damping, but $K(0)=K^{(2)}(0)$ exactly, as \cref{thm:irreducible} requires.
 
 \begin{figure}[t]
 \centering

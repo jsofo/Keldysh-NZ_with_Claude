@@ -52,7 +52,12 @@ $r_z^{\rm eq}=\Gc_{z\Id}/(-\Gc_{zz})$ & $-0.96970$ & $-0.96970$\\
 \end{center}
 The small differences are the $\dd t$ discretization and the nonsecular versus secular
 definitions. The nonsecular generator has $\Gc_{xx}=-\Gamma_\varphi$ and $\Gc_{yy}=-\Gamma_\varphi-\Gamma_1$, whose
-average is $\Gamma_2$ (Example~5.1), and $\Gc_{yx}=2\delta\omega$, $\Gc_{xy}=0$.
+average is $\Gamma_2$ (Example~5.3), and $\Gc_{yx}=2\delta\omega$, $\Gc_{xy}=0$.
+
+\paragraph{Check of \cref{thm:irreducible}.}
+The function \texttt{check\_fourth\_order} evaluates the fourth-order irreducible kernel
+$K^{(4)}$ as a double time integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$
+in the pseudomode space and compares $K-K^{(2)}$ with $K^{(4)}$ for $g=0.05,0.1,0.2$ (Example~5.1).
 
 \paragraph{Filter functions.}
 \Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling

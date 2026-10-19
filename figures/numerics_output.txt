@@ -13,3 +13,10 @@ expected  1/T1 = 0.36554,  1/T2 = 1/(2T1) + Gamma_phi = 0.22512
 numeric   precession frequency sqrt(-M_xy M_yx) = 1.02191 (Lamb-shifted omega_0)
 numeric   steady-state <sigma_z> = -0.96970, expected -(Gdown-Gup)/(Gdown+Gup) = -0.96970
 pseudomode truncation check (N=14 vs 20), max |dPi| over t<4: 5.02e-15
+Theorem 5.4 at fourth order: exact kernel vs K2 + K4 (trapezoid, n=50)
+  g=0.05 tau=1.0  |K-K2|=2.59e-05  |K4|=2.54e-05  |K-K2-K4|=5.57e-07
+  g=0.05 tau=2.5  |K-K2|=6.09e-05  |K4|=6.01e-05  |K-K2-K4|=1.64e-06
+  g=0.10 tau=1.0  |K-K2|=4.10e-04  |K4|=4.06e-04  |K-K2-K4|=4.10e-06
+  g=0.10 tau=2.5  |K-K2|=9.42e-04  |K4|=9.61e-04  |K-K2-K4|=2.47e-05
+  g=0.20 tau=1.0  |K-K2|=6.26e-03  |K4|=6.50e-03  |K-K2-K4|=2.33e-04
+  g=0.20 tau=2.5  |K-K2|=1.32e-02  |K4|=1.54e-02  |K-K2-K4|=2.15e-03

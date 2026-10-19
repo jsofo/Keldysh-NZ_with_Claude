@@ -208,11 +208,11 @@ def exact_propagator(ts, g, N=N_OSC):
     dt = ts[1] - ts[0]
     U = expm(Ltot * dt)
     basis = []
-    for i in range(2):
-        for j in range(2):
+    for j in range(2):          # column-stacking order: vec index = i + 2 j
+        for i in range(2):
             E = np.zeros((2, 2), complex); E[i, j] = 1
             basis.append(embed(E, N))
-    cols = np.array(basis).T  # (2N)^2 x 4
+    cols = np.array(basis).T  # (2N)^2 x 4, columns ordered as vec(|i><j|)
     Pi, dPi = [], []
     cur = cols.copy()
     for n in range(len(ts)):
@@ -361,6 +361,48 @@ def fig_filter():
 
 
 # ----------------------------------------------------------------------------
+# Check of Theorem 5.4 at fourth order:  K(tau) - K2(tau) = K4(tau) + O(g^6),
+# with K4 = P L_I e^{L0} Q L_I e^{L0} Q L_I e^{L0} Q L_I P evaluated in the pseudomode space
+# (the single surviving P-insertion in the middle gap is what Q supplies; see Example 5.1).
+# ----------------------------------------------------------------------------
+def check_fourth_order(N=8, n=50):
+    def setup(g):
+        a, H, Ltot, P = pseudomode_setup(g, N)
+        LI = liouvillian(g * np.kron(S_op, a + a.conj().T)); L0 = Ltot - LI; Q = np.eye(P.shape[0]) - P
+        cols = []
+        for j in range(2):
+            for i in range(2):
+                E = np.zeros((2, 2), complex); E[i, j] = 1; cols.append(embed(E, N))
+        return L0, LI, Q, np.array(cols).T
+
+    def toS(out):
+        return np.array([vec(partial_trace_osc(out[:, k], N)) for k in range(4)]).T
+
+    def K_exact(tau, g):
+        L0, LI, Q, cols = setup(g)
+        return toS(LI @ expm(Q @ (L0 + LI) @ Q * tau) @ (Q @ LI @ cols))
+
+    def K4(tau, g):
+        L0, LI, Q, cols = setup(g)
+        s = np.linspace(0, tau, n + 1); ds = s[1] - s[0]
+        E = [expm(L0 * x) for x in s]
+        acc = np.zeros((4, 4), complex)
+        for i in range(n + 1):
+            for j in range(i):
+                w = (0.5 if i in (0, n) else 1) * (0.5 if j in (0, n) else 1)
+                v = E[n - i] @ (Q @ LI @ (E[i - j] @ (Q @ LI @ (E[j] @ (Q @ LI @ cols)))))
+                acc += w * toS(LI @ v)
+        return acc * ds * ds
+
+    print("Theorem 5.4 at fourth order: exact kernel vs K2 + K4 (trapezoid, n=%d)" % n)
+    for g in (0.05, 0.1, 0.2):
+        for tau in (1.0, 2.5):
+            Kx = K_exact(tau, g); K2v = K2(tau, g); K4v = K4(tau, g)
+            print("  g=%.2f tau=%.1f  |K-K2|=%.2e  |K4|=%.2e  |K-K2-K4|=%.2e" % (
+                g, tau, np.abs(Kx - K2v).max(), np.abs(K4v).max(), np.abs(Kx - K2v - K4v).max()))
+
+
+# ----------------------------------------------------------------------------
 def main():
     ts = np.arange(0, T_MAX + DT / 2, DT)
     rho0 = np.array([[1, 1], [1, 1]], complex) / 2  # |+x>
@@ -393,6 +435,7 @@ def main():
     Pi20, _, _ = exact_propagator(ts[:200], g_strong, N=20)
     err = np.max(np.abs(Pi20 - results[g_strong]["Pi"][:200]))
     print("pseudomode truncation check (N=14 vs 20), max |dPi| over t<4: %.2e" % err)
+    check_fourth_order()
 
 
 if __name__ == "__main__":
