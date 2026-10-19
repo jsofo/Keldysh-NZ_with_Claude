@@ -1,0 +1,81 @@
+%=====================================================================
+\section*{Lecture 0: The map of the course}
+\addcontentsline{toc}{section}{Lecture 0: The map of the course}
+\label{sec:overview}
+
+\paragraph{The problem.}
+A small quantum system $S$ (here: a qubit) is coupled to a large environment $B$ (here:
+a bath of harmonic oscillators). The full dynamics is unitary, but we only ever look at the
+system, so what we want is the \emph{reduced} dynamics: either the reduced density matrix
+$\rhoS(t)=\Tr_B\rho(t)$, or the expectation values and correlation functions of system
+operators. Three formalisms were invented, by different communities and for different
+purposes, to do exactly this:
+\begin{itemize}[itemsep=1pt]
+\item \textbf{Keldysh} (Schwinger~\cite{Schwinger1961}, Keldysh~\cite{Keldysh1964}): write
+  expectation values as a path integral or a diagrammatic series on a closed time
+  contour that runs forward with $U$ and backward with $U^\dagger$. Natural for
+  many-body systems, Green's functions and field theory.
+\item \textbf{Nakajima--Zwanzig} (Nakajima~\cite{Nakajima1958}, Zwanzig~\cite{Zwanzig1960})
+  and its time-convolutionless (TCL) variant~\cite{Shibata1977,Chaturvedi1979}: project
+  the full density matrix onto the ``relevant'' part $\rhoS\otimes\rhoB$ and derive a
+  closed, exact integro-differential equation for $\rhoS(t)$. Natural for small systems
+  and for questions about positivity, memory and master equations.
+\item \textbf{Mori} (Mori~\cite{Mori1965}, Zwanzig~\cite[Ch.~8]{ZwanzigBook}): project
+  \emph{operators} (Heisenberg picture) onto a chosen set of slow variables and derive a
+  generalized Langevin equation. Natural for hydrodynamics, response functions and
+  continued-fraction approximations.
+\end{itemize}
+
+\paragraph{The thesis.}
+The three formalisms are not three theories; they are three bookkeeping schemes for the
+same perturbation series. The precise statements, proved in the course, are:
+\begin{keybox}[The three bridges]
+\begin{enumerate}[itemsep=1pt]
+\item Ordering superoperators along the real time axis \emph{is} Keldysh contour ordering
+  (\cref{sec:lec3}). The ``classical/quantum'' Keldysh rotation is the pair of
+  superoperators $A^\cl=\tfrac12\{A,\cdot\}$, $A^\qu=[A,\cdot]$.
+\item The Nakajima--Zwanzig memory kernel is the sum of \emph{irreducible} real-time diagrams
+  of the reduced propagator, and the NZ equation is its Dyson equation
+  (\cref{sec:lec5}). TCL is the same Dyson equation solved for a time-local generator
+  (\cref{sec:lec6}).
+\item Mori's memory function is the \emph{retarded self-energy} of the projected operator;
+  for the full operator basis with the Heisenberg-adjoint inner product it is the adjoint
+  of the NZ kernel (\cref{sec:lec8}).
+\end{enumerate}
+In all three, a Gaussian bath enters only through two kernels: the symmetrized
+noise $S(t)$ (Keldysh component $D^K$) and the response $\chi(t)$ (retarded component $D^R$).
+\end{keybox}
+
+\paragraph{The running example.}
+Everything is worked out for
+\begin{equation}
+  H=\frac{\omega_0}{2}\sz+\sum_k\omega_kb_k^\dagger b_k
+  +\big(\cos\theta\,\sz+\sin\theta\,\sx\big)\otimes\sum_kg_k\big(b_k+b_k^\dagger\big),
+  \label{eq:model-intro}
+\end{equation}
+the spin-boson model with a general linear coupling. The mixing angle $\theta$ lets us
+switch between the two textbook limits without changing the formalism: $\theta=0$ is pure
+dephasing (exactly solvable, the sensor's workhorse) and $\theta=\pi/2$ is transverse
+coupling (relaxation, the damped qubit). Intermediate $\theta$ is unitarily equivalent to
+the biased dissipative two-level system of Leggett \emph{et al.}~\cite{Leggett1987}, as we
+show in \cref{sec:lec2}. A Lorentzian spectral density makes the model numerically exact
+through the pseudomode mapping~\cite{Garraway1997,Tamascelli2018}, so each approximation
+in the course can be compared with the truth (\cref{sec:numerics}).
+
+\paragraph{The route.}
+\Cref{sec:lec1,sec:lec2} set up the language (Liouville space; the model and its bath).
+\Cref{sec:lec3,sec:lec4} derive the Keldysh structure and the diagram rules from the von
+Neumann equation. \Cref{sec:lec5,sec:lec6} derive NZ and TCL and identify them with the
+Dyson equation. \Cref{sec:lec7} goes to the path integral: Feynman--Vernon, the polaron
+frame and the noninteracting-blip approximation. \Cref{sec:lec8} does Mori and
+connects it to the other two. \Cref{sec:lec9} rewrites the qubit problem as a Keldysh
+field theory, so the reader can recognize the structures in the many-body literature.
+\Cref{sec:lec10} turns the machinery to quantum sensing: which protocol measures which
+bath kernel, and why non-Markovian memory changes precision scaling.
+
+\paragraph{Prerequisites.}
+Quantum mechanics at the level of second quantization for bosons, the interaction
+picture and the Dyson series; a first exposure to density matrices. No prior knowledge of
+Keldysh, projection operators or path integrals is assumed. Units: $\hbar=k_B=1$.
+
+\clearpage

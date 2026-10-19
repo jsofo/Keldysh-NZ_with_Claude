@@ -1,0 +1,15 @@
+Second-order Markov generator in the Pauli basis (I,x,y,z), g = 0.30, theta = pi/4
+[[-0.      0.     -0.     -0.    ]
+ [ 0.3544 -0.0424 -1.      0.3655]
+ [ 0.1251  1.0443 -0.4079  0.0443]
+ [-0.3544  0.0424  0.     -0.3655]]
+[[-0. -0. -0. -0.]
+ [ 0.  0. -0.  0.]
+ [-0. -0.  0. -0.]
+ [ 0.  0.  0.  0.]]
+analytic  Gamma_down = 0.36000  Gamma_up = 0.00554  Gamma_phi(pure) = 0.04235
+numeric   -M_zz = 0.36552 (= 1/T1),  -(M_xx+M_yy)/2 = 0.22512 (= 1/T2, secular average)
+expected  1/T1 = 0.36554,  1/T2 = 1/(2T1) + Gamma_phi = 0.22512
+numeric   precession frequency sqrt(-M_xy M_yx) = 1.02191 (Lamb-shifted omega_0)
+numeric   steady-state <sigma_z> = -0.96970, expected -(Gdown-Gup)/(Gdown+Gup) = -0.96970
+pseudomode truncation check (N=14 vs 20), max |dPi| over t<4: 5.02e-15

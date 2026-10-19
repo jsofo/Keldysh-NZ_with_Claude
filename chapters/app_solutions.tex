@@ -1,0 +1,253 @@
+%=====================================================================
+\section{Solutions and hints}
+\label{sec:solutions}
+
+\paragraph{\Cref{ex:1-1}.}
+$(A^\cl)^\dagger$: $(X,A^\cl Y)=\tfrac12\Tr[X^\dagger(AY+YA)]=\tfrac12\Tr[(AX+XA)^\dagger Y]=(A^\cl X,Y)$ using
+$A=A^\dagger$ and cyclicity. $(A^\qu)^\dagger$: $(X,[A,Y])=\Tr[X^\dagger AY-X^\dagger YA]=\Tr[(AX-XA)^\dagger(-1)\cdots]$,
+giving $-(A^\qu X,Y)$. Hence $iA^\qu$ is Hermitian and $\Lc=-iH^\qu$ is anti-Hermitian, as the
+generator of a unitary (isometric) evolution in Liouville space must be.
+
+\paragraph{\Cref{ex:1-2}.}
+With $\mathrm{vec}$ in the basis $\{\ket0\bra0,\ket0\bra1,\ket1\bra0,\ket1\bra1\}$,
+$\Lc_S=-i(\Id\otimes H_S-H_S^T\otimes\Id)=\operatorname{diag}(0,-i\omega_0,i\omega_0,0)$. The change of basis to
+$\sigma_\mu/\sqrt2$ is the unitary with columns $\mathrm{vec}(\sigma_\mu)/\sqrt2$; it maps the
+$2\times2$ block $\operatorname{diag}(-i\omega_0,i\omega_0)$ on $(\ket0\bra1,\ket1\bra0)$ to the real rotation generator
+$\begin{psmallmatrix}0&-\omega_0\\ \omega_0&0\end{psmallmatrix}$ on $(\sx,\sy)$.
+
+\paragraph{\Cref{ex:1-3}.}
+Trace preservation fixes the first row; Hermiticity preservation makes the matrix
+real. For a unital qubit map with $T=\operatorname{diag}(\lambda_1,\lambda_2,\lambda_3)$, positivity is
+$|\lambda_i|\le1$ while complete positivity (Fujiwara--Algoet conditions) is
+$|\lambda_1\pm\lambda_2|\le|1\pm\lambda_3|$; transposition $(1,-1,1)$ violates the latter.
+
+\paragraph{\Cref{ex:1-4}.}
+$(S^\cl)^2=\tfrac14(S^{+}+S^{-})^2=\tfrac14(2+2S^+S^-)$ using $S^2=\Id$: it maps $X\mapsto\tfrac12(X+SXS)$. Similarly
+$(S^\qu)^2X=2X-2SXS$. Hence $(S^\cl)^2+\tfrac14(S^\qu)^2=1$ and $(S^\cl)^2-\tfrac14(S^\qu)^2=S^+S^-$, i.e.\
+$X\mapsto SXS$. In matrix form, $(S^\cl)^2$ projects onto $\mathrm{span}(\Id,S)$ and $\tfrac14(S^\qu)^2$
+onto its complement (the two Pauli directions orthogonal to $\hat n$).
+
+\paragraph{\Cref{ex:2-1}.}
+Straightforward from $b_k(t)=b_k\ee^{-i\omega_kt}$, $\avg{b_k^\dagger b_k}=\bar n_k$, $\avg{b_kb_k^\dagger}=\bar n_k+1$.
+
+\paragraph{\Cref{ex:2-2}.}
+$\chi(\omega)=\tfrac2\pi\int_0^\infty\dd\omega'J(\omega')\int_0^\infty\dd t\,\ee^{i\omega t}\sin\omega't$ and
+$\Im\int_0^\infty\ee^{i\omega t}\sin\omega't\,\dd t=\tfrac\pi2[\delta(\omega-\omega')-\delta(\omega+\omega')]$. For the finite-$T$ Ohmic
+kernel use $\int_0^\infty\omega\coth(\beta\omega/2)\cos\omega t\,\dd\omega=-(\pi/\beta)^2/\sinh^2(\pi t/\beta)$ for $t\ne0$ (the
+$t=0$ singularity carries the positive weight that makes $S(\omega)\ge0$). $S(t)<0$ for all
+$t>0$ is compatible with $S(\omega)\ge0$ because $S(\omega)=\int S(t)\ee^{i\omega t}\dd t$ is dominated by the
+short-time peak.
+
+\paragraph{\Cref{ex:2-3}.}
+The adjoint master equation gives $\dot a=-(i\Omega+\gamma/2)a$ for the Heisenberg operator
+in the absence of the qubit; with the quantum regression theorem,
+$\avg{a(t)a^\dagger}=\ee^{-(i\Omega+\gamma/2)t}$. Gaussianity: the Lindbladian is quadratic in
+$a,a^\dagger$, so it maps Gaussian states to Gaussian states.
+
+\paragraph{\Cref{ex:2-4}.}
+$\Tr_B[(\cos\theta\sz+\sin\theta\sx)B\cdots(\cos\theta\sz+\sin\theta\sx)B]$ contains $\cos\theta\sin\theta\,C(t)$ cross
+terms between $\sz$ and $\sx$ vertices. Two independent baths would give
+$C_{zz}=\cos^2\theta C$, $C_{xx}=\sin^2\theta C$, $C_{zx}=0$. The cross terms are the $cs$ entries of
+\cref{eq:K2-bloch}.
+
+\paragraph{\Cref{ex:3-1}.}
+Eight terms $\tilde\Lc_I^{a_1}\tilde\Lc_I^{a_2}\tilde\Lc_I^{a_3}$, $a_i=\pm$, each a contour-ordered
+three-point function of $B$, which vanishes for a Gaussian state with $\avg B=0$.
+
+\paragraph{\Cref{ex:3-2}.}
+For $t>s$: $D^{\cl\qu}=\tfrac12[C(t-s)-C(s-t)+C(t-s)-C(s-t)]=C(t-s)-C(s-t)=\avg{[B(t),B(s)]}$. For $t<s$ the
+later superoperator is $B^\qu(s)$ and the trace identity kills the term. Without the table:
+write $D^{ab}$ as $\Tr_B[\text{later}\cdot\text{earlier}\cdot\rhoB]$; if the later one is $B^\qu$ the
+trace vanishes; if both are $B^\cl$ the result is symmetric in $t,s$.
+
+\paragraph{\Cref{ex:3-3}.}
+$\Tr_S[\tilde S^\cl(t)\tilde S^\cl(s)\rho_S]=\tfrac12\avg{\{\tilde S(t),\tilde S(s)\}}=\cos^2\theta+\sin^2\theta\cos\omega_0(t-s)$ for the
+diagonal state (independent of $r_z$), and
+$\Tr_S[\tilde S^\cl(t)\tilde S^\qu(s)\rho_S]=\avg{[\tilde S(t),\tilde S(s)]}=-2i\sin^2\theta\,r_z\sin\omega_0(t-s)$ for $t>s$: the
+qubit's response function, proportional to its polarization, as a two-level system's
+susceptibility must be.
+
+\paragraph{\Cref{ex:3-4}.}
+See the text; $\chi''(\omega)=J(\omega)-J(-\omega)$ and $S(\omega)=J(\omega)+J(-\omega)$ give $S=\sgn(\omega)\chi''$ at $T=0$
+only for $|\omega|$ where $J(-|\omega|)\ll J(|\omega|)$; the negative-frequency tail is the price of the
+pseudomode.
+
+\paragraph{\Cref{ex:4-1}.}
+$\Tr_SK^{(2)}X=-\Tr_S[S^\qu(\cdots)]=0$ by the first trace identity for $S$. Hermiticity: with
+$Y=\ee^{\Lc_S\tau}[S(\tau)S^\qu X-i\chi(\tau)S^\cl X]$, $Y^\dagger=\ee^{\Lc_S\tau}[-S(\tau)S^\qu X^\dagger+i\chi S^\cl X^\dagger]$, so
+$(S^\qu Y)^\dagger=-S^\qu Y^\dagger=S^\qu\ee^{\Lc_S\tau}[S\,S^\qu-i\chi S^\cl]X^\dagger$ for Hermitian $X$.
+
+\paragraph{\Cref{ex:4-2}.}
+Input $\sz$: $S^\cl\sz=\cos\theta\,\Id$, $S^\qu\sz=-2i\sin\theta\,\sy$. Free rotation:
+$\ee^{\Lc_S\tau}\sy=\cos\omega_0\tau\,\sy-\sin\omega_0\tau\,\sx$, $\ee^{\Lc_S\tau}\Id=\Id$. Then
+$-S^\qu[\,S_\tau(-2i\sin\theta)(\cos\,\sy-\sin\,\sx)-i\chi_\tau\cos\theta\,\Id\,]$; use $S^\qu\Id=0$,
+$S^\qu\sy=-2i\cos\theta\sx+2i\sin\theta\sz$, $S^\qu\sx=2i\cos\theta\sy$:
+$=-S_\tau\sin\theta\,[-4\cos\theta\cos\,\sx+4\sin\theta\cos\,\sz-4\cos\theta\sin\,\sy]$, giving the last column of
+\cref{eq:K2-bloch}. Input $\Id$: $S^\cl\Id=S$, $S^\qu\Id=0$; $\ee^{\Lc_S\tau}S=\cos\theta\sz+\sin\theta(\cos\,\sx+\sin\,\sy)$;
+then $i\chi_\tau S^\qu[\cdots]=\chi_\tau[2cs(1-\cos)\sy+2cs\sin\,\sx-2s^2\sin\,\sz]$, the first column. The
+$\sx,\sy$ columns are analogous. At $\theta=0$ only the $c^2$ block survives (dephasing of
+$\sx,\sy$ at rate $4S_\tau$ with the rotation); at $\theta=\pi/2$ only the $s^2$ entries
+(relaxation of $\sz$, dephasing of $\sy$ but not of $\sx$ in the lab frame, and the
+$\chi$-driven inhomogeneity).
+
+\paragraph{\Cref{ex:4-3}.}
+The 15 pairings of six ordered points split into 10 irreducible and 5 reducible:
+$(12)(34)(56)$, $(12)\times$\{2 irreducible 4-point\}, \{2 irreducible 4-point\}$\times(56)$.
+(Irreducible chord diagrams: $1,1,2,10,74,\dots$)
+
+\paragraph{\Cref{ex:4-4}.}
+$\Gamma(t)=4\int_0^t\dd t_1\int_0^{t_1}\dd t_2\,g^2\ee^{-\gamma(t_1-t_2)/2}\cos\Omega(t_1-t_2)$. Short times:
+$4g^2t^2/2=2g^2t^2$. Long times: $4t\int_0^\infty S(\tau)\dd\tau=2S(\omega{=}0)\,t$ with
+$S(0)=2g^2(\gamma/2)/(\Omega^2+\gamma^2/4)$, the zero-frequency value of $J(\omega)+J(-\omega)$.
+
+\paragraph{\Cref{ex:5-1}.}
+$\Pc\Lc\Pc=\Lc_S\Pc$ uses $\Pc\Lc_I\Pc=0$; $\Pc\Lc\ee^{\Qc\Lc\tau}\Qc\Lc\Pc=\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ uses
+$\Pc\Lc_0\Qc=0$. With $\avg B\ne0$, write $B=\avg B+\delta B$ and absorb $S\avg B$ into $H_S$.
+
+\paragraph{\Cref{ex:5-2}.}
+Secular reduction of \cref{eq:K2-bloch} with $\ee^{-\Lc_S\tau}$ acting on the input:
+$\Gc_{xx}=-4c^2\int S$, $\Gc_{yy}=-4c^2\int S-4s^2\int S\cos\omega_0\tau$, $\Gc_{yx}=4s^2\int S\sin\omega_0\tau$,
+$\Gc_{xy}=0$, $\Gc_{zz}=-4s^2\int S\cos\omega_0\tau$, $\Gc_{z\Id}=-2s^2\int\chi\sin\omega_0\tau$. Average $\Gc_{xx}$ and
+$\Gc_{yy}$ (the difference oscillates at $2\omega_0$ in the rotating frame) to get $\Gamma_2$; the
+precession frequency is $\sqrt{\omega_0(\omega_0+\Gc_{yx})}\simeq\omega_0+\tfrac12\Gc_{yx}$. The Lamb shift
+contains $\int_0^\infty S\sin\omega_0\tau$ only: the $\chi$ terms sit in the first column, which is the
+inhomogeneity, not a frequency. In the operator form, $\Delta(\omega)=\Im\int_0^\infty\ee^{i\omega s}C(s)\dd s=\int_0^\infty S\sin\omega s-\tfrac12\chi'(\omega)$
+and $\delta\omega=\sin^2\theta[\Delta(\omega_0)-\Delta(-\omega_0)]$; $\chi'$ is even and cancels.
+
+\paragraph{\Cref{ex:5-3}.}
+Secular: $\Gc=-i[\tilde H_S,\cdot]+\Gamma_\downarrow\Dc[\sigma_-]+\Gamma_\uparrow\Dc[\sigma_+]+\tfrac12\Gamma_\varphi\Dc[\sz]$ with
+$\Dc[L]X=LXL^\dagger-\tfrac12\{L^\dagger L,X\}$. Nonsecular Redfield for $\theta=\pi/2$ has
+$\Gc_{xx}=0$, $\Gc_{yy}=-\Gamma_1$: starting from $\ket{+y}$ the Bloch vector initially shrinks along $y$
+but not along $x$, which is fine; the violation appears through the $\Gc_{yx}=2\delta\omega$ term
+combined with the inhomogeneity when $\delta\omega$ is comparable to $\Gamma_1$, i.e.\ when
+$\gamma\gtrsim\omega_0$ so that $S(\omega)$ is broad.
+
+\paragraph{\Cref{ex:5-4}.}
+$K(0)=\Tr_B[\Lc_I\Qc\Lc_I(X\otimes\rhoB)]=\Tr_B[\Lc_I\Lc_I(X\otimes\rhoB)]$ since $\Pc\Lc_I\Pc=0$. Laplace:
+invert \cref{eq:Dyson}. For $\theta=0$, $\hat\Pi_{01}(z)=\int_0^\infty\ee^{-(z+i\omega_0)t-\Gamma(t)}\dd t$, and
+$\hat K_{01}(z)=z+i\omega_0-1/\hat\Pi_{01}$; expanding $\ee^{-\Gamma}=1-\Gamma+\Gamma^2/2-\dots$ with $\Gamma=O(g^2)$ produces
+all powers of $g^2$ in $\hat K$: the irreducible crossed and nested diagrams do not cancel.
+
+\paragraph{\Cref{ex:6-1}.}
+$\Sigma(t)=\int_0^t\hat G(t,s)\Qc\tilde\Lc_I(s)\Pc\tilde G(s,t)\dd s$ is explicitly $O(\Lc_I)$ and vanishes at $t=0$.
+Expanding $\hat G$, $\tilde G$ and $[1-\Sigma]^{-1}$ and using $\Pc\tilde\Lc_I\Pc=0$ gives
+\cref{eq:TCL2} at second order and \cref{eq:TCL4} at fourth, where the subtracted terms
+come from $\Pc\tilde\Lc_I\Sigma^2\Pc$ and from the expansion of $\tilde G(s,t)$ inside $\Sigma$. Odd
+orders have an odd number of $B$'s.
+
+\paragraph{\Cref{ex:6-2}.}
+$\int_0^tS(\tau)\dd\tau=g^2\,\Re\big[(1-\ee^{-(\gamma/2-i\Omega)t})/(\gamma/2-i\Omega)\big]$; negative windows exist when
+$\Omega>\gamma/2$, the first around $\Omega t\in(\pi,2\pi)$ for small $\gamma/\Omega$.
+
+\paragraph{\Cref{ex:6-3}.}
+With $\Pi^{(2)}(t)=\int_0^t\dd t_1\int_0^{t_1}\dd t_2\,\Pi_0(t-t_1)K^{(2)}(t_1-t_2)\Pi_0(t_2)$ and
+$\Pi^{-1}=\Pi_0^{-1}-\Pi_0^{-1}\Pi^{(2)}\Pi_0^{-1}+\dots$, the fourth-order term of \cref{eq:TCLNZ} is
+$\int K^{(4)}(t-s)\Pi_0(s)\Pi_0(t)^{-1}+\int K^{(2)}(t-s)[\Pi^{(2)}(s)\Pi_0(t)^{-1}-\Pi_0(s)\Pi_0(t)^{-1}\Pi^{(2)}(t)\Pi_0(t)^{-1}]$. The
+bracket, written as a time-ordered integral, is $-\int\int\int$ of the products
+$\avg{\Lc_I\Lc_I}\avg{\Lc_I\Lc_I}$ in the crossed and nested time orderings, which are exactly the
+last two subtractions of \cref{eq:TCL4}; the reducible product is already absent from $K^{(4)}$.
+
+\paragraph{\Cref{ex:6-4}.}
+$\hat\rho_{ee}(z)=\widehat{|c_e|^2}(z)\rho_{ee}(0)$ and $\hat K_{ee}(z)=z-1/\widehat{|c_e|^2}(z)$; the Laplace
+transform of $|c_e|^2$ is a rational function with poles at $-\gamma/2\pm i|d|/2$ and $-\gamma/2$,
+so $\hat K$ is analytic to the right of them. The generator's rate $\gamma(t)$ has poles on the
+real $t$ axis, so its Laplace transform does not exist as an ordinary function.
+
+\paragraph{\Cref{ex:7-1}.}
+Substitute $s^\pm=s^\cl\pm\tfrac12s^\qu$ and $C=S-\tfrac i2\chi$:
+$(s^+_1-s^-_1)[Cs^+_2-C^*s^-_2]=s^\qu_1[S(s^+_2-s^-_2)-\tfrac i2\chi(s^+_2+s^-_2)]=s^\qu_1[Ss^\qu_2-i\chi s^\cl_2]$.
+Induction: the sum over pairings of $2n$ commuting vertices is $\tfrac1{n!}(\text{one line})^n$.
+
+\paragraph{\Cref{ex:7-2}.}
+For a blip $s^\qu=\pm2$ on $[t_a,t_b]$, $-\int\!\!\int s^\qu Ss^\qu=-4\int_{t_a}^{t_b}\dd t_1\int_{t_a}^{t_1}\dd t_2\,S(t_1-t_2)=-Q_2(t_b-t_a)$
+using $\ddot Q_2=4S$, $Q_2(0)=\dot Q_2(0)=0$. The blip--sojourn term with the preceding sojourn
+$s^\cl=\pm1$ on $[t_0,t_a]$ gives $\pm i\cdot2\int_{t_a}^{t_b}\dd t_1\int_{t_0}^{t_a}\dd t_2\,\chi(t_1-t_2)$, which for
+$t_0\to-\infty$ is $\mp iQ_1(t_b-t_a)$ with $\ddot Q_1=-2\chi$.
+
+\paragraph{\Cref{ex:7-3}.}
+$B_+(\tau)=\prod_kD(\alpha_k\ee^{i\omega_k\tau})$ with $\alpha_k=2g_k/\omega_k$. $D(\alpha_\tau)D(-\alpha)=\ee^{-i\alpha^2\sin\omega\tau}D(\alpha(\ee^{i\omega\tau}-1))$ and
+$|\alpha(\ee^{i\omega\tau}-1)|^2=2\alpha^2(1-\cos\omega\tau)$, so $\avg{B_+(\tau)B_-(0)}=\ee^{-Q_2-iQ_1}$ and, with the
+other ordering, $\avg{B_-(0)B_+(\tau)}=\ee^{-Q_2+iQ_1}$. Detailed balance: expand to first order
+in $Q$, $\int_0^\infty\ee^{-i\varepsilon\tau}(-Q_2+iQ_1)\dd\tau$ picks $+2J(\varepsilon)[\coth(\beta\varepsilon/2)+1]/\varepsilon^2$, hence
+$w_{\downarrow\leftarrow\uparrow}\propto1+n$, $w_{\uparrow\leftarrow\downarrow}\propto n$.
+
+\paragraph{\Cref{ex:7-4}.}
+(a) $\hat K^s(z)$ for the Ohmic kernel is
+$\Delta^2\int_0^\infty\ee^{-z\tau}(1+\omega_c^2\tau^2)^{-\alpha}\cos(2\alpha\arctan\omega_c\tau)\,\dd\tau$; for $z\ll\omega_c$ it behaves as
+$\hat K^s(z)\simeq\Delta^2\,\Gamma(1-2\alpha)\cos(\pi\alpha)\,z^{2\alpha-1}\omega_c^{-2\alpha}$, giving poles of $\hat P$ at
+$z\sim\Delta_r\,\ee^{\pm i\pi/(2-2\alpha)}$ with $\Delta_r=\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}\times O(1)$; for
+$\alpha\ge\tfrac12$ the poles are on the negative real axis (incoherent
+decay)~\cite[Sec.~V]{Leggett1987}. (b) See Example~7.2.
+
+\paragraph{\Cref{ex:8-1}.}
+Apply the identity to $i\mathsf LA$: $\dot A(t)=\ee^{i\mathsf Lt}i\mathsf LA=\ee^{i\mathsf Lt}[\mathsf P+\mathsf Q]i\mathsf LA$; the
+$\mathsf P$ part is $i\Omega A(t)$, the $\mathsf Q$ part is expanded with the identity into $F(t)$ plus
+$\int_0^t\ee^{i\mathsf L(t-s)}i\mathsf P\mathsf LF(s)\dd s$, and $i\mathsf P\mathsf LF(s)=A(A,A)^{-1}(A,i\mathsf LF(s))=-A(A,A)^{-1}(i\mathsf LA,F(s))=-AM(s)$
+using self-adjointness of $\mathsf L$ and $(A,F)=0$.
+
+\paragraph{\Cref{ex:8-2}.}
+Project on the \emph{fluctuation} $A=\delta\sz=\sz-\avg{\sz}$, with
+$(\delta\sz,\delta\sz)=1-\tanh^2(\beta\omega_0/2)$ (projecting on $\sz$ itself keeps the non-decaying
+part $\avg{\sz}^2$ in $C(t)$ and gives a memory function that vanishes at $z=0$). Then
+$i\mathsf L\delta\sz=i\sin\theta[\sx,\sz]B=2\sin\theta\,\sy B=F(0)$, $F(t)=2\sin\theta\,\sy(t)B(t)$ with
+$\sy(t)=\sy\cos\omega_0t+\sx\sin\omega_0t$, and $\avg{\sy\sy(t)}=\cos\omega_0t+i\tanh(\beta\omega_0/2)\sin\omega_0t$,
+$\avg{\sy(t)\sy}=$ its conjugate. Hence
+\begin{equation*}
+  (F,F(t))=2\sin^2\theta\big[\avg{\sy\sy(t)}C(-t)+\avg{\sy(t)\sy}C(t)\big]
+  =4\sin^2\theta\Big[S(t)\cos\omega_0t-\tfrac12\tanh\tfrac{\beta\omega_0}{2}\,\chi(t)\sin\omega_0t\Big],
+\end{equation*}
+and $\hat M(0)=2\sin^2\theta[S(\omega_0)-\tanh(\beta\omega_0/2)\chi''(\omega_0)]/(1-\tanh^2)=2\sin^2\theta S(\omega_0)=\Gamma_1$
+by the FDT. The response kernel enters with the system's polarization and is what makes the
+normalization work out; there is no inhomogeneous term because the equilibrium value
+sits in the reference state and the GLE describes the fluctuation around it.
+
+\paragraph{\Cref{ex:8-3}.}
+With $E_\mu=\sigma_\mu/\sqrt2$, $(E_\mu,\Lc^\dagger E_\nu)_B=\tfrac12\Tr[\sigma_\mu(i[H,\sigma_\nu])\rhoB]$, which is the transpose
+of $\tfrac12\Tr[\sigma_\nu(-i[H,\sigma_\mu])\rhoB]$: Heisenberg generators are the transposes of
+Schr\"odinger ones in a real orthonormal basis. The same holds for the kernel.
+
+\paragraph{\Cref{ex:8-4}.}
+In the RWA, $\mathsf Q i\mathsf L$ acting on $F\propto\sigma_-a^\dagger$-type operators closes on
+$\sigma_-a$ (one excitation), and the second-level memory is the bath's own correlator
+$\ee^{-(i\Omega+\gamma/2)t}$. The continued fraction $\hat C(z)=\tfrac12/[z+i\omega_0+g^2/(z+i\Omega+\gamma/2)]$ has the poles
+of $c_e(t)$.
+
+\paragraph{\Cref{ex:9-1}.}
+Each $h^\cl$ derivative inserts an $S^\cl$ vertex as the \emph{last} operation before the trace
+in at least one term; by the trace identity the full sum vanishes.
+
+\paragraph{\Cref{ex:9-2}.}
+$\sz=-i\eta_x\eta_y$, etc.; $\Theta\eta_x=-i\eta_x\eta_y\eta_z\eta_x=-i\eta_y\eta_z=\sx$. $H_I=S\otimes B$ becomes
+$\Theta(\cos\theta\eta_z+\sin\theta\eta_x)B$; since $\Theta$ is conserved, in each sector $\Theta=\pm1$ the vertex is
+linear in one Majorana and in $B$: the second-order self-energy of $\eta_i$ is a bath line
+times a $\delta_{ij}$ Majorana loop-free diagram, i.e.\ $\Sigma_{\eta}\propto D$.
+
+\paragraph{\Cref{ex:9-3}.}
+Follow~\cite[Sec.~2]{Sieberer2016} with fermionic (Majorana) fields; the result is
+$\Sigma^R=-i(\Gamma_\downarrow+\Gamma_\uparrow)/2$ and $\Sigma^K=-i(\Gamma_\downarrow-\Gamma_\uparrow)$ for the $\sigma_-$ propagator up to
+normalization, so that $\Sigma^K/(\Sigma^R-\Sigma^A)=(\Gamma_\downarrow-\Gamma_\uparrow)/(\Gamma_\downarrow+\Gamma_\uparrow)=\tanh(\beta\omega_0/2)$ iff
+detailed balance holds.
+
+\paragraph{\Cref{ex:10-1}.}
+Insert $C(\tau)=\int\frac{\dd\omega}{2\pi}C(\omega)\ee^{-i\omega\tau}$ and use $2\Re\int_0^t\ee^{i(\omega_0-\omega)\tau}\dd\tau=2\sin[(\omega-\omega_0)t]/(\omega-\omega_0)$.
+A modulation $\omega_0\to\omega_0+\delta\cos\nu t$ replaces the sinc by a sum of sincs centred at $\omega_0+k\nu$
+weighted by Bessel functions. If $C(\omega)$ grows above $\omega_0$ the broadened filter samples
+more spectral weight and the decay accelerates (anti-Zeno).
+
+\paragraph{\Cref{ex:10-2}.}
+$\int_0^ty\ee^{i\omega s}\dd s=-\ee^{i\omega t/2}[2\cos(\omega t/2)-2]/(i\omega)$, so $|\cdot|^2=16\sin^4(\omega t/4)/\omega^2$. For the comb,
+expand the square wave, $y=\tfrac4\pi\sum_{k\ \rm odd}k^{-1}\sin(k\pi s/\tau)$, and use
+$|\int_0^t\ee^{i(\omega-k\pi/\tau)s}\dd s|^2\to2\pi t\,\delta(\omega-k\pi/\tau)$. The first tooth hits $\Omega$ when
+$n\pi/t=\Omega$, i.e.\ $t=n\pi/\Omega$ ($=4\pi$ for $n=4$).
+
+\paragraph{\Cref{ex:10-3}.}
+Maximize $t\ee^{-2\Gamma_2t-2\kappa t^2}$: the quadratic term matters when $\kappa t^*\gtrsim\Gamma_2$, i.e.\
+$t^*\lesssim\tau_B$; for GHZ states $t^*\sim1/(2N\Gamma_2)$, so the Zeno regime is reached for
+$N\gtrsim1/(\Gamma_2\tau_B)$. For $T_1$-limited sensing (signal $\propto\ee^{-\Gamma_1t}$ with the phase on the
+populations) the same algebra applies with $\Gamma_1$ in place of $2\Gamma_2$.
+
+\paragraph{\Cref{ex:10-4}.}
+Implement the pulse as $\rho\to\sx\rho\sx$ on the qubit factor at $t/2$ in the pseudomode
+simulation. Expect (b) to be closer than (a), with a residual oscillating discrepancy of
+relative size $\sim g^2\sin\theta\cos\theta/\omega_0$ at short times and a drift of the echo
+``baseline'' from the $\chi$-driven inhomogeneity.
