@@ -27,6 +27,20 @@ $(S^\qu)^2X=2X-2SXS$. Hence $(S^\cl)^2+\tfrac14(S^\qu)^2=1$ and $(S^\cl)^2-\tfra
 $X\mapsto SXS$. In matrix form, $(S^\cl)^2$ projects onto $\mathrm{span}(\Id,S)$ and $\tfrac14(S^\qu)^2$
 onto its complement (the two Pauli directions orthogonal to $\hat n$).
 
+\paragraph{\Cref{ex:1-5}.}
+$[A^+,B^+]X=ABX-BAX=([A,B])^+X$; $[A^-,B^-]X=XBA-XAB=-([A,B])^-X$; $[A^+,B^-]X=AXB-AXB=0$.
+For \cref{eq:product-clqu} insert $A^\pm=A^\cl\pm\tfrac12A^\qu$ into $(AB)^\cl=\tfrac12(A^+B^++B^-A^-)$:
+$A^+B^+=A^\cl B^\cl+\tfrac12A^\cl B^\qu+\tfrac12A^\qu B^\cl+\tfrac14A^\qu B^\qu$ and
+$B^-A^-=B^\cl A^\cl-\tfrac12B^\cl A^\qu-\tfrac12B^\qu A^\cl+\tfrac14B^\qu A^\qu$; adding and halving gives the
+anticommutators and the two commutators, and subtracting gives $(AB)^\qu$. For
+$A=\sx$, $B=\sy$ the commutator terms are essential: the two anticommutator terms cancel
+each other, $\tfrac12\{\sx^\cl,\sy^\cl\}=-\tfrac18\{\sx^\qu,\sy^\qu\}$: the first swaps $\sx\leftrightarrow\sy$ with
+weight $\tfrac12$ and annihilates $\Id$ and $\sz$, the second is its negative (check with the
+matrices of Example~1.2), while $\tfrac14([\sx^\cl,\sy^\qu]+[\sx^\qu,\sy^\cl])=i\sz^\cl$ exactly, which is the
+whole answer $(\sx\sy)^\cl=(i\sz)^\cl$. The script
+\texttt{spin\_boson\_numerics.py} contains the vectorized superoperators; the identities
+hold to machine precision for random $A,B$.
+
 \paragraph{\Cref{ex:2-1}.}
 Straightforward from $b_k(t)=b_k\ee^{-i\omega_kt}$, $\avg{b_k^\dagger b_k}=\bar n_k$, $\avg{b_kb_k^\dagger}=\bar n_k+1$.
 

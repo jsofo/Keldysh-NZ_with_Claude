@@ -57,6 +57,32 @@ Left and right multiplications by different operators always commute,
 $A^+B^-=B^-A^+$, because $(AX)B=A(XB)$. In vectorized form,
 $A^+=\Id\otimes A$ and $A^-=A^T\otimes\Id$ by \cref{eq:vec}.
 
+\paragraph{Products of operators.}
+What is the superoperator of a product $AB$? On the left side the order is preserved,
+on the right side it is reversed:
+\begin{equation}
+  (AB)^{+}X=ABX=A^{+}B^{+}X,\qquad
+  (AB)^{-}X=XAB=(XA)B=B^{-}A^{-}X,
+\end{equation}
+so that
+\begin{equation}
+  \boxed{\;(AB)^{+}=A^{+}B^{+},\qquad (AB)^{-}=B^{-}A^{-}.\;}
+  \label{eq:product-rule}
+\end{equation}
+The map $A\mapsto A^+$ is an algebra homomorphism, the map $A\mapsto A^-$ is an
+\emph{anti}-homomorphism (in vectorized form this is just $(AB)^T=B^TA^T$). This
+innocent-looking reversal is the entire origin of the Keldysh contour: a string of
+operators acting on the bra side of $\rho$ is applied in the opposite order, which is why
+the backward branch is anti-time-ordered (\cref{sec:lec3}). Two consequences follow
+immediately: $(A^n)^\pm=(A^\pm)^n$ for powers of a single operator, and the commutators
+\begin{equation}
+  [A^{+},B^{+}]=\big([A,B]\big)^{+},\qquad [A^{-},B^{-}]=-\big([A,B]\big)^{-},\qquad [A^{+},B^{-}]=0 ,
+  \label{eq:super-commutators}
+\end{equation}
+the minus sign in the second being the anti-homomorphism again. The Hermitian conjugates
+with respect to \cref{eq:HS} are $(A^{+})^\dagger=(A^\dagger)^{+}$ and $(A^{-})^\dagger=(A^\dagger)^{-}$,
+since $\Tr[Y^\dagger AX]=\Tr[(A^\dagger Y)^\dagger X]$ and $\Tr[Y^\dagger XA]=\Tr[(YA^\dagger)^\dagger X]$.
+
 From these we build the two combinations that organize everything that follows:
 \begin{equation}
   \boxed{\;A^{\cl}\equiv\tfrac12\big(A^{+}+A^{-}\big),\quad A^{\cl}X=\tfrac12\{A,X\};\qquad
@@ -77,6 +103,29 @@ For any operator $A$ on $\mathcal H$ and any $X$:
 \end{enumerate}
 The first two are the cyclicity of the trace. The third follows from $A^+A^-=A^-A^+$.
 \end{keybox}
+
+\paragraph{Products in the rotated variables.}
+The product rule \cref{eq:product-rule} translates into the $\cl/\qu$ language as
+\begin{equation}
+\begin{aligned}
+  (AB)^{\cl}&=\tfrac12\{A^{\cl},B^{\cl}\}+\tfrac18\{A^{\qu},B^{\qu}\}+\tfrac14\big([A^{\cl},B^{\qu}]+[A^{\qu},B^{\cl}]\big),\\
+  (AB)^{\qu}&=\tfrac12\{A^{\cl},B^{\qu}\}+\tfrac12\{A^{\qu},B^{\cl}\}+[A^{\cl},B^{\cl}]+\tfrac14[A^{\qu},B^{\qu}],
+\end{aligned}
+  \label{eq:product-clqu}
+\end{equation}
+obtained by inserting $A^\pm=A^\cl\pm\tfrac12A^\qu$ into $(AB)^\cl=\tfrac12(A^+B^++B^-A^-)$ and
+$(AB)^\qu=A^+B^+-B^-A^-$ (\cref{ex:1-5}). When the superoperators of $A$ and $B$ commute,
+which is the case whenever $A$ and $B$ act on different tensor factors (system and bath)
+or more generally whenever $[A,B]=0$, the commutator terms drop and the rule collapses to
+the familiar Keldysh rule for composite fields,
+\begin{equation}
+  (AB)^{\cl}=A^{\cl}B^{\cl}+\tfrac14A^{\qu}B^{\qu},\qquad (AB)^{\qu}=A^{\cl}B^{\qu}+A^{\qu}B^{\cl}\qquad([A,B]=0),
+  \label{eq:product-clqu-commuting}
+\end{equation}
+which is exactly how the interaction vertex $\Lc_I=-i(S\otimes B)^\qu$ will acquire its
+``one classical, one quantum leg'' structure in \cref{sec:lec3}. For a single operator,
+$A=B$, \cref{eq:product-clqu-commuting} gives $(A^2)^\cl=(A^\cl)^2+\tfrac14(A^\qu)^2$ and
+$(A^2)^\qu=2A^\cl A^\qu$, which is property~3 of the key box above.
 
 \paragraph{The Liouvillian.}
 The von Neumann equation $\dot\rho=-i[H,\rho]$ reads $\dot\rho=\Lc\rho$ with
@@ -211,6 +260,13 @@ transposition $T=\operatorname{diag}(1,-1,1)$).
 \begin{exercise}\label{ex:1-4}
 Compute $(S^\cl)^2$ and $(S^\qu)^2$ from \cref{eq:SclSqu} and interpret them with property~3
 of the key box (use $S^2=\Id$).
+\end{exercise}
+
+\begin{exercise}\label{ex:1-5}
+Derive \cref{eq:super-commutators} and \cref{eq:product-clqu}, and check the latter on
+$A=\sx$, $B=\sy$ (so $AB=i\sz$) using the matrices of Example~1.2 with $\theta=0$ and
+$\theta=\pi/2$: verify that $(i\sz)^\cl=i\sz^\cl$ comes out of the right-hand side, including
+the commutator terms, which do not vanish here because $[\sx,\sy]\ne0$.
 \end{exercise}
 
 \clearpage
