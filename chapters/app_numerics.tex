@@ -26,7 +26,7 @@ $\Gc(t)=\dot\Pi\Pi^{-1}-\Lc_S$ with $\dot\Pi$ computed from $\Lc_{\rm tot}$ (no 
 differentiation). The exact NZ kernel is computed directly from its definition
 \eqref{eq:NZ}, $K(\tau)=\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$, with $\Pc=\Tr_{\rm osc}(\cdot)\otimes\ket0\bra0$ built
 as a matrix on the $(2N)^2$-dimensional Liouville space of qubit plus oscillator; since
-the kernel is determined by $\Pi(t)$ alone (\cref{ex:5-4}), it is also the kernel of the
+the kernel is determined by $\Pi(t)$ alone (Exercise~\ref{ex:5-4}), it is also the kernel of the
 physical Lorentzian bath.
 
 \paragraph{Approximations.}
@@ -54,7 +54,7 @@ The small differences are the $\dd t$ discretization and the nonsecular versus s
 definitions. The nonsecular generator has $\Gc_{xx}=-\Gamma_\varphi$ and $\Gc_{yy}=-\Gamma_\varphi-\Gamma_1$, whose
 average is $\Gamma_2$ (Example~5.3), and $\Gc_{yx}=2\delta\omega$, $\Gc_{xy}=0$.
 
-\paragraph{Check of \cref{thm:irreducible}.}
+\paragraph{Check of Theorem~\ref{thm:irreducible}.}
 The function \texttt{check\_fourth\_order} evaluates the fourth-order irreducible kernel
 $K^{(4)}$ as a double time integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$
 in the pseudomode space and compares $K-K^{(2)}$ with $K^{(4)}$ for $g=0.05,0.1,0.2$ (Example~5.1).

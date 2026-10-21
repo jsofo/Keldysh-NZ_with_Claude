@@ -217,7 +217,7 @@ does not see. Hence
 a Wick string of $m+2$ vertices with $\Qc=1-\Pc$ in each of its $m+1$ gaps.
 
 \emph{Step 3: expand the $\Qc$'s.} $\prod_{j=0}^{m}(1-\Pc_j)=\sum_{\mathcal C\subseteq\{0,\dots,m\}}(-1)^{|\mathcal C|}\prod_{j\in\mathcal C}\Pc_j$,
-where $\Pc_j$ denotes $\Pc$ inserted in gap $j$. By \cref{lem:P-cut}, the term with the
+where $\Pc_j$ denotes $\Pc$ inserted in gap $j$. By Lemma~\ref{lem:P-cut}, the term with the
 set $\mathcal C$ equals $\sum_{\pi:\,\mathcal C\subseteq U(\pi)}W_\pi$. Therefore
 \begin{equation}
   \Tr_B\big[\cdots\Qc\cdots\Qc\cdots\big]
@@ -225,14 +225,14 @@ set $\mathcal C$ equals $\sum_{\pi:\,\mathcal C\subseteq U(\pi)}W_\pi$. Therefor
   =\sum_{\pi}W_\pi\sum_{\mathcal C\subseteq U(\pi)}(-1)^{|\mathcal C|}
   =\sum_{\pi}W_\pi\,\delta_{U(\pi),\varnothing},
 \end{equation}
-where we exchanged the two finite sums and used \cref{lem:incl-excl}. Only pairings
+where we exchanged the two finite sums and used Lemma~\ref{lem:incl-excl}. Only pairings
 with no cut survive, which is \cref{eq:K-irred}.
 \end{proof}
 
 \begin{remark}
 The three ingredients are worth separating. (i) $\Pc$ \emph{factorizes} a string
-(\cref{lem:P-cut}); this uses only the form $\Pc=\rhoB\otimes\Tr_B$. (ii) The exponential
-$\ee^{\Qc\Lc\tau}$ puts a $\Qc$ in every gap (\cref{lem:expansion}); this uses only
+(Lemma~\ref{lem:P-cut}); this uses only the form $\Pc=\rhoB\otimes\Tr_B$. (ii) The exponential
+$\ee^{\Qc\Lc\tau}$ puts a $\Qc$ in every gap (Lemma~\ref{lem:expansion}); this uses only
 $[\Pc,\Lc_0]=0$. (iii) Inclusion--exclusion converts ``$\Qc$ in every gap'' into ``no cut
 anywhere''; this is pure combinatorics. Gaussianity enters only in identifying the
 factorized strings with sums over pairings. For a non-Gaussian bath the same three steps
@@ -265,7 +265,7 @@ $U(\pi)$, which is determined by $\pi$. The converse is immediate.
 Now expand the full map $\Pi(t)=\Tr_B[\ee^{\Lc t}(\cdot\otimes\rhoB)]$ in the Dyson series
 \eqref{eq:dyson-super} and apply Wick's theorem: in the Schr\"odinger picture, every
 term is a product of free propagators $\ee^{\Lc_S\Delta t}$ and diagrams $W_\pi$. Group the
-terms by the cuts of $\pi$ using \cref{prop:blocks}: a term with $r$ cuts is a product of
+terms by the cuts of $\pi$ using Proposition~\ref{prop:blocks}: a term with $r$ cuts is a product of
 $r+1$ irreducible blocks, each of which is (after the time integrations over its interior
 vertices) a factor $K(\tau_\ell)$ with $\tau_\ell$ the duration of the block, separated by free
 propagation across the cuts. Summing over the number of blocks and over the positions of
@@ -300,7 +300,7 @@ in any useful sense, because each $K$ contains all orders. The expansion paramet
   \node[font=\footnotesize] at (6.3,-0.75) {block $K(t_0-t_1)$};
   \node[font=\footnotesize,anchor=west] at (0.0,1.9) {$\pi=(t_5t_3)(t_4t_2)(t_1t_0)$: gaps $4,3,2$ crossed, gap $1$ not, gap $0$ crossed};
 \end{tikzpicture}
-\caption{A sixth-order pairing with exactly one cut. By \cref{prop:blocks} it is the
+\caption{A sixth-order pairing with exactly one cut. By Proposition~\ref{prop:blocks} it is the
 product of a fourth-order irreducible (crossed) block and a second-order block, with free
 propagation $\ee^{\Lc_S(t_1-t_2)}$ across the cut. In the NZ equation this term is generated
 by $\int\!\!\int\Pi_0K^{(4)}\Pi_0K^{(2)}\Pi_0$; in the kernel it is removed by the $\Pc$ inserted in
@@ -351,7 +351,7 @@ where $W_6$ is the full six-vertex string ($15$ pairings), $W_2W_4$ the pairings
 after the first two vertices ($1\times3=3$ pairings), $W_4W_2$ those with a cut before the
 last two ($3$ pairings), and $W_2W_2W_2$ the single pairing with both cuts. Counting:
 $15-3-3+1=10$ irreducible pairings, which matches the sequence $1,2,10,74,\dots$ of
-irreducible chord diagrams quoted in \cref{ex:4-3}. The reducible ones are $5=15-10$:
+irreducible chord diagrams quoted in Exercise~\ref{ex:4-3}. The reducible ones are $5=15-10$:
 the pairing with two cuts, and the $2+2$ pairings with exactly one cut (an irreducible
 fourth-order block next to a second-order one, as in \cref{fig:cut}). Note that the
 inclusion--exclusion signs are needed to avoid double-subtracting the pairing with two
@@ -462,7 +462,7 @@ Each line is worth a comment.
   At $T=0$, $S(\omega)=J(|\omega|)$ and the integral splits into the rotating-wave term
   $\mathrm P\!\int_0^\infty J(\omega)/(\omega_0-\omega)$ and the counter-rotating (Bloch--Siegert) term
   $\int_0^\infty J(\omega)/(\omega_0+\omega)$. The response $\chi'$ drops out of the shift because it is
-  even in $\omega$ (\cref{ex:5-2}).
+  even in $\omega$ (Exercise~\ref{ex:5-2}).
 \end{itemize}
 For the Lorentzian bath of \cref{sec:lec2} at $T=0$, with $\Omega=\omega_0=1$, $\gamma=0.5$,
 $\theta=\pi/4$, $g=0.3$: $\Gamma_\downarrow=0.360$, $\Gamma_\uparrow=0.0055$ (from the negative-frequency
@@ -512,7 +512,7 @@ Lorentzian model, extracted numerically from the pseudomode representation as
 $\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ (which is \cref{eq:NZ} evaluated literally, with the
 pseudomode's Markovian Liouvillian playing the role of $\Lc$), against $K^{(2)}$: the higher
 orders shift the oscillation frequency inside the kernel (a self-consistent Lamb shift)
-and change its damping, but $K(0)=K^{(2)}(0)$ exactly, as \cref{thm:irreducible} requires.
+and change its damping, but $K(0)=K^{(2)}(0)$ exactly, as Theorem~\ref{thm:irreducible} requires.
 
 \begin{figure}[t]
 \centering
@@ -552,7 +552,7 @@ $A(\pm\omega_0)=\sin\theta\,\sigma_\mp$, $A(0)=\cos\theta\,\sz$, $\gamma(\omega)
 \end{exercise}
 
 \begin{exercise}\label{ex:5-3}
-Show that the secular generator of \cref{ex:5-2} is of GKSL form with
+Show that the secular generator of Exercise~\ref{ex:5-2} is of GKSL form with
 $L_1=\sigma_-$, $L_2=\sigma_+$, $L_3=\sz$ and nonnegative rates. Then take the nonsecular
 Redfield generator for $\theta=\pi/2$ and find an initial state and a time at which
 $\Tr\rhoS^2>1$ for a Lorentzian bath with $\gamma\gtrsim\omega_0$.
