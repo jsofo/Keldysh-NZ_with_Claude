@@ -94,25 +94,129 @@ $f(t)$ is applied through $H\to H-f(t)B$, then $\delta\avg{B(t)}=\int\dd s\,\chi
 $\theta(t)$ is causality. $S$ depends on temperature through $\coth$; $\chi$ does not depend
 on temperature at all for a harmonic bath.
 
-\paragraph{Frequency domain.}
-With $f(\omega)=\int_{-\infty}^\infty\dd t\,\ee^{i\omega t}f(t)$,
+\subsection{The kernels in the frequency domain}
+\label{sec:freq-domain}
+
+With the convention $f(\omega)=\int_{-\infty}^\infty\dd t\,\ee^{i\omega t}f(t)$, the three functions
+$\chi$, $S$ and $C$ are tied together by
 \begin{equation}
   \chi''(\omega)=\sgn(\omega)\,J(|\omega|),\quad
   S(\omega)=\coth\tfrac{\beta\omega}{2}\;\chi''(\omega),\quad
   C(\omega)=S(\omega)+\chi''(\omega)=2\chi''(\omega)\big[1+n(\omega)\big],
   \label{eq:FDT}
 \end{equation}
-with $\chi''\equiv\Im\chi$ and $n(\omega)=(\ee^{\beta\omega}-1)^{-1}$ (for $\omega<0$, $1+n(\omega)=-n(|\omega|)$ and $C(\omega)=2J(|\omega|)n(|\omega|)$).
-The middle relation is the fluctuation--dissipation theorem~\cite{CallenWelton1951,Kubo1966};
-the last one is the statement that $C(\omega)$ at positive frequency is the rate at which the
-bath \emph{absorbs} energy $\omega$ (stimulated $1+n$) and at negative frequency the rate at
-which it \emph{emits} ($n$), with detailed balance $C(-\omega)=\ee^{-\beta\omega}C(\omega)$. The real
-part of the response follows from Kramers--Kronig,
-$\chi'(\omega)=\tfrac1\pi\,\mathrm{P}\!\int\dd\omega'\,\chi''(\omega')/(\omega'-\omega)$. These three functions,
-$S$, $\chi''$, $C$, are the same information in a thermal bath; out of equilibrium $S$ and
-$\chi$ are independent, and keeping them separate is the whole point of the Keldysh
-rotation. See~\cite[Sec.~II]{ClerkRMP2010} for a careful discussion of the asymmetric
-spectrum $C(\omega)$ and its measurement.
+with $\chi''\equiv\Im\chi$ and $n(\omega)=(\ee^{\beta\omega}-1)^{-1}$. These three lines are used on
+every page that follows, so we go through them one at a time. The one fact to keep in
+mind is where the sign of a frequency comes from: in $B(t)=\sum_kg_k(b_k\ee^{-i\omega_kt}+b_k^\dagger\ee^{i\omega_kt})$
+the annihilation part rotates as $\ee^{-i\omega_kt}$, so after multiplication by $\ee^{i\omega t}$ and
+integration it lands at $\omega=+\omega_k$ and the creation part at $\omega=-\omega_k$. \emph{Positive
+frequency means that the bath absorbs a quantum.}
+
+\paragraph{(i) The dissipative response is the spectral density.}
+From \cref{eq:chi-def},
+\begin{equation*}
+  \chi(\omega)=\frac2\pi\int_0^\infty\!\dd\omega'\,J(\omega')\int_0^\infty\!\dd t\,\ee^{i\omega t}\sin\omega't ,
+\end{equation*}
+and the one-sided time integral is a distribution whose imaginary part is
+$\tfrac\pi2[\delta(\omega-\omega')-\delta(\omega+\omega')]$ (the derivation is written out in the solution of
+\cref{ex:2-2}). Integrating against $J(\omega')$ on $\omega'>0$ picks $J(\omega)$ for $\omega>0$ and
+$-J(-\omega)$ for $\omega<0$, which is the first line of \cref{eq:FDT}. Two remarks. $\chi''$ is odd
+because $\chi(t)$ is real: for a real function $\chi(-\omega)=\chi(\omega)^*$, so the imaginary part
+is odd and the real part even. And $\chi''$ carries no temperature at all. This is special to
+a harmonic bath with linear $B$: the commutator $[B(t),B(0)]$ is then a c-number, and
+its expectation value cannot depend on the state. For an anharmonic bath $\chi''$ would be
+temperature dependent, and \cref{eq:FDT} would still hold, but with a $J$ that is itself a
+function of $T$.
+
+\paragraph{(ii) The fluctuation--dissipation theorem.}
+From \cref{eq:S-def}, and using $\int\dd t\,\ee^{i\omega t}\cos\omega't=\pi[\delta(\omega-\omega')+\delta(\omega+\omega')]$ (a
+two-sided integral, hence no principal value),
+\begin{equation}
+  S(\omega)=J(|\omega|)\coth\tfrac{\beta|\omega|}{2}=\underbrace{\coth\tfrac{\beta\omega}{2}}_{\text{odd}}\cdot\underbrace{\sgn(\omega)J(|\omega|)}_{\chi''(\omega),\ \text{odd}},
+\end{equation}
+even in $\omega$ as the transform of a real even $S(t)$ must be. This is the
+fluctuation--dissipation theorem in the form of Callen and
+Welton~\cite{CallenWelton1951,Kubo1966}: the symmetrized noise at frequency $\omega$ is fixed
+by the dissipative response at the same frequency, through a universal factor that
+depends only on temperature. Two limits are worth memorizing:
+\begin{equation}
+\begin{aligned}
+  |\omega|\ll T:&\quad S(\omega)\to\frac{2T}{\omega}\,\chi''(\omega)&&\text{(classical, Nyquist--Johnson)},\\
+  |\omega|\gg T:&\quad S(\omega)\to|\chi''(\omega)|=J(|\omega|)&&\text{(zero-point noise)}.
+\end{aligned}
+\end{equation}
+The noise does not vanish at $T=0$. In \cref{fig:bath-kernels}, drawn at $T=0$, $S(\omega)$
+coincides with $\chi''$ for $\omega>0$ and is its mirror image for $\omega<0$.
+
+\paragraph{(iii) The full correlator is noise plus response.}
+The first equality in the third line is linearity: $C(t)=S(t)-\tfrac i2\chi(t)$ for $t>0$ and,
+from $C(-t)=C(t)^*$, $C(t)=S(t)+\tfrac i2\chi(-t)$ for $t<0$; the odd combination
+$-\tfrac i2[\chi(t)-\chi(-t)]$ transforms to $-\tfrac i2[\chi(\omega)-\chi(\omega)^*]=\chi''(\omega)$. So $S$ is the
+\emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this is the
+cleanest way to remember the Keldysh decomposition. The second equality uses the
+identity $\coth\tfrac{\beta\omega}{2}=1+2n(\omega)$, valid for all real $\omega$ including negative ones,
+so that $S+\chi''=(\coth+1)\chi''=2(1+n)\chi''$. Computing $C(\omega)$ directly from \cref{eq:C}
+confirms it and exhibits the physics:
+\begin{equation}
+  C(\omega)=2J(\omega)\big[1+n(\omega)\big]\ \ (\omega>0),\qquad
+  C(\omega)=2J(|\omega|)\,n(|\omega|)\ \ (\omega<0),
+  \label{eq:C-omega}
+\end{equation}
+the two cases being covered by the single formula $2\chi''(1+n)$ because
+$1+n(\omega)=\ee^{\beta\omega}/(\ee^{\beta\omega}-1)=-n(|\omega|)$ for $\omega<0$, and the two minus signs cancel.
+
+\paragraph{(iv) Absorption, emission and detailed balance.}
+Write $C(\omega)$ in the energy eigenbasis of the bath, $\rhoB=\sum_ip_i\ket i\bra i$:
+\begin{equation}
+  C(\omega)=2\pi\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\delta\big(\omega-(E_f-E_i)\big).
+  \label{eq:C-golden}
+\end{equation}
+This is Fermi's golden rule. $C(\omega)$ at $\omega>0$ is the rate, per unit coupling squared, at
+which the bath makes a transition \emph{upward} by $\omega$, i.e.\ absorbs energy that the
+system must supply; the factor $1+n$ in \cref{eq:C-omega} is the ``spontaneous plus
+stimulated'' factor of a bosonic mode. At $\omega<0$ it is the rate at which the bath gives up
+energy $|\omega|$, which requires a thermally excited mode, hence the factor $n$.
+\Cref{sec:lec5} uses exactly this: $\Gamma_\downarrow\propto C(\omega_0)$ (the qubit decays, the bath absorbs)
+and $\Gamma_\uparrow\propto C(-\omega_0)$. Dividing the two cases of \cref{eq:C-omega},
+\begin{equation}
+  \frac{C(-\omega)}{C(\omega)}=\frac{n(\omega)}{1+n(\omega)}=\ee^{-\beta\omega},
+  \label{eq:detailed-balance}
+\end{equation}
+which is detailed balance, and is also the Kubo--Martin--Schwinger condition
+$\avg{B(t)B(0)}=\avg{B(0)B(t+i\beta)}$ read in frequency space. At $T=0$ the negative-frequency
+side vanishes identically: the bath can only absorb. This asymmetry between $\pm\omega$ is
+what makes $C(\omega)$ a \emph{quantum} noise spectrum; it is invisible in $S$, which is even by
+construction, and a classical noise source always has $C(-\omega)=C(\omega)$. A measurement that
+resolves the asymmetry, such as $\Gamma_\downarrow\ne\Gamma_\uparrow$ in a $T_1$ experiment, is seeing quantum
+noise; see~\cite[Sec.~II]{ClerkRMP2010} for a careful discussion of the asymmetric
+spectrum and its measurement.
+
+\paragraph{(v) Kramers--Kronig, and what is independent of what.}
+$\chi(\omega)$ is the transform of a function that vanishes for $t<0$, so it is analytic in the
+upper half $\omega$-plane and its real and imaginary parts are Hilbert transforms of each
+other,
+\begin{equation}
+  \chi'(\omega)=\frac1\pi\,\mathrm{P}\!\!\int_{-\infty}^{\infty}\!\dd\omega'\,\frac{\chi''(\omega')}{\omega'-\omega}
+  =\frac2\pi\,\mathrm{P}\!\!\int_{0}^{\infty}\!\dd\omega'\,\frac{\omega'J(\omega')}{\omega'^2-\omega^2},
+  \label{eq:KK}
+\end{equation}
+the second form following from the oddness of $\chi''$ (it is also what the principal-value
+part of the integral in \cref{ex:2-2} gives directly). The static susceptibility
+$\chi(0)=\tfrac2\pi\int_0^\infty\dd\omega\,J(\omega)/\omega$ is twice the reorganization energy of the bath and
+will reappear in \cref{sec:lec7,sec:lec8}. Putting (i)--(v) together: in a thermal bath the
+whole environment enters through the single real function $J(\omega)$ on $\omega>0$. $\chi''$ is $J$
+extended oddly, $\chi'$ follows by Kramers--Kronig, $S$ follows by the FDT, and $C=S+\chi''$. The
+two entries of the Keldysh matrix \eqref{eq:LO} carry no independent information in
+equilibrium. Out of equilibrium the chain breaks at exactly one link: causality still fixes
+$\chi'$ from $\chi''$, but nothing fixes $S$ from $\chi''$. A driven cavity, a bath with a
+nonthermal occupation, or a $1/f$ noise source each have their own $S(\omega)$ and $\chi''(\omega)$,
+and their ratio at a given frequency defines an effective temperature there,
+$\coth(\beta_{\rm eff}(\omega)\,\omega/2)\equiv S(\omega)/\chi''(\omega)$, which can differ between frequencies and even be
+negative (population inversion). Keeping $S$ and $\chi$ on separate lines, which is what
+the Keldysh rotation does, costs nothing and buys this generality: every formula derived
+with $D^K$ and $D^R$ kept apart remains valid without the FDT, and only the final steps
+that use $S=\coth\cdot\chi''$ (for instance the Gibbs steady state in \cref{sec:lec5}) must be
+revisited.
 
 \begin{exbox}[Example 2.1: two spectral densities used throughout]
 \emph{Ohmic bath.} $J(\omega)=2\pi\alpha\,\omega\,\ee^{-\omega/\omega_c}$. With Leggett's coupling
