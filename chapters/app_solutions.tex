@@ -45,8 +45,44 @@ hold to machine precision for random $A,B$.
 Straightforward from $b_k(t)=b_k\ee^{-i\omega_kt}$, $\avg{b_k^\dagger b_k}=\bar n_k$, $\avg{b_kb_k^\dagger}=\bar n_k+1$.
 
 \paragraph{\Cref{ex:2-2}.}
-$\chi(\omega)=\tfrac2\pi\int_0^\infty\dd\omega'J(\omega')\int_0^\infty\dd t\,\ee^{i\omega t}\sin\omega't$ and
-$\Im\int_0^\infty\ee^{i\omega t}\sin\omega't\,\dd t=\tfrac\pi2[\delta(\omega-\omega')-\delta(\omega+\omega')]$. For the finite-$T$ Ohmic
+From \cref{eq:chi-def}, $\chi(\omega)=\tfrac2\pi\int_0^\infty\dd\omega'J(\omega')\,I(\omega,\omega')$ with
+$I(\omega,\omega')=\int_0^\infty\dd t\,\ee^{i\omega t}\sin\omega't$. This integral does not converge in the
+ordinary sense; it is defined as a distribution by a convergence factor $\ee^{-\epsilon t}$,
+$\epsilon\to0^+$ (adiabatic switching; the one-sided range comes from the $\theta(t)$ in
+$\chi$). \emph{Step 1.} For real $k$,
+\begin{equation*}
+  \int_0^\infty\!\dd t\,\ee^{ikt-\epsilon t}=\frac{1}{\epsilon-ik}=\frac{\epsilon}{k^2+\epsilon^2}+i\,\frac{k}{k^2+\epsilon^2}
+  \ \xrightarrow{\epsilon\to0^+}\ \pi\delta(k)+i\,\mathrm P\frac1k ,
+\end{equation*}
+because the Lorentzian $\epsilon/(k^2+\epsilon^2)$ has width $\epsilon$ and area $\pi$, while
+$k/(k^2+\epsilon^2)$ is odd and equals $1/k$ away from $k=0$ (Sokhotski--Plemelj). Compare the
+two-sided integral $\int_{-\infty}^\infty\ee^{ikt}\dd t=2\pi\delta(k)$: the one-sided one is half the
+delta plus the odd principal-value part that the other half would cancel.
+\emph{Step 2.} Write $\sin\omega't=(\ee^{i\omega't}-\ee^{-i\omega't})/2i$ and apply Step 1 with
+$k=\omega\pm\omega'$:
+\begin{align*}
+  I&=\frac{1}{2i}\Big[\pi\delta(\omega+\omega')-\pi\delta(\omega-\omega')+i\,\mathrm P\frac{1}{\omega+\omega'}-i\,\mathrm P\frac{1}{\omega-\omega'}\Big],\\
+  \Re I&=\frac12\Big[\mathrm P\frac{1}{\omega+\omega'}-\mathrm P\frac{1}{\omega-\omega'}\Big]=-\,\mathrm P\frac{\omega'}{\omega^2-\omega'^2},\qquad
+  \Im I=\frac\pi2\big[\delta(\omega-\omega')-\delta(\omega+\omega')\big].
+\end{align*}
+(Without complex exponentials: $\int_0^\infty\sin\omega't\,\sin\omega t\,\ee^{-\epsilon t}\dd t
+=\tfrac12\big[\tfrac{\epsilon}{(\omega-\omega')^2+\epsilon^2}-\tfrac{\epsilon}{(\omega+\omega')^2+\epsilon^2}\big]$, two Lorentzians
+that become the two deltas.) \emph{Step 3.} Insert into $\chi(\omega)$. The deltas are
+integrated against $J(\omega')$ over $\omega'>0$, so for $\omega>0$ only $\delta(\omega-\omega')$ fires and
+$\chi''(\omega)=J(\omega)$, while for $\omega<0$ only $\delta(\omega+\omega')$ fires, with its minus sign, and
+$\chi''(\omega)=-J(-\omega)$: together $\chi''(\omega)=\sgn(\omega)J(|\omega|)$, odd in $\omega$ as a dissipative
+response must be. The real part of the same formula gives
+$\chi'(\omega)=\tfrac2\pi\,\mathrm P\!\int_0^\infty\dd\omega'\,\omega'J(\omega')/(\omega'^2-\omega^2)$, the Kramers--Kronig relation
+of \cref{sec:lec2}: one regularized integral yields both the dissipative part (deltas) and
+the reactive part (principal value), tied together by the causal $\theta(t)$. Two
+remarks. The sign of $i\epsilon$ is the only place where retarded versus advanced is
+decided: $\int_{-\infty}^0\ee^{ikt+\epsilon t}\dd t=\pi\delta(k)-i\mathrm P(1/k)$, same deltas, opposite
+principal value, hence $\chi^A(\omega)=\chi^R(\omega)^*$. And the finite-time version,
+$\Re\int_0^t\ee^{i(\omega-\omega_0)\tau}\dd\tau=\sin[(\omega-\omega_0)t]/(\omega-\omega_0)\to\pi\delta(\omega-\omega_0)$, is the filter of
+\cref{eq:kofman} that turns the running rates of \cref{sec:lec6} into Markov rates: a sharp
+cutoff in time instead of an exponential one.
+
+For the finite-$T$ Ohmic
 kernel use $\int_0^\infty\omega\coth(\beta\omega/2)\cos\omega t\,\dd\omega=-(\pi/\beta)^2/\sinh^2(\pi t/\beta)$ for $t\ne0$ (the
 $t=0$ singularity carries the positive weight that makes $S(\omega)\ge0$). $S(t)<0$ for all
 $t>0$ is compatible with $S(\omega)\ge0$ because $S(\omega)=\int S(t)\ee^{i\omega t}\dd t$ is dominated by the
