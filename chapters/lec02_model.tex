@@ -106,11 +106,41 @@ $\chi$, $S$ and $C$ are tied together by
   \label{eq:FDT}
 \end{equation}
 with $\chi''\equiv\Im\chi$ and $n(\omega)=(\ee^{\beta\omega}-1)^{-1}$. These three lines are used on
-every page that follows, so we go through them one at a time. The one fact to keep in
-mind is where the sign of a frequency comes from: in $B(t)=\sum_kg_k(b_k\ee^{-i\omega_kt}+b_k^\dagger\ee^{i\omega_kt})$
-the annihilation part rotates as $\ee^{-i\omega_kt}$, so after multiplication by $\ee^{i\omega t}$ and
-integration it lands at $\omega=+\omega_k$ and the creation part at $\omega=-\omega_k$. \emph{Positive
-frequency means that the bath absorbs a quantum.}
+every page that follows, so we go through them one at a time. Before doing so we fix
+the one convention-dependent fact that everything else hangs on: \emph{what the sign of
+a frequency means}. Insert a complete set of bath eigenstates, $\rhoB=\sum_ip_i\ket i\bra i$,
+$H_B\ket f=E_f\ket f$, between the two operators of $C(t)$:
+\begin{equation}
+  \avg{B(t)B(0)}=\sum_{i,f}p_i\,\bra i\ee^{iH_Bt}B\ee^{-iH_Bt}\ket f\bra fB\ket i
+  =\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\ee^{-i(E_f-E_i)t},
+\end{equation}
+so that, with our Fourier sign,
+\begin{equation}
+  C(\omega)=2\pi\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\delta\big(\omega-(E_f-E_i)\big).
+  \label{eq:C-golden}
+\end{equation}
+The operator that acts first on the state is $B(0)$, which takes the bath from $\ket i$ to
+$\ket f$; the phase $\ee^{-i(E_f-E_i)t}$ is the propagation of that intermediate state relative to
+the initial one, and $B(t)$ must bring the bath back for the overlap to be nonzero.
+Hence $C(\omega)$ at $\omega>0$ collects exactly the transitions with $E_f>E_i$: the bath ends up
+with \emph{more} energy than it started with. \emph{With $C(t)=\avg{B(t)B(0)}$ and
+$f(\omega)=\int\ee^{+i\omega t}f(t)\dd t$, positive frequency means that the bath absorbs a quantum.}
+In the mode language the same statement reads: the only surviving products in
+$\avg{B(t)B(0)}$ are $\avg{b_k(t)b_k^\dagger(0)}=(\bar n_k+1)\ee^{-i\omega_kt}$, in which $B(0)$ \emph{creates} a
+quantum and the phase is that quantum propagating until $B(t)$ removes it (it lands at
+$\omega=+\omega_k$), and $\avg{b_k^\dagger(t)b_k(0)}=\bar n_k\ee^{+i\omega_kt}$, in which $B(0)$ \emph{annihilates} a
+quantum that must already be present (it lands at $\omega=-\omega_k$). The annihilation operator
+$b_k(t)$ carries the visible $\ee^{-i\omega_kt}$ in the first term, but the physics is in $b_k^\dagger(0)$
+having acted first.
+
+\begin{warnbox}
+\small\textbf{Conventions.} The assignment ``$\omega>0$ = bath absorbs'' flips under either of
+two changes: the opposite Fourier sign $\int\ee^{-i\omega t}$, or the opposite operator order
+$\avg{B(0)B(t)}$ (both together restore it). Breuer--Petruccione~\cite[Sec.~3.3.1]{BreuerPetruccione}
+and Clerk \emph{et al.}~\cite[Sec.~II.B]{ClerkRMP2010} use the same assignment as these
+notes; parts of the sensing literature use the opposite one. When comparing formulas for
+$\Gamma_\uparrow$ and $\Gamma_\downarrow$ across papers, check which one is in force before comparing signs.
+\end{warnbox}
 
 \paragraph{(i) The dissipative response is the spectral density.}
 From \cref{eq:chi-def},
@@ -166,14 +196,9 @@ the two cases being covered by the single formula $2\chi''(1+n)$ because
 $1+n(\omega)=\ee^{\beta\omega}/(\ee^{\beta\omega}-1)=-n(|\omega|)$ for $\omega<0$, and the two minus signs cancel.
 
 \paragraph{(iv) Absorption, emission and detailed balance.}
-Write $C(\omega)$ in the energy eigenbasis of the bath, $\rhoB=\sum_ip_i\ket i\bra i$:
-\begin{equation}
-  C(\omega)=2\pi\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\delta\big(\omega-(E_f-E_i)\big).
-  \label{eq:C-golden}
-\end{equation}
-This is Fermi's golden rule. $C(\omega)$ at $\omega>0$ is the rate, per unit coupling squared, at
-which the bath makes a transition \emph{upward} by $\omega$, i.e.\ absorbs energy that the
-system must supply; the factor $1+n$ in \cref{eq:C-omega} is the ``spontaneous plus
+\Cref{eq:C-golden} is Fermi's golden rule: $C(\omega)$ at $\omega>0$ is the rate, per unit coupling
+squared, at which the bath makes a transition \emph{upward} by $\omega$, i.e.\ absorbs energy
+that the system must supply; the factor $1+n$ in \cref{eq:C-omega} is the ``spontaneous plus
 stimulated'' factor of a bosonic mode. At $\omega<0$ it is the rate at which the bath gives up
 energy $|\omega|$, which requires a thermally excited mode, hence the factor $n$.
 \Cref{sec:lec5} uses exactly this: $\Gamma_\downarrow\propto C(\omega_0)$ (the qubit decays, the bath absorbs)
@@ -259,7 +284,7 @@ dephasing measurement samples $S$ near $\omega=0$ (\cref{sec:lec10}).}
 \label{fig:bath-kernels}
 \end{figure}
 
-\subsection{Why only $J(\omega)$ matters: Gaussianity and Wick's theorem}
+\subsection{Why only \texorpdfstring{$J(\omega)$}{J(omega)} matters: Gaussianity and Wick's theorem}
 
 The bath state is Gaussian (thermal state of a quadratic Hamiltonian) and $B$ is linear
 in the $b_k$. Hence all higher moments of $B$ factorize into products of two-point
