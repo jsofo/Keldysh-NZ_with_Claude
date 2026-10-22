@@ -142,6 +142,39 @@ notes; parts of the sensing literature use the opposite one. When comparing form
 $\Gamma_\uparrow$ and $\Gamma_\downarrow$ across papers, check which one is in force before comparing signs.
 \end{warnbox}
 
+\paragraph{Why the transform of a correlator is a ``noise spectrum''.}
+The functions $C(\omega)$ and $S(\omega)$ will be called noise spectra throughout, so it is worth
+saying once why a Fourier-transformed correlation function deserves the name. Take a
+finite record of the bath operator, $X_T(\omega)\equiv\int_0^T\dd t\,\ee^{i\omega t}B(t)$, the Fourier
+amplitude of $B$ at frequency $\omega$ accumulated over a time $T$. Its mean square is
+\begin{equation}
+  \avg{X_T(\omega)X_T(\omega)^\dagger}=\int_0^T\!\!\dd t\!\int_0^T\!\!\dd t'\,\ee^{i\omega(t-t')}\avg{B(t)B(t')}
+  =\int_{-T}^{T}\!\dd\tau\,(T-|\tau|)\,\ee^{i\omega\tau}C(\tau)\;\xrightarrow{\;T\gg\tau_B\;}\;T\,C(\omega),
+  \label{eq:wiener-khinchin}
+\end{equation}
+where stationarity was used to write $\avg{B(t)B(t')}=C(t-t')$ and the double integral was
+reorganized by the difference $\tau=t-t'$; for $T$ much longer than the correlation time
+$\tau_B$ the factor $(T-|\tau|)$ can be replaced by $T$ where $C(\tau)$ is appreciable. So
+$C(\omega)=\lim_{T\to\infty}\avg{X_TX_T^\dagger}/T$ is the \emph{mean-square Fourier amplitude of the
+fluctuations of $B$ at frequency $\omega$, per unit time}: the noise power per unit bandwidth,
+which is what a spectrum analyser displays. This is the Wiener--Khinchin
+theorem~\cite{Wiener1930,Khinchin1934}, and its classical statement is the reason the
+transform of an autocorrelation function is called the power spectral density. The
+companion statement $\int\frac{\dd\omega}{2\pi}C(\omega)=C(0)=\avg{B^2}$ (Parseval) says that the
+spectrum distributes the total variance over frequency.
+
+The quantum version differs from the classical one in exactly one respect, operator
+ordering. The other ordering, $\avg{X_T^\dagger X_T}/T$, gives $\int\ee^{i\omega\tau}\avg{B(0)B(\tau)}\dd\tau=C(-\omega)$,
+and the two are not equal: the ``spectrum'' of a quantum variable is a pair of functions
+$C(\pm\omega)$, or equivalently their even part $S(\omega)=\tfrac12[C(\omega)+C(-\omega)]$ and odd part
+$\chi''(\omega)$ of \cref{eq:C-even-odd} below. For a classical stochastic signal the two
+orderings coincide, the spectrum is a single even function, and it is $S(\omega)$: the
+symmetrized spectrum is the part of the quantum noise that looks like classical noise,
+which is why it is what dephasing measurements see (\cref{sec:lec10}), while the
+antisymmetric part is the dissipative response, which only an energy-exchanging process
+can detect (relaxation, item (iv)). Clerk \emph{et al.}~\cite[Sec.~II.A]{ClerkRMP2010} develop
+this viewpoint in detail, including how an amplifier or a detector ``reads'' $C(\pm\omega)$.
+
 \paragraph{(i) The dissipative response is the spectral density.}
 From \cref{eq:chi-def},
 \begin{equation*}
