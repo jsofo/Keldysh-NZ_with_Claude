@@ -3,36 +3,25 @@
 \section{The numerical companion}
 \label{sec:numerics}
 
-All figures are produced by \texttt{figures/spin\_boson\_numerics.py} (NumPy, SciPy,
-Matplotlib; about one minute on a laptop). This appendix records what it computes, so
-that each curve can be traced to an equation in the text.
+All figures are produced by \texttt{figures/spin\_boson\_numerics.py} (NumPy, SciPy, Matplotlib; about one minute on a laptop).
+This appendix records what it computes, so that each curve can be traced to an equation in the text.
 
 \paragraph{Model and parameters.}
-$\omega_0=1$ (units), $S=\cos\theta\sz+\sin\theta\sx$ with $\theta=\pi/4$, Lorentzian bath with
-$\Omega=1$, $\gamma=0.5$, $T=0$, couplings $g=0.1$ and $0.3$; initial state $\ket{+x}$; time step
-$\dd t=0.02$, $t\le40$. Kernels: \cref{eq:lorentz-kernels}.
+$\omega_0=1$ (units), $S=\cos\theta\sz+\sin\theta\sx$ with $\theta=\pi/4$, Lorentzian bath with $\Omega=1$, $\gamma=0.5$, $T=0$, couplings $g=0.1$ and $0.3$; initial state $\ket{+x}$; time step $\dd t=0.02$, $t\le40$.
+Kernels: \cref{eq:lorentz-kernels}.
 
 \paragraph{Representation.}
-Column-stacking vectorization, \cref{eq:vec}: $A^+=\Id\otimes A$, $A^-=A^T\otimes\Id$,
-$A^\cl=\tfrac12(A^++A^-)$, $A^\qu=A^+-A^-$, $\Lc=-iH^\qu$. Bloch-basis matrix elements are
-$M_{\mu\nu}=\tfrac12\Tr(\sigma_\mu\mathcal M\sigma_\nu)$ (the coefficient convention of \cref{sec:lec1}).
+Column-stacking vectorization, \cref{eq:vec}: $A^+=\Id\otimes A$, $A^-=A^T\otimes\Id$, $A^\cl=\tfrac12(A^++A^-)$, $A^\qu=A^+-A^-$, $\Lc=-iH^\qu$.
+Bloch-basis matrix elements are $M_{\mu\nu}=\tfrac12\Tr(\sigma_\mu\mathcal M\sigma_\nu)$ (the coefficient convention of \cref{sec:lec1}).
 
 \paragraph{Exact reference.}
-The pseudomode master equation \eqref{eq:pseudomode} with $N=14$ oscillator levels
-(checked against $N=20$: maximal deviation $5\times10^{-15}$ in $\Pi(t)$ for $t\le4$ at $g=0.3$).
-$\Pi(t)$ is obtained by propagating the four basis operators $\ket i\bra j\otimes\ket0\bra0$ with
-$\ee^{\Lc_{\rm tot}\dd t}$ and tracing out the oscillator. The exact TCL generator is
-$\Gc(t)=\dot\Pi\Pi^{-1}-\Lc_S$ with $\dot\Pi$ computed from $\Lc_{\rm tot}$ (no numerical
-differentiation). The exact NZ kernel is computed directly from its definition
-\eqref{eq:NZ}, $K(\tau)=\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$, with $\Pc=\Tr_{\rm osc}(\cdot)\otimes\ket0\bra0$ built
-as a matrix on the $(2N)^2$-dimensional Liouville space of qubit plus oscillator; since
-the kernel is determined by $\Pi(t)$ alone (Exercise~\ref{ex:5-4}), it is also the kernel of the
-physical Lorentzian bath.
+The pseudomode master equation \eqref{eq:pseudomode} with $N=14$ oscillator levels (checked against $N=20$: maximal deviation $5\times10^{-15}$ in $\Pi(t)$ for $t\le4$ at $g=0.3$).
+$\Pi(t)$ is obtained by propagating the four basis operators $\ket i\bra j\otimes\ket0\bra0$ with $\ee^{\Lc_{\rm tot}\dd t}$ and tracing out the oscillator.
+The exact TCL generator is $\Gc(t)=\dot\Pi\Pi^{-1}-\Lc_S$ with $\dot\Pi$ computed from $\Lc_{\rm tot}$ (no numerical differentiation).
+The exact NZ kernel is computed directly from its definition \eqref{eq:NZ}, $K(\tau)=\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$, with $\Pc=\Tr_{\rm osc}(\cdot)\otimes\ket0\bra0$ built as a matrix on the $(2N)^2$-dimensional Liouville space of qubit plus oscillator; since the kernel is determined by $\Pi(t)$ alone (Exercise~\ref{ex:5-4}), it is also the kernel of the physical Lorentzian bath.
 
 \paragraph{Approximations.}
-$K^{(2)}(\tau)$ from \cref{eq:K2}; NZ2 solves the Volterra equation with the trapezoidal rule
-and an implicit treatment of $K(0)\rho_n$; TCL2 uses $\Gc^{(2)}(t)=\int_0^tK^{(2)}(\tau)\ee^{-\Lc_S\tau}\dd\tau$
-(cumulative trapezoid) and the midpoint exponential; Markov uses $\Gc^{(2)}(t_{\max})$.
+$K^{(2)}(\tau)$ from \cref{eq:K2}; NZ2 solves the Volterra equation with the trapezoidal rule and an implicit treatment of $K(0)\rho_n$; TCL2 uses $\Gc^{(2)}(t)=\int_0^tK^{(2)}(\tau)\ee^{-\Lc_S\tau}\dd\tau$ (cumulative trapezoid) and the midpoint exponential; Markov uses $\Gc^{(2)}(t_{\max})$.
 
 \paragraph{Checks printed by the script} (for $g=0.3$):
 \begin{center}
@@ -50,17 +39,13 @@ $r_z^{\rm eq}=\Gc_{z\Id}/(-\Gc_{zz})$ & $-0.96970$ & $-0.96970$\\
 \bottomrule
 \end{tabular}
 \end{center}
-The small differences are the $\dd t$ discretization and the nonsecular versus secular
-definitions. The nonsecular generator has $\Gc_{xx}=-\Gamma_\varphi$ and $\Gc_{yy}=-\Gamma_\varphi-\Gamma_1$, whose
-average is $\Gamma_2$ (Example~5.3), and $\Gc_{yx}=2\delta\omega$, $\Gc_{xy}=0$.
+The small differences are the $\dd t$ discretization and the nonsecular versus secular definitions.
+The nonsecular generator has $\Gc_{xx}=-\Gamma_\varphi$ and $\Gc_{yy}=-\Gamma_\varphi-\Gamma_1$, whose average is $\Gamma_2$ (Example~5.3), and $\Gc_{yx}=2\delta\omega$, $\Gc_{xy}=0$.
 
 \paragraph{Check of Theorem~\ref{thm:irreducible}.}
-The function \texttt{check\_fourth\_order} evaluates the fourth-order irreducible kernel
-$K^{(4)}$ as a double time integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$
-in the pseudomode space and compares $K-K^{(2)}$ with $K^{(4)}$ for $g=0.05,0.1,0.2$ (Example~5.1).
+The function \texttt{check\_fourth\_order} evaluates the fourth-order irreducible kernel $K^{(4)}$ as a double time integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$ in the pseudomode space and compares $K-K^{(2)}$ with $K^{(4)}$ for $g=0.05,0.1,0.2$ (Example~5.1).
 
 \paragraph{Filter functions.}
-\Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling
-$\tfrac12\sz\otimes B$) and $g=0.2$, for Ramsey, Hahn and CPMG-4 sequences.
+\Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling $\tfrac12\sz\otimes B$) and $g=0.2$, for Ramsey, Hahn and CPMG-4 sequences.
 
 \clearpage

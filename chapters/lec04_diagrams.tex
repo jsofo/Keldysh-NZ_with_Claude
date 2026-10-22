@@ -2,43 +2,32 @@
 \section{Lecture 4: Real-time diagrams for the reduced density matrix}
 \label{sec:lec4}
 
-We now combine the Dyson series \eqref{eq:dyson-super}, the vertex \eqref{eq:LIcq} and the
-contractions \eqref{eq:contractions} into a diagrammatic expansion of the dynamical map
-$\Pi(t)$, and evaluate it for the qubit. The second-order result is the Born kernel that
-every master equation uses; the fourth-order structure introduces the notion of
-irreducibility on which \cref{sec:lec5} rests.
+We now combine the Dyson series \eqref{eq:dyson-super}, the vertex \eqref{eq:LIcq} and the contractions \eqref{eq:contractions} into a diagrammatic expansion of the dynamical map $\Pi(t)$, and evaluate it for the qubit.
+The second-order result is the Born kernel that every master equation uses; the fourth-order structure introduces the notion of irreducibility on which \cref{sec:lec5} rests.
 
 \subsection{Feynman rules}
 \label{sec:feynman-rules}
 
-Insert \cref{eq:LIcq} into \cref{eq:dyson-super} and take $\Tr_B$. Every vertex is either
-$S^\qu B^\cl$ or $S^\cl B^\qu$, so the bath index at a vertex is the \emph{opposite} of
-the system index. Apply Wick's theorem to the bath string and translate \cref{eq:LO} to
-the system side:
+Insert \cref{eq:LIcq} into \cref{eq:dyson-super} and take $\Tr_B$.
+Every vertex is either $S^\qu B^\cl$ or $S^\cl B^\qu$, so the bath index at a vertex is the \emph{opposite} of the system index.
+Apply Wick's theorem to the bath string and translate \cref{eq:LO} to the system side:
 
 \begin{keybox}[System-side Feynman rules for $\Pi(t)$]
-A term of order $2n$ is a time-ordered string of $2n$ vertices at $t>t_1>\dots>t_{2n}>0$,
-with a pairing of the vertices into $n$ lines. Reading from right (earliest) to left:
+A term of order $2n$ is a time-ordered string of $2n$ vertices at $t>t_1>\dots>t_{2n}>0$, with a pairing of the vertices into $n$ lines.
+Reading from right (earliest) to left:
 \begin{itemize}[itemsep=1pt]
-\item each vertex contributes $-i\,\tilde S^\qu(t_i)$ or $-i\,\tilde S^\cl(t_i)$ (interaction
-  picture; in the Schr\"odinger picture, replace $\tilde S^a(t_i)$ by $S^a$ and insert
-  free propagators $\ee^{\Lc_S(t_i-t_{i+1})}$ between consecutive vertices and $\ee^{\Lc_St_{2n}}$ before the first, $\ee^{\Lc_S(t-t_1)}$ after the last);
-\item a \emph{noise line} $S(t_i-t_j)$ connects $S^\qu(t_i)$ to $S^\qu(t_j)$
-  ($\qu$--$\qu$ on the system side is $\cl$--$\cl$ on the bath side);
-\item a \emph{response line} $-i\chi(t_i-t_j)$ connects the \emph{later} $S^\qu(t_i)$ to the
-  \emph{earlier} $S^\cl(t_j)$;
+\item each vertex contributes $-i\,\tilde S^\qu(t_i)$ or $-i\,\tilde S^\cl(t_i)$ (interaction picture; in the Schr\"odinger picture, replace $\tilde S^a(t_i)$ by $S^a$ and insert free propagators $\ee^{\Lc_S(t_i-t_{i+1})}$ between consecutive vertices and $\ee^{\Lc_St_{2n}}$ before the first, $\ee^{\Lc_S(t-t_1)}$ after the last);
+\item a \emph{noise line} $S(t_i-t_j)$ connects $S^\qu(t_i)$ to $S^\qu(t_j)$ ($\qu$--$\qu$ on the system side is $\cl$--$\cl$ on the bath side);
+\item a \emph{response line} $-i\chi(t_i-t_j)$ connects the \emph{later} $S^\qu(t_i)$ to the \emph{earlier} $S^\cl(t_j)$;
 \item there is no line with both ends $\cl$, and no line whose later end is $\cl$.
 \end{itemize}
-Consequently the latest vertex of every diagram is $S^\qu$, which preserves $\Tr_S$ (trace
-preservation of $\Pi$), and the earliest vertex of every line can be either.
+Consequently the latest vertex of every diagram is $S^\qu$, which preserves $\Tr_S$ (trace preservation of $\Pi$), and the earliest vertex of every line can be either.
 \end{keybox}
 
-The last rule has a direct physical reading. A $\cl$ vertex is where the bath
-\emph{acts} on the system (a force, through $\chi$); a $\qu$ vertex is where the system
-\emph{acts} on the bath or where noise enters. Causality says the bath can only respond to
-earlier system history, hence the response line points from an earlier $\cl$ to a later
-$\qu$. For fermionic baths the same rules hold with a sign for each crossing of lines; for
-non-Gaussian baths, $2n$-point cumulants join more than two vertices~\cite{Schoeller2009}.
+The last rule has a direct physical reading.
+A $\cl$ vertex is where the bath \emph{acts} on the system (a force, through $\chi$); a $\qu$ vertex is where the system \emph{acts} on the bath or where noise enters.
+Causality says the bath can only respond to earlier system history, hence the response line points from an earlier $\cl$ to a later $\qu$.
+For fermionic baths the same rules hold with a sign for each crossing of lines; for non-Gaussian baths, $2n$-point cumulants join more than two vertices~\cite{Schoeller2009}.
 
 \subsection{Second order: the Born kernel}
 
@@ -52,25 +41,20 @@ From \cref{eq:rho2super} with $\Lc_I=-i(S^\qu B^\cl+S^\cl B^\qu)$,
    +\tilde S^\cl_1\tilde S^\cl_2\,\underbrace{\Tr_B[B^\qu_1B^\qu_2\rhoB]}_{0}\Big]\rho_S ,
 \end{align}
 with the shorthand $\tilde S^{a}_i=\tilde S^{a}(t_i)$, $B^{a}_i=\tilde B^{a}(t_i)$.
-Only two of the four index combinations survive, exactly as the rules say. In the
-Schr\"odinger picture the surviving bracket, with $\tau=t_1-t_2$, defines the
-\emph{second-order kernel}
+Only two of the four index combinations survive, exactly as the rules say.
+In the Schr\"odinger picture the surviving bracket, with $\tau=t_1-t_2$, defines the \emph{second-order kernel}
 \begin{equation}
   \boxed{\;K^{(2)}(\tau)=-S^\qu\,\ee^{\Lc_S\tau}\Big[S(\tau)\,S^\qu-i\,\chi(\tau)\,S^\cl\Big],\;}
   \label{eq:K2}
 \end{equation}
 and the second-order map is $\Pi^{(2)}(t)=\int_0^t\dd t_1\int_0^{t_1}\dd t_2\,\ee^{\Lc_S(t-t_1)}K^{(2)}(t_1-t_2)\,\ee^{\Lc_St_2}$.
-Expanding $S^\cl$ and $S^\qu$, \cref{eq:K2} is the textbook Born kernel
-$K^{(2)}(\tau)X=-\big[S,\ee^{\Lc_S\tau}\big(C(\tau)SX-C(-\tau)XS\big)\big]$~\cite[Sec.~3.3.1]{BreuerPetruccione},
-but the rotated form keeps the two bath inputs apart, and that is what we want.
+Expanding $S^\cl$ and $S^\qu$, \cref{eq:K2} is the textbook Born kernel $K^{(2)}(\tau)X=-\big[S,\ee^{\Lc_S\tau}\big(C(\tau)SX-C(-\tau)XS\big)\big]$~\cite[Sec.~3.3.1]{BreuerPetruccione}, but the rotated form keeps the two bath inputs apart, and that is what we want.
 \end{exbox}
 
 \begin{exbox}[Example 4.2: $K^{(2)}$ for the qubit, in Bloch form]
-Apply \cref{eq:K2} to the coefficient basis $(\Id,\sx,\sy,\sz)$ using the matrices
-\eqref{eq:SclSqu} and the rotation \eqref{eq:LS-bloch}. Write $c=\cos\theta$, $s=\sin\theta$,
-$S_\tau=S(\tau)$, $\chi_\tau=\chi(\tau)$, and $\cos,\sin$ for $\cos\omega_0\tau,\sin\omega_0\tau$. Going
-through the four input vectors (the computation is written out in the solution to
-Exercise~\ref{ex:4-2}) gives
+Apply \cref{eq:K2} to the coefficient basis $(\Id,\sx,\sy,\sz)$ using the matrices \eqref{eq:SclSqu} and the rotation \eqref{eq:LS-bloch}.
+Write $c=\cos\theta$, $s=\sin\theta$, $S_\tau=S(\tau)$, $\chi_\tau=\chi(\tau)$, and $\cos,\sin$ for $\cos\omega_0\tau,\sin\omega_0\tau$.
+Going through the four input vectors (the computation is written out in the solution to Exercise~\ref{ex:4-2}) gives
 \begin{equation}
   K^{(2)}(\tau)=\scalebox{0.82}{$\displaystyle
   \begin{pmatrix}
@@ -84,20 +68,14 @@ Exercise~\ref{ex:4-2}) gives
 Everything one needs to know about second-order qubit relaxation is in this matrix:
 \begin{itemize}[itemsep=1pt]
 \item The first row vanishes: trace preservation (last vertex is $S^\qu$).
-\item The first \emph{column} is the only place $\chi$ appears. It multiplies the input
-  $\Id$, i.e.\ it is the inhomogeneous term that drives the Bloch vector toward a nonzero
-  steady state. Noise alone ($S$) would relax the qubit to the maximally mixed state;
-  it is the \emph{response} of the bath that knows about the sign of $\omega_0$ and produces
-  the Boltzmann asymmetry between emission and absorption.
-\item Populations ($z$) relax only through $s^2=\sin^2\theta$: the transverse part of the
-  coupling, sampled at the qubit frequency ($S_\tau\cos\omega_0\tau$).
-\item The $c^2=\cos^2\theta$ terms in the coherence block are sampled at zero frequency
-  ($S_\tau$ alone, after the rotating-frame average): pure dephasing. The $s^2$ term in
-  $K_{yy}$ is the ``$T_1$ contributes to $T_2$'' piece.
-\item The $cs$ cross terms couple populations to coherences. In the rotating frame they
-  oscillate at $\pm\omega_0$ and average out when $\omega_0\gg$ rates (secular approximation,
-  \cref{sec:lec5}); at short times they are real and are the reason Exercise~\ref{ex:2-4} has no
-  simple answer.
+\item The first \emph{column} is the only place $\chi$ appears.
+  It multiplies the input $\Id$, i.e.\ it is the inhomogeneous term that drives the Bloch vector toward a nonzero steady state.
+  Noise alone ($S$) would relax the qubit to the maximally mixed state; it is the \emph{response} of the bath that knows about the sign of $\omega_0$ and produces the Boltzmann asymmetry between emission and absorption.
+\item Populations ($z$) relax only through $s^2=\sin^2\theta$: the transverse part of the coupling, sampled at the qubit frequency ($S_\tau\cos\omega_0\tau$).
+\item The $c^2=\cos^2\theta$ terms in the coherence block are sampled at zero frequency ($S_\tau$ alone, after the rotating-frame average): pure dephasing.
+  The $s^2$ term in $K_{yy}$ is the ``$T_1$ contributes to $T_2$'' piece.
+\item The $cs$ cross terms couple populations to coherences.
+  In the rotating frame they oscillate at $\pm\omega_0$ and average out when $\omega_0\gg$ rates (secular approximation, \cref{sec:lec5}); at short times they are real and are the reason Exercise~\ref{ex:2-4} has no simple answer.
 \end{itemize}
 The matrix is real, as Hermiticity preservation requires in this basis.
 \end{exbox}
@@ -105,10 +83,10 @@ The matrix is real, as Hermiticity preservation requires in this basis.
 \subsection{Pure dephasing to all orders; reducible and irreducible diagrams}
 
 \begin{exbox}[Example 4.3: $\theta=0$ and the first irreducible diagram]
-Take $\theta=0$, so $S=\sz$ and $S^{\cl/\qu}$ commute with $\Lc_S$. On the coherence
-$X=\ket0\bra1$ we have $S^\qu X=[\sz,X]=2X$ and $S^\cl X=\tfrac12\{\sz,X\}=0$. Every response
-line ends on an $S^\cl$ and therefore vanishes on $X$. What remains is a sum over pairings
-of noise lines, with every vertex equal to the number $-2i$:
+Take $\theta=0$, so $S=\sz$ and $S^{\cl/\qu}$ commute with $\Lc_S$.
+On the coherence $X=\ket0\bra1$ we have $S^\qu X=[\sz,X]=2X$ and $S^\cl X=\tfrac12\{\sz,X\}=0$.
+Every response line ends on an $S^\cl$ and therefore vanishes on $X$.
+What remains is a sum over pairings of noise lines, with every vertex equal to the number $-2i$:
 \begin{align}
   \tilde\rho_{01}(t)=\rho_{01}(0)\Big[1
   &-4\!\int_{t_1>t_2}\!S_{12}
@@ -117,26 +95,23 @@ of noise lines, with every vertex equal to the number $-2i$:
     +\underbrace{S_{14}S_{23}}_{\text{nested}}\big]-\dots\Big],
   \label{eq:dephasing-4th}
 \end{align}
-with $S_{ij}\equiv S(t_i-t_j)$, where the sign at order $2n$ is $(-2i)^{2n}=(-4)^n$. Because all vertices commute, the sum over
-pairings is $\frac1{n!}$ times the $n$-th power of the single contraction, and the series
-exponentiates:
+with $S_{ij}\equiv S(t_i-t_j)$, where the sign at order $2n$ is $(-2i)^{2n}=(-4)^n$.
+Because all vertices commute, the sum over pairings is $\frac1{n!}$ times the $n$-th power of the single contraction, and the series exponentiates:
 \begin{equation}
   \rho_{01}(t)=\rho_{01}(0)\,\ee^{-i\omega_0t}\,\ee^{-\Gamma(t)},\qquad
   \Gamma(t)=4\!\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,S(t_1-t_2)
   =\frac4\pi\int_0^\infty\!\dd\omega\,\frac{S(\omega)}{\omega^2}\big(1-\cos\omega t\big).
   \label{eq:dephasing-exact}
 \end{equation}
-(The factor 4 is the ``our $S=\sz$ versus Leggett's $\sz/2$'' factor of \cref{sec:lec2}.) This
-is the exact pure-dephasing result~\cite[Sec.~4.2]{BreuerPetruccione}; we will rederive it
-from the influence functional in \cref{sec:lec7} and use it in \cref{sec:lec10}.
+(The factor 4 is the ``our $S=\sz$ versus Leggett's $\sz/2$'' factor of \cref{sec:lec2}.)
+This is the exact pure-dephasing result~\cite[Sec.~4.2]{BreuerPetruccione}; we will rederive it from the influence functional in \cref{sec:lec7} and use it in \cref{sec:lec10}.
 
-Now look at the three fourth-order pairings. The first, $S_{12}S_{34}$, can be cut
-between $t_2$ and $t_3$ without cutting a line: the bath has returned to $\rhoB$ there, and
-the diagram is a product of two second-order pieces. It is \emph{reducible}. The crossed
-and nested pairings cannot be cut: they are \emph{irreducible}, and they are the
-fourth-order contributions to the memory kernel of \cref{sec:lec5}. Summing all orders,
-the reducible structure is what makes the exponential; the irreducible pieces are what the
-exponent is made of. The general statement is \cref{sec:nz-irreducible}.
+Now look at the three fourth-order pairings.
+The first, $S_{12}S_{34}$, can be cut between $t_2$ and $t_3$ without cutting a line: the bath has returned to $\rhoB$ there, and the diagram is a product of two second-order pieces.
+It is \emph{reducible}.
+The crossed and nested pairings cannot be cut: they are \emph{irreducible}, and they are the fourth-order contributions to the memory kernel of \cref{sec:lec5}.
+Summing all orders, the reducible structure is what makes the exponential; the irreducible pieces are what the exponent is made of.
+The general statement is \cref{sec:nz-irreducible}.
 \end{exbox}
 
 \begin{figure}[t]
@@ -164,56 +139,47 @@ exponent is made of. The general statement is \cref{sec:nz-irreducible}.
   \node[below,font=\small] at (2.6,-0.35) {nested: $S_{14}S_{23}$};
   \end{scope}
 \end{tikzpicture}
-\caption{The three fourth-order diagrams. Time runs to the right; vertices are
-system superoperators; lines are bath contractions ($S$ or $\chi$). Only the first can be
-cut (red) without cutting a line.}
+\caption{The three fourth-order diagrams.
+Time runs to the right; vertices are system superoperators; lines are bath contractions ($S$ or $\chi$).
+Only the first can be cut (red) without cutting a line.}
 \label{fig:fourth-order}
 \end{figure}
 
 \subsection{What the diagrams are good for}
 
-The series \eqref{eq:dyson-super} converges for any finite $t$ but is useless as it
-stands: at order $2n$ there are $(2n-1)!!$ pairings and the terms grow like $(g^2t^2)^n$.
+The series \eqref{eq:dyson-super} converges for any finite $t$ but is useless as it stands: at order $2n$ there are $(2n-1)!!$ pairings and the terms grow like $(g^2t^2)^n$.
 Every practical method is a \emph{resummation}:
 \begin{itemize}[itemsep=1pt]
-\item \textbf{Dyson resummation} (\cref{sec:lec5,sec:lec6}): sum the reducible structure
-  exactly and approximate the irreducible kernel. This is Nakajima--Zwanzig, and TCL is the
-  same thing organized differently.
-\item \textbf{Exponentiation} (\cref{sec:lec7}): when the vertices commute (or are replaced
-  by c-number paths), the pairings exponentiate into an influence functional. The
-  noninteracting-blip approximation is a controlled truncation of that exponent.
-\item \textbf{Self-consistent resummation} (\cref{sec:lec9}): replace bare propagators by
-  dressed ones inside the kernel (Kadanoff--Baym, GKBA, DMFT-like schemes).
+\item \textbf{Dyson resummation} (\cref{sec:lec5,sec:lec6}): sum the reducible structure exactly and approximate the irreducible kernel.
+  This is Nakajima--Zwanzig, and TCL is the same thing organized differently.
+\item \textbf{Exponentiation} (\cref{sec:lec7}): when the vertices commute (or are replaced by c-number paths), the pairings exponentiate into an influence functional.
+  The noninteracting-blip approximation is a controlled truncation of that exponent.
+\item \textbf{Self-consistent resummation} (\cref{sec:lec9}): replace bare propagators by dressed ones inside the kernel (Kadanoff--Baym, GKBA, DMFT-like schemes).
 \end{itemize}
-In all three, the only input from the bath is the pair $(S,\chi)$, and the only thing that
-distinguishes the methods is which subset of diagrams is kept and how it is organized.
+In all three, the only input from the bath is the pair $(S,\chi)$, and the only thing that distinguishes the methods is which subset of diagrams is kept and how it is organized.
 
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:4-1}
 From the Feynman rules, show that $\Tr_S K^{(2)}(\tau)X=0$ for every $X$ and interpret it.
-Show also that $K^{(2)}(\tau)\rho$ is Hermitian for Hermitian $\rho$ (use
-$(S^\cl)^\dagger=S^\cl$, $(S^\qu)^\dagger=-S^\qu$ and the reality of $S(\tau),\chi(\tau)$).
+Show also that $K^{(2)}(\tau)\rho$ is Hermitian for Hermitian $\rho$ (use $(S^\cl)^\dagger=S^\cl$, $(S^\qu)^\dagger=-S^\qu$ and the reality of $S(\tau),\chi(\tau)$).
 \end{exercise}
 
 \begin{exercise}\label{ex:4-2}
-Derive \cref{eq:K2-bloch}. (Apply \cref{eq:K2} to each of $\Id,\sx,\sy,\sz$ in turn; the
-solution writes out the $\sz$ and $\Id$ columns.) Check the $\theta=0$ and $\theta=\pi/2$ limits
-against your expectations for pure dephasing and for a damped qubit.
+Derive \cref{eq:K2-bloch}.
+(Apply \cref{eq:K2} to each of $\Id,\sx,\sy,\sz$ in turn; the solution writes out the $\sz$ and $\Id$ columns.)
+Check the $\theta=0$ and $\theta=\pi/2$ limits against your expectations for pure dephasing and for a damped qubit.
 \end{exercise}
 
 \begin{exercise}\label{ex:4-3}
-List the $15$ pairings at sixth order and classify them as reducible (cuttable) or
-irreducible. How many are irreducible? (Answer: 10 of the 15 are irreducible if one counts
-only cuts between consecutive vertices; the reducible ones are products of lower-order
-irreducible blocks.)
+List the $15$ pairings at sixth order and classify them as reducible (cuttable) or irreducible.
+How many are irreducible?
+(Answer: 10 of the 15 are irreducible if one counts only cuts between consecutive vertices; the reducible ones are products of lower-order irreducible blocks.)
 \end{exercise}
 
 \begin{exercise}\label{ex:4-4}
-Evaluate $\Gamma(t)$ in \cref{eq:dephasing-exact} for the Lorentzian bath at $T=0$ and
-show that $\Gamma(t)\simeq 2g^2t^2$ for $t\ll1/\Omega$ (Gaussian decay) and
-$\Gamma(t)\simeq2S(\omega{=}0)\,t+\text{const}$ for $t\gg1/\gamma$ (exponential decay). Which value
-of $S(\omega{=}0)$ enters?
+Evaluate $\Gamma(t)$ in \cref{eq:dephasing-exact} for the Lorentzian bath at $T=0$ and show that $\Gamma(t)\simeq 2g^2t^2$ for $t\ll1/\Omega$ (Gaussian decay) and $\Gamma(t)\simeq2S(\omega{=}0)\,t+\text{const}$ for $t\gg1/\gamma$ (exponential decay).
+Which value of $S(\omega{=}0)$ enters?
 \end{exercise}
 
 \clearpage

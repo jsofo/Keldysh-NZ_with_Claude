@@ -16,51 +16,39 @@ The running model is
 \end{aligned}
   \label{eq:model}
 \end{equation}
-The qubit has energy splitting $\omega_0$; the bath is a collection of harmonic
-oscillators (phonons, photons, the electromagnetic modes of a cavity or a transmission
-line, the Gaussian part of a spin bath, etc.); the coupling is linear in the bath
-coordinates and couples to a fixed Hermitian qubit operator $S$ with $S^2=\Id$. The angle
-$\theta$ is the only new parameter compared with the textbook cases.
+The qubit has energy splitting $\omega_0$; the bath is a collection of harmonic oscillators (phonons, photons, the electromagnetic modes of a cavity or a transmission line, the Gaussian part of a spin bath, etc.); the coupling is linear in the bath coordinates and couples to a fixed Hermitian qubit operator $S$ with $S^2=\Id$.
+The angle $\theta$ is the only new parameter compared with the textbook cases.
 
-\paragraph{Pure dephasing, $\theta=0$.} $H_I=\sz\otimes B$ commutes with $H_S$. Populations
-are frozen, coherences decay. This is the model of ``$T_2$'' processes, of the filter-function
-formalism in quantum sensing, and of Ramsey and echo experiments~\cite{Ramsey1950,Hahn1950}.
+\paragraph{Pure dephasing, $\theta=0$.}
+$H_I=\sz\otimes B$ commutes with $H_S$.
+Populations are frozen, coherences decay.
+This is the model of ``$T_2$'' processes, of the filter-function formalism in quantum sensing, and of Ramsey and echo experiments~\cite{Ramsey1950,Hahn1950}.
 It is exactly solvable for any Gaussian bath (\cref{sec:lec4,sec:lec7}).
 
-\paragraph{Transverse coupling, $\theta=\pi/2$.} $H_I=\sx\otimes B$ flips the qubit. This is
-the model of ``$T_1$'' processes: spontaneous and stimulated emission, absorption, and the
-associated Lamb shift. In the rotating-wave approximation it becomes the damped
-Jaynes--Cummings model, which is again exactly solvable for a single excitation.
+\paragraph{Transverse coupling, $\theta=\pi/2$.}
+$H_I=\sx\otimes B$ flips the qubit.
+This is the model of ``$T_1$'' processes: spontaneous and stimulated emission, absorption, and the associated Lamb shift.
+In the rotating-wave approximation it becomes the damped Jaynes--Cummings model, which is again exactly solvable for a single excitation.
 
 \paragraph{The dissipative two-level system.}
-For general $\theta$, rotate the qubit about $\hat y$ so that $S$ becomes the new $\sz$:
-define $\sz'\equiv S=\cos\theta\sz+\sin\theta\sx$ and $\sx'\equiv\cos\theta\sx-\sin\theta\sz$,
-which satisfy the Pauli algebra with $\sy'=\sy$. Then
-$\sz=\cos\theta\,\sz'-\sin\theta\,\sx'$ and
+For general $\theta$, rotate the qubit about $\hat y$ so that $S$ becomes the new $\sz$: define $\sz'\equiv S=\cos\theta\sz+\sin\theta\sx$ and $\sx'\equiv\cos\theta\sx-\sin\theta\sz$, which satisfy the Pauli algebra with $\sy'=\sy$.
+Then $\sz=\cos\theta\,\sz'-\sin\theta\,\sx'$ and
 \begin{equation}
   H=\frac{\varepsilon}{2}\sz'-\frac{\Delta}{2}\sx'+\sz'\otimes B+H_B,\qquad
   \varepsilon=\omega_0\cos\theta,\quad \Delta=\omega_0\sin\theta .
   \label{eq:leggett-form}
 \end{equation}
-This is the spin-boson model in the form of Leggett \emph{et al.}~\cite[Sec.~II]{Leggett1987}
-and Weiss~\cite[Ch.~3]{Weiss2012}: a particle tunnelling with amplitude $\Delta$ between two
-wells with bias $\varepsilon$, whose \emph{position} $\sz'$ is coupled to the bath. Our
-$\theta$ is the angle between the energy eigenbasis and the bath's pointer basis. Keep both
-pictures in mind: \cref{eq:model} is natural for perturbation theory in the coupling
-$g_k$ (the energy eigenstates are a good starting point), while \cref{eq:leggett-form} is
-natural for perturbation theory in $\Delta$ after a polaron transformation (the pointer
-states are a good starting point). We will use both, in \cref{sec:lec5} and
-\cref{sec:lec7} respectively. The two expansions have different domains of validity, and
-seeing the same kernel emerge in both is one of the pleasures of the subject.
+This is the spin-boson model in the form of Leggett \emph{et al.}~\cite[Sec.~II]{Leggett1987} and Weiss~\cite[Ch.~3]{Weiss2012}: a particle tunnelling with amplitude $\Delta$ between two wells with bias $\varepsilon$, whose \emph{position} $\sz'$ is coupled to the bath.
+Our $\theta$ is the angle between the energy eigenbasis and the bath's pointer basis.
+Keep both pictures in mind: \cref{eq:model} is natural for perturbation theory in the coupling $g_k$ (the energy eigenstates are a good starting point), while \cref{eq:leggett-form} is natural for perturbation theory in $\Delta$ after a polaron transformation (the pointer states are a good starting point).
+We will use both, in \cref{sec:lec5} and \cref{sec:lec7} respectively.
+The two expansions have different domains of validity, and seeing the same kernel emerge in both is one of the pleasures of the subject.
 
 \begin{warnbox}
-\small\textbf{Normalization of the coupling.} Leggett \emph{et al.} write the coupling as
-$\tfrac12\sz'\sum_kc_kx_k$ with oscillator coordinates $x_k=(b_k+b_k^\dagger)/\sqrt{2m_k\omega_k}$,
-and define $J_{\rm L}(\omega)=\tfrac{\pi}2\sum_kc_k^2/(m_k\omega_k)\,\delta(\omega-\omega_k)$. With
-$g_k=c_k/\sqrt{2m_k\omega_k}$ this is $J_{\rm L}(\omega)=\pi\sum_kg_k^2\delta(\omega-\omega_k)$, which coincides with our
-$J(\omega)$ of \cref{eq:J} below, \emph{but} their coupling operator is $\sz'/2$ where ours is $\sz'$.
-All our bath kernels therefore enter with a factor~4 relative to Leggett's formulas when
-the same $J$ is used; equivalently, our $\theta=0$ model with $J$ is Leggett's with $4J$.
+\small\textbf{Normalization of the coupling.}
+Leggett \emph{et al.} write the coupling as $\tfrac12\sz'\sum_kc_kx_k$ with oscillator coordinates $x_k=(b_k+b_k^\dagger)/\sqrt{2m_k\omega_k}$, and define $J_{\rm L}(\omega)=\tfrac{\pi}2\sum_kc_k^2/(m_k\omega_k)\,\delta(\omega-\omega_k)$.
+With $g_k=c_k/\sqrt{2m_k\omega_k}$ this is $J_{\rm L}(\omega)=\pi\sum_kg_k^2\delta(\omega-\omega_k)$, which coincides with our $J(\omega)$ of \cref{eq:J} below, \emph{but} their coupling operator is $\sz'/2$ where ours is $\sz'$.
+All our bath kernels therefore enter with a factor~4 relative to Leggett's formulas when the same $J$ is used; equivalently, our $\theta=0$ model with $J$ is Leggett's with $4J$.
 We flag this at each place where it matters.
 \end{warnbox}
 
@@ -78,38 +66,35 @@ where the \emph{spectral density}
   J(\omega)\equiv\pi\sum_kg_k^2\,\delta(\omega-\omega_k)\qquad(\omega>0)
   \label{eq:J}
 \end{equation}
-is the only property of the bath that the system will ever feel (for a Gaussian bath;
-see below). $C(t)$ is neither real nor even: $C(-t)=C(t)^*$. Its real and imaginary parts
-are the two kernels of the title:
+is the only property of the bath that the system will ever feel (for a Gaussian bath; see below).
+$C(t)$ is neither real nor even: $C(-t)=C(t)^*$.
+Its real and imaginary parts are the two kernels of the title:
 \begin{align}
   S(t)&\equiv\tfrac12\avg{\{B(t),B(0)\}}=\Re C(t)=\int_0^\infty\!\frac{\dd\omega}{\pi}\,J(\omega)\coth\tfrac{\beta\omega}2\,\cos\omega t ,
   \label{eq:S-def}\\
   \chi(t)&\equiv i\,\theta(t)\avg{[B(t),B(0)]}=-2\theta(t)\Im C(t)=2\theta(t)\int_0^\infty\!\frac{\dd\omega}{\pi}\,J(\omega)\sin\omega t ,
   \label{eq:chi-def}
 \end{align}
-so that $C(t)=S(t)-\tfrac{i}{2}\chi(t)$ for $t>0$. $S$ is the symmetrized
-\emph{noise} correlator: it is what a classical measuring device would record as the
-fluctuations of $B$. $\chi$ is Kubo's \emph{response} function~\cite{Kubo1957}: if a force
-$f(t)$ is applied through $H\to H-f(t)B$, then $\delta\avg{B(t)}=\int\dd s\,\chi(t-s)f(s)$. The
-$\theta(t)$ is causality. $S$ depends on temperature through $\coth$; $\chi$ does not depend
-on temperature at all for a harmonic bath.
+so that $C(t)=S(t)-\tfrac{i}{2}\chi(t)$ for $t>0$.
+$S$ is the symmetrized \emph{noise} correlator: it is what a classical measuring device would record as the fluctuations of $B$.
+$\chi$ is Kubo's \emph{response} function~\cite{Kubo1957}: if a force $f(t)$ is applied through $H\to H-f(t)B$, then $\delta\avg{B(t)}=\int\dd s\,\chi(t-s)f(s)$.
+The $\theta(t)$ is causality.
+$S$ depends on temperature through $\coth$; $\chi$ does not depend on temperature at all for a harmonic bath.
 
 \subsection{The kernels in the frequency domain}
 \label{sec:freq-domain}
 
-With the convention $f(\omega)=\int_{-\infty}^\infty\dd t\,\ee^{i\omega t}f(t)$, the three functions
-$\chi$, $S$ and $C$ are tied together by
+With the convention $f(\omega)=\int_{-\infty}^\infty\dd t\,\ee^{i\omega t}f(t)$, the three functions $\chi$, $S$ and $C$ are tied together by
 \begin{equation}
   \chi''(\omega)=\sgn(\omega)\,J(|\omega|),\quad
   S(\omega)=\coth\tfrac{\beta\omega}{2}\;\chi''(\omega),\quad
   C(\omega)=S(\omega)+\chi''(\omega)=2\chi''(\omega)\big[1+n(\omega)\big],
   \label{eq:FDT}
 \end{equation}
-with $\chi''\equiv\Im\chi$ and $n(\omega)=(\ee^{\beta\omega}-1)^{-1}$. These three lines are used on
-every page that follows, so we go through them one at a time. Before doing so we fix
-the one convention-dependent fact that everything else hangs on: \emph{what the sign of
-a frequency means}. Insert a complete set of bath eigenstates, $\rhoB=\sum_ip_i\ket i\bra i$,
-$H_B\ket f=E_f\ket f$, between the two operators of $C(t)$:
+with $\chi''\equiv\Im\chi$ and $n(\omega)=(\ee^{\beta\omega}-1)^{-1}$.
+These three lines are used on every page that follows, so we go through them one at a time.
+Before doing so we fix the one convention-dependent fact that everything else hangs on: \emph{what the sign of a frequency means}.
+Insert a complete set of bath eigenstates, $\rhoB=\sum_ip_i\ket i\bra i$, $H_B\ket f=E_f\ket f$, between the two operators of $C(t)$:
 \begin{equation}
   \avg{B(t)B(0)}=\sum_{i,f}p_i\,\bra i\ee^{iH_Bt}B\ee^{-iH_Bt}\ket f\bra fB\ket i
   =\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\ee^{-i(E_f-E_i)t},
@@ -119,124 +104,88 @@ so that, with our Fourier sign,
   C(\omega)=2\pi\sum_{i,f}p_i\,\big|\bra fB\ket i\big|^2\,\delta\big(\omega-(E_f-E_i)\big).
   \label{eq:C-golden}
 \end{equation}
-The operator that acts first on the state is $B(0)$, which takes the bath from $\ket i$ to
-$\ket f$; the phase $\ee^{-i(E_f-E_i)t}$ is the propagation of that intermediate state relative to
-the initial one, and $B(t)$ must bring the bath back for the overlap to be nonzero.
-Hence $C(\omega)$ at $\omega>0$ collects exactly the transitions with $E_f>E_i$: the bath ends up
-with \emph{more} energy than it started with. \emph{With $C(t)=\avg{B(t)B(0)}$ and
-$f(\omega)=\int\ee^{+i\omega t}f(t)\dd t$, positive frequency means that the bath absorbs a quantum.}
-In the mode language the same statement reads: the only surviving products in
-$\avg{B(t)B(0)}$ are $\avg{b_k(t)b_k^\dagger(0)}=(\bar n_k+1)\ee^{-i\omega_kt}$, in which $B(0)$ \emph{creates} a
-quantum and the phase is that quantum propagating until $B(t)$ removes it (it lands at
-$\omega=+\omega_k$), and $\avg{b_k^\dagger(t)b_k(0)}=\bar n_k\ee^{+i\omega_kt}$, in which $B(0)$ \emph{annihilates} a
-quantum that must already be present (it lands at $\omega=-\omega_k$). The annihilation operator
-$b_k(t)$ carries the visible $\ee^{-i\omega_kt}$ in the first term, but the physics is in $b_k^\dagger(0)$
-having acted first.
+The operator that acts first on the state is $B(0)$, which takes the bath from $\ket i$ to $\ket f$; the phase $\ee^{-i(E_f-E_i)t}$ is the propagation of that intermediate state relative to the initial one, and $B(t)$ must bring the bath back for the overlap to be nonzero.
+Hence $C(\omega)$ at $\omega>0$ collects exactly the transitions with $E_f>E_i$: the bath ends up with \emph{more} energy than it started with.
+\emph{With $C(t)=\avg{B(t)B(0)}$ and $f(\omega)=\int\ee^{+i\omega t}f(t)\dd t$, positive frequency means that the bath absorbs a quantum.}
+In the mode language the same statement reads: the only surviving products in $\avg{B(t)B(0)}$ are $\avg{b_k(t)b_k^\dagger(0)}=(\bar n_k+1)\ee^{-i\omega_kt}$, in which $B(0)$ \emph{creates} a quantum and the phase is that quantum propagating until $B(t)$ removes it (it lands at $\omega=+\omega_k$), and $\avg{b_k^\dagger(t)b_k(0)}=\bar n_k\ee^{+i\omega_kt}$, in which $B(0)$ \emph{annihilates} a quantum that must already be present (it lands at $\omega=-\omega_k$).
+The annihilation operator $b_k(t)$ carries the visible $\ee^{-i\omega_kt}$ in the first term, but the physics is in $b_k^\dagger(0)$ having acted first.
 
 \begin{warnbox}
-\small\textbf{Conventions.} The assignment ``$\omega>0$ = bath absorbs'' flips under either of
-two changes: the opposite Fourier sign $\int\ee^{-i\omega t}$, or the opposite operator order
-$\avg{B(0)B(t)}$ (both together restore it). Breuer--Petruccione~\cite[Sec.~3.3.1]{BreuerPetruccione}
-and Clerk \emph{et al.}~\cite[Sec.~II.B]{ClerkRMP2010} use the same assignment as these
-notes; parts of the sensing literature use the opposite one. When comparing formulas for
-$\Gamma_\uparrow$ and $\Gamma_\downarrow$ across papers, check which one is in force before comparing signs.
+\small\textbf{Conventions.}
+The assignment ``$\omega>0$ = bath absorbs'' flips under either of two changes: the opposite Fourier sign $\int\ee^{-i\omega t}$, or the opposite operator order $\avg{B(0)B(t)}$ (both together restore it).
+Breuer--Petruccione~\cite[Sec.~3.3.1]{BreuerPetruccione} and Clerk \emph{et al.}~\cite[Sec.~II.B]{ClerkRMP2010} use the same assignment as these notes; parts of the sensing literature use the opposite one.
+When comparing formulas for $\Gamma_\uparrow$ and $\Gamma_\downarrow$ across papers, check which one is in force before comparing signs.
 \end{warnbox}
 
 \paragraph{Why the transform of a correlator is a ``noise spectrum''.}
-The functions $C(\omega)$ and $S(\omega)$ will be called noise spectra throughout, so it is worth
-saying once why a Fourier-transformed correlation function deserves the name. Take a
-finite record of the bath operator, $X_T(\omega)\equiv\int_0^T\dd t\,\ee^{i\omega t}B(t)$, the Fourier
-amplitude of $B$ at frequency $\omega$ accumulated over a time $T$. Its mean square is
+The functions $C(\omega)$ and $S(\omega)$ will be called noise spectra throughout, so it is worth saying once why a Fourier-transformed correlation function deserves the name.
+Take a finite record of the bath operator, $X_T(\omega)\equiv\int_0^T\dd t\,\ee^{i\omega t}B(t)$, the Fourier amplitude of $B$ at frequency $\omega$ accumulated over a time $T$.
+Its mean square is
 \begin{equation}
   \avg{X_T(\omega)X_T(\omega)^\dagger}=\int_0^T\!\!\dd t\!\int_0^T\!\!\dd t'\,\ee^{i\omega(t-t')}\avg{B(t)B(t')}
   =\int_{-T}^{T}\!\dd\tau\,(T-|\tau|)\,\ee^{i\omega\tau}C(\tau)\;\xrightarrow{\;T\gg\tau_B\;}\;T\,C(\omega),
   \label{eq:wiener-khinchin}
 \end{equation}
-where stationarity was used to write $\avg{B(t)B(t')}=C(t-t')$ and the double integral was
-reorganized by the difference $\tau=t-t'$; for $T$ much longer than the correlation time
-$\tau_B$ the factor $(T-|\tau|)$ can be replaced by $T$ where $C(\tau)$ is appreciable. So
-$C(\omega)=\lim_{T\to\infty}\avg{X_TX_T^\dagger}/T$ is the \emph{mean-square Fourier amplitude of the
-fluctuations of $B$ at frequency $\omega$, per unit time}: the noise power per unit bandwidth,
-which is what a spectrum analyser displays. This is the Wiener--Khinchin
-theorem~\cite{Wiener1930,Khinchin1934}, and its classical statement is the reason the
-transform of an autocorrelation function is called the power spectral density. The
-companion statement $\int\frac{\dd\omega}{2\pi}C(\omega)=C(0)=\avg{B^2}$ (Parseval) says that the
-spectrum distributes the total variance over frequency.
+where stationarity was used to write $\avg{B(t)B(t')}=C(t-t')$ and the double integral was reorganized by the difference $\tau=t-t'$; for $T$ much longer than the correlation time $\tau_B$ the factor $(T-|\tau|)$ can be replaced by $T$ where $C(\tau)$ is appreciable.
+So $C(\omega)=\lim_{T\to\infty}\avg{X_TX_T^\dagger}/T$ is the \emph{mean-square Fourier amplitude of the fluctuations of $B$ at frequency $\omega$, per unit time}: the noise power per unit bandwidth, which is what a spectrum analyser displays.
+This is the Wiener--Khinchin theorem~\cite{Wiener1930,Khinchin1934}, and its classical statement is the reason the transform of an autocorrelation function is called the power spectral density.
+The companion statement $\int\frac{\dd\omega}{2\pi}C(\omega)=C(0)=\avg{B^2}$ (Parseval) says that the spectrum distributes the total variance over frequency.
 
-The quantum version differs from the classical one in exactly one respect, operator
-ordering. The other ordering, $\avg{X_T^\dagger X_T}/T$, gives $\int\ee^{i\omega\tau}\avg{B(0)B(\tau)}\dd\tau=C(-\omega)$,
-and the two are not equal: the ``spectrum'' of a quantum variable is a pair of functions
-$C(\pm\omega)$, or equivalently their even part $S(\omega)=\tfrac12[C(\omega)+C(-\omega)]$ and odd part
-$\chi''(\omega)$ of \cref{eq:C-even-odd} below. For a classical stochastic signal the two
-orderings coincide, the spectrum is a single even function, and it is $S(\omega)$: the
-symmetrized spectrum is the part of the quantum noise that looks like classical noise,
-which is why it is what dephasing measurements see (\cref{sec:lec10}), while the
-antisymmetric part is the dissipative response, which only an energy-exchanging process
-can detect (relaxation, item (iv)). Clerk \emph{et al.}~\cite[Sec.~II.A]{ClerkRMP2010} develop
-this viewpoint in detail, including how an amplifier or a detector ``reads'' $C(\pm\omega)$.
+The quantum version differs from the classical one in exactly one respect, operator ordering.
+The other ordering, $\avg{X_T^\dagger X_T}/T$, gives $\int\ee^{i\omega\tau}\avg{B(0)B(\tau)}\dd\tau=C(-\omega)$, and the two are not equal: the ``spectrum'' of a quantum variable is a pair of functions $C(\pm\omega)$, or equivalently their even part $S(\omega)=\tfrac12[C(\omega)+C(-\omega)]$ and odd part $\chi''(\omega)$ of \cref{eq:C-even-odd} below.
+For a classical stochastic signal the two orderings coincide, the spectrum is a single even function, and it is $S(\omega)$: the symmetrized spectrum is the part of the quantum noise that looks like classical noise, which is why it is what dephasing measurements see (\cref{sec:lec10}), while the antisymmetric part is the dissipative response, which only an energy-exchanging process can detect (relaxation, item (iv)).
+Clerk \emph{et al.}~\cite[Sec.~II.A]{ClerkRMP2010} develop this viewpoint in detail, including how an amplifier or a detector ``reads'' $C(\pm\omega)$.
 
 \paragraph{(i) The dissipative response is the spectral density.}
 From \cref{eq:chi-def},
 \begin{equation*}
   \chi(\omega)=\frac2\pi\int_0^\infty\!\dd\omega'\,J(\omega')\int_0^\infty\!\dd t\,\ee^{i\omega t}\sin\omega't ,
 \end{equation*}
-and the one-sided time integral is a distribution whose imaginary part is
-$\tfrac\pi2[\delta(\omega-\omega')-\delta(\omega+\omega')]$ (the derivation is written out in the solution of
-Exercise~\ref{ex:2-2}). Integrating against $J(\omega')$ on $\omega'>0$ picks $J(\omega)$ for $\omega>0$ and
-$-J(-\omega)$ for $\omega<0$, which is the first line of \cref{eq:FDT}. Two remarks. $\chi''$ is odd
-because $\chi(t)$ is real: for a real function $\chi(-\omega)=\chi(\omega)^*$, so the imaginary part
-is odd and the real part even. And $\chi''$ carries no temperature at all. This is special to
-a harmonic bath with linear $B$: the commutator $[B(t),B(0)]$ is then a c-number, and
-its expectation value cannot depend on the state. For an anharmonic bath $\chi''$ would be
-temperature dependent, and \cref{eq:FDT} would still hold, but with a $J$ that is itself a
-function of $T$.
+and the one-sided time integral is a distribution whose imaginary part is $\tfrac\pi2[\delta(\omega-\omega')-\delta(\omega+\omega')]$ (the derivation is written out in the solution of Exercise~\ref{ex:2-2}).
+Integrating against $J(\omega')$ on $\omega'>0$ picks $J(\omega)$ for $\omega>0$ and $-J(-\omega)$ for $\omega<0$, which is the first line of \cref{eq:FDT}.
+Two remarks.
+$\chi''$ is odd because $\chi(t)$ is real: for a real function $\chi(-\omega)=\chi(\omega)^*$, so the imaginary part is odd and the real part even.
+And $\chi''$ carries no temperature at all.
+This is special to a harmonic bath with linear $B$: the commutator $[B(t),B(0)]$ is then a c-number, and its expectation value cannot depend on the state.
+For an anharmonic bath $\chi''$ would be temperature dependent, and \cref{eq:FDT} would still hold, but with a $J$ that is itself a function of $T$.
 
 \paragraph{(ii) The fluctuation--dissipation theorem.}
-From \cref{eq:S-def}, and using $\int\dd t\,\ee^{i\omega t}\cos\omega't=\pi[\delta(\omega-\omega')+\delta(\omega+\omega')]$ (a
-two-sided integral, hence no principal value),
+From \cref{eq:S-def}, and using $\int\dd t\,\ee^{i\omega t}\cos\omega't=\pi[\delta(\omega-\omega')+\delta(\omega+\omega')]$ (a two-sided integral, hence no principal value),
 \begin{equation}
   S(\omega)=J(|\omega|)\coth\tfrac{\beta|\omega|}{2}=\underbrace{\coth\tfrac{\beta\omega}{2}}_{\text{odd}}\cdot\underbrace{\sgn(\omega)J(|\omega|)}_{\chi''(\omega),\ \text{odd}},
 \end{equation}
-even in $\omega$ as the transform of a real even $S(t)$ must be. This is the
-fluctuation--dissipation theorem in the form of Callen and
-Welton~\cite{CallenWelton1951,Kubo1966}: the symmetrized noise at frequency $\omega$ is fixed
-by the dissipative response at the same frequency, through a universal factor that
-depends only on temperature. Two limits are worth memorizing:
+even in $\omega$ as the transform of a real even $S(t)$ must be.
+This is the fluctuation--dissipation theorem in the form of Callen and Welton~\cite{CallenWelton1951,Kubo1966}: the symmetrized noise at frequency $\omega$ is fixed by the dissipative response at the same frequency, through a universal factor that depends only on temperature.
+Two limits are worth memorizing:
 \begin{equation}
 \begin{aligned}
   |\omega|\ll T:&\quad S(\omega)\to\frac{2T}{\omega}\,\chi''(\omega)&&\text{(classical, Nyquist--Johnson)},\\
   |\omega|\gg T:&\quad S(\omega)\to|\chi''(\omega)|=J(|\omega|)&&\text{(zero-point noise)}.
 \end{aligned}
 \end{equation}
-The noise does not vanish at $T=0$. In \cref{fig:bath-kernels}, drawn at $T=0$, $S(\omega)$
-coincides with $\chi''$ for $\omega>0$ and is its mirror image for $\omega<0$.
+The noise does not vanish at $T=0$.
+In \cref{fig:bath-kernels}, drawn at $T=0$, $S(\omega)$ coincides with $\chi''$ for $\omega>0$ and is its mirror image for $\omega<0$.
 
 \paragraph{(iii) The full correlator is noise plus response.}
-The first equality in the third line, $C(\omega)=S(\omega)+\chi''(\omega)$, is linearity of the Fourier
-transform applied to the real and imaginary parts of $C(t)$, but the bookkeeping of the
-$\theta$ function deserves to be written out. Split $C(t)=\Re C(t)+i\,\Im C(t)$ for all $t$.
-The real part is $S(t)$ by \cref{eq:S-def}. For the imaginary part, the definition
-\eqref{eq:chi-def} gives $\avg{[B(t),B(0)]}=-i\chi(t)$ for $t>0$, so
-$\Im C(t)=\tfrac{1}{2i}\avg{[B(t),B(0)]}=-\tfrac12\chi(t)$ for $t>0$; and since $C(-t)=C(t)^*$ makes
-$\Im C$ odd, $\Im C(t)=+\tfrac12\chi(-t)$ for $t<0$. With the $\theta$ function already inside
-$\chi$, both cases are the single formula
+The first equality in the third line, $C(\omega)=S(\omega)+\chi''(\omega)$, is linearity of the Fourier transform applied to the real and imaginary parts of $C(t)$, but the bookkeeping of the $\theta$ function deserves to be written out.
+Split $C(t)=\Re C(t)+i\,\Im C(t)$ for all $t$.
+The real part is $S(t)$ by \cref{eq:S-def}.
+For the imaginary part, the definition \eqref{eq:chi-def} gives $\avg{[B(t),B(0)]}=-i\chi(t)$ for $t>0$, so $\Im C(t)=\tfrac{1}{2i}\avg{[B(t),B(0)]}=-\tfrac12\chi(t)$ for $t>0$; and since $C(-t)=C(t)^*$ makes $\Im C$ odd, $\Im C(t)=+\tfrac12\chi(-t)$ for $t<0$.
+With the $\theta$ function already inside $\chi$, both cases are the single formula
 \begin{equation}
   C(t)=S(t)-\tfrac i2\big[\chi(t)-\chi(-t)\big]\qquad(\text{all }t),
   \label{eq:C-split}
 \end{equation}
-in which the bracket is the odd extension of $\chi$: $\chi(t)$ lives on $t>0$, $\chi(-t)$ on
-$t<0$. Now transform term by term. $S(t)\mapsto S(\omega)$. For the bracket use
-$\int\dd t\,\ee^{i\omega t}\chi(-t)=\int\dd t'\,\ee^{-i\omega t'}\chi(t')=\chi(-\omega)=\chi(\omega)^*$, the last step because
-$\chi(t)$ is real. Hence
+in which the bracket is the odd extension of $\chi$: $\chi(t)$ lives on $t>0$, $\chi(-t)$ on $t<0$.
+Now transform term by term.
+$S(t)\mapsto S(\omega)$.
+For the bracket use $\int\dd t\,\ee^{i\omega t}\chi(-t)=\int\dd t'\,\ee^{-i\omega t'}\chi(t')=\chi(-\omega)=\chi(\omega)^*$, the last step because $\chi(t)$ is real.
+Hence
 \begin{equation}
   C(\omega)=S(\omega)-\tfrac i2\big[\chi(\omega)-\chi(\omega)^*\big]=S(\omega)-\tfrac i2\cdot2i\,\Im\chi(\omega)=S(\omega)+\chi''(\omega).
 \end{equation}
-Only the imaginary part of $\chi(\omega)$ survives: the real (reactive) part $\chi'$ cancels
-between $\chi(\omega)$ and $\chi(\omega)^*$, which is why the noise spectrum knows about dissipation
-but not about reactive response. The same result can be read off without any $\theta$
-functions from the golden-rule form \eqref{eq:C-golden}, which shows that $C(\omega)$ is real
-(and nonnegative) for every $\omega$: then $C(-\omega)=\int\ee^{i\omega t}C(-t)\dd t=\int\ee^{i\omega t}C(t)^*\dd t$ is the
-transform of $C^*$, and the even and odd parts of the spectrum are
+Only the imaginary part of $\chi(\omega)$ survives: the real (reactive) part $\chi'$ cancels between $\chi(\omega)$ and $\chi(\omega)^*$, which is why the noise spectrum knows about dissipation but not about reactive response.
+The same result can be read off without any $\theta$ functions from the golden-rule form \eqref{eq:C-golden}, which shows that $C(\omega)$ is real (and nonnegative) for every $\omega$: then $C(-\omega)=\int\ee^{i\omega t}C(-t)\dd t=\int\ee^{i\omega t}C(t)^*\dd t$ is the transform of $C^*$, and the even and odd parts of the spectrum are
 \begin{equation}
 \begin{aligned}
   \tfrac12\big[C(\omega)+C(-\omega)\big]&=\int\!\dd t\,\ee^{i\omega t}\,\Re C(t)=S(\omega),\\
@@ -244,109 +193,73 @@ transform of $C^*$, and the even and odd parts of the spectrum are
 \end{aligned}
   \label{eq:C-even-odd}
 \end{equation}
-So $S$ is the \emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this
-is the cleanest way to remember the Keldysh decomposition, and \cref{eq:C-even-odd} is how
-one extracts both kernels from a measured or computed $C(\omega)$.
+So $S$ is the \emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this is the cleanest way to remember the Keldysh decomposition, and \cref{eq:C-even-odd} is how one extracts both kernels from a measured or computed $C(\omega)$.
 
 \begin{remark}
-Two different facts are packed into $C(-t)=C(t)^*$, and only one of them is general. For
-the two-time correlator $C(t,s)=\avg{B(t)B(s)}$ one always has $C(t,s)^*=C(s,t)$, in any
-state of the bath, because $\avg X^*=\avg{X^\dagger}$ and $(B(t)B(s))^\dagger=B(s)B(t)$ for Hermitian
-$B$; this is what makes $S(t,s)=\Re C(t,s)$ real and symmetric and $\tfrac12\avg{[B(t),B(s)]}$ real
-and antisymmetric. Writing $C$ with a single argument, $C(t,s)=C(t-s)$, is a separate
-assumption: invariance under a common shift of both times, which holds if and only if
-$[H_B,\rhoB]=0$ (move $\ee^{\pm iH_B\tau}$ onto $\rhoB$ by cyclicity). Only with stationarity does
-$C(t,s)^*=C(s,t)$ become $C(-t)=C(t)^*$ and a one-frequency $C(\omega)$ exist; for a
-non-stationary bath (a driven one, or one prepared in a coherent or squeezed state) the
-analysis of (ii)--(iii) must be done in two times or in Wigner coordinates
-$(t-s,\tfrac{t+s}2)$. One piece survives in general, and it is a nice illustration of the
-Keldysh split: for a harmonic bath with linear $B$ the commutator $[B(t),B(s)]$ is a
-c-number, so $\chi(t,s)=i\theta(t-s)\avg{[B(t),B(s)]}$ depends on $t-s$ alone in \emph{every}
-state, stationary or not, and only the noise kernel $S(t,s)$ becomes a genuine two-time
-function. A non-stationary Gaussian bath has a state-independent $D^R$ and a two-time
-$D^K$.
+Two different facts are packed into $C(-t)=C(t)^*$, and only one of them is general.
+For the two-time correlator $C(t,s)=\avg{B(t)B(s)}$ one always has $C(t,s)^*=C(s,t)$, in any state of the bath, because $\avg X^*=\avg{X^\dagger}$ and $(B(t)B(s))^\dagger=B(s)B(t)$ for Hermitian $B$; this is what makes $S(t,s)=\Re C(t,s)$ real and symmetric and $\tfrac12\avg{[B(t),B(s)]}$ real and antisymmetric.
+Writing $C$ with a single argument, $C(t,s)=C(t-s)$, is a separate assumption: invariance under a common shift of both times, which holds if and only if $[H_B,\rhoB]=0$ (move $\ee^{\pm iH_B\tau}$ onto $\rhoB$ by cyclicity).
+Only with stationarity does $C(t,s)^*=C(s,t)$ become $C(-t)=C(t)^*$ and a one-frequency $C(\omega)$ exist; for a non-stationary bath (a driven one, or one prepared in a coherent or squeezed state) the analysis of (ii)--(iii) must be done in two times or in Wigner coordinates $(t-s,\tfrac{t+s}2)$.
+One piece survives in general, and it is a nice illustration of the Keldysh split: for a harmonic bath with linear $B$ the commutator $[B(t),B(s)]$ is a c-number, so $\chi(t,s)=i\theta(t-s)\avg{[B(t),B(s)]}$ depends on $t-s$ alone in \emph{every} state, stationary or not, and only the noise kernel $S(t,s)$ becomes a genuine two-time function.
+A non-stationary Gaussian bath has a state-independent $D^R$ and a two-time $D^K$.
 \end{remark}
 
-\noindent The second equality uses the
-identity $\coth\tfrac{\beta\omega}{2}=1+2n(\omega)$, valid for all real $\omega$ including negative ones,
-so that $S+\chi''=(\coth+1)\chi''=2(1+n)\chi''$. Computing $C(\omega)$ directly from \cref{eq:C}
-confirms it and exhibits the physics:
+\noindent The second equality uses the identity $\coth\tfrac{\beta\omega}{2}=1+2n(\omega)$, valid for all real $\omega$ including negative ones, so that $S+\chi''=(\coth+1)\chi''=2(1+n)\chi''$.
+Computing $C(\omega)$ directly from \cref{eq:C} confirms it and exhibits the physics:
 \begin{equation}
   C(\omega)=2J(\omega)\big[1+n(\omega)\big]\ \ (\omega>0),\qquad
   C(\omega)=2J(|\omega|)\,n(|\omega|)\ \ (\omega<0),
   \label{eq:C-omega}
 \end{equation}
-the two cases being covered by the single formula $2\chi''(1+n)$ because
-$1+n(\omega)=\ee^{\beta\omega}/(\ee^{\beta\omega}-1)=-n(|\omega|)$ for $\omega<0$, and the two minus signs cancel.
+the two cases being covered by the single formula $2\chi''(1+n)$ because $1+n(\omega)=\ee^{\beta\omega}/(\ee^{\beta\omega}-1)=-n(|\omega|)$ for $\omega<0$, and the two minus signs cancel.
 
 \paragraph{(iv) Absorption, emission and detailed balance.}
-\Cref{eq:C-golden} is Fermi's golden rule: $C(\omega)$ at $\omega>0$ is the rate, per unit coupling
-squared, at which the bath makes a transition \emph{upward} by $\omega$, i.e.\ absorbs energy
-that the system must supply; the factor $1+n$ in \cref{eq:C-omega} is the ``spontaneous plus
-stimulated'' factor of a bosonic mode. At $\omega<0$ it is the rate at which the bath gives up
-energy $|\omega|$, which requires a thermally excited mode, hence the factor $n$.
-\Cref{sec:lec5} uses exactly this: $\Gamma_\downarrow\propto C(\omega_0)$ (the qubit decays, the bath absorbs)
-and $\Gamma_\uparrow\propto C(-\omega_0)$. Dividing the two cases of \cref{eq:C-omega},
+\Cref{eq:C-golden} is Fermi's golden rule: $C(\omega)$ at $\omega>0$ is the rate, per unit coupling squared, at which the bath makes a transition \emph{upward} by $\omega$, i.e.\ absorbs energy that the system must supply; the factor $1+n$ in \cref{eq:C-omega} is the ``spontaneous plus stimulated'' factor of a bosonic mode.
+At $\omega<0$ it is the rate at which the bath gives up energy $|\omega|$, which requires a thermally excited mode, hence the factor $n$.
+\Cref{sec:lec5} uses exactly this: $\Gamma_\downarrow\propto C(\omega_0)$ (the qubit decays, the bath absorbs) and $\Gamma_\uparrow\propto C(-\omega_0)$.
+Dividing the two cases of \cref{eq:C-omega},
 \begin{equation}
   \frac{C(-\omega)}{C(\omega)}=\frac{n(\omega)}{1+n(\omega)}=\ee^{-\beta\omega},
   \label{eq:detailed-balance}
 \end{equation}
-which is detailed balance, and is also the Kubo--Martin--Schwinger condition
-$\avg{B(t)B(0)}=\avg{B(0)B(t+i\beta)}$ read in frequency space. At $T=0$ the negative-frequency
-side vanishes identically: the bath can only absorb. This asymmetry between $\pm\omega$ is
-what makes $C(\omega)$ a \emph{quantum} noise spectrum; it is invisible in $S$, which is even by
-construction, and a classical noise source always has $C(-\omega)=C(\omega)$. A measurement that
-resolves the asymmetry, such as $\Gamma_\downarrow\ne\Gamma_\uparrow$ in a $T_1$ experiment, is seeing quantum
-noise; see~\cite[Sec.~II]{ClerkRMP2010} for a careful discussion of the asymmetric
-spectrum and its measurement.
+which is detailed balance, and is also the Kubo--Martin--Schwinger condition $\avg{B(t)B(0)}=\avg{B(0)B(t+i\beta)}$ read in frequency space.
+At $T=0$ the negative-frequency side vanishes identically: the bath can only absorb.
+This asymmetry between $\pm\omega$ is what makes $C(\omega)$ a \emph{quantum} noise spectrum; it is invisible in $S$, which is even by construction, and a classical noise source always has $C(-\omega)=C(\omega)$.
+A measurement that resolves the asymmetry, such as $\Gamma_\downarrow\ne\Gamma_\uparrow$ in a $T_1$ experiment, is seeing quantum noise; see~\cite[Sec.~II]{ClerkRMP2010} for a careful discussion of the asymmetric spectrum and its measurement.
 
 \paragraph{(v) Kramers--Kronig, and what is independent of what.}
-$\chi(\omega)$ is the transform of a function that vanishes for $t<0$, so it is analytic in the
-upper half $\omega$-plane and its real and imaginary parts are Hilbert transforms of each
-other,
+$\chi(\omega)$ is the transform of a function that vanishes for $t<0$, so it is analytic in the upper half $\omega$-plane and its real and imaginary parts are Hilbert transforms of each other,
 \begin{equation}
   \chi'(\omega)=\frac1\pi\,\mathrm{P}\!\!\int_{-\infty}^{\infty}\!\dd\omega'\,\frac{\chi''(\omega')}{\omega'-\omega}
   =\frac2\pi\,\mathrm{P}\!\!\int_{0}^{\infty}\!\dd\omega'\,\frac{\omega'J(\omega')}{\omega'^2-\omega^2},
   \label{eq:KK}
 \end{equation}
-the second form following from the oddness of $\chi''$ (it is also what the principal-value
-part of the integral in Exercise~\ref{ex:2-2} gives directly). The static susceptibility
-$\chi(0)=\tfrac2\pi\int_0^\infty\dd\omega\,J(\omega)/\omega$ is twice the reorganization energy of the bath and
-will reappear in \cref{sec:lec7,sec:lec8}. 
+the second form following from the oddness of $\chi''$ (it is also what the principal-value part of the integral in Exercise~\ref{ex:2-2} gives directly).
+The static susceptibility $\chi(0)=\tfrac2\pi\int_0^\infty\dd\omega\,J(\omega)/\omega$ is twice the reorganization energy of the bath and will reappear in \cref{sec:lec7,sec:lec8}.
 
-Putting (i)--(v) together: in a thermal bath the
-whole environment enters through the single real function $J(\omega)$ on $\omega>0$. $\chi''$ is $J$
-extended oddly, $\chi'$ follows by Kramers--Kronig, $S$ follows by the FDT, and $C=S+\chi''$. The
-two entries of the Keldysh matrix \eqref{eq:LO} carry no independent information in
-equilibrium. Out of equilibrium the chain breaks at exactly one link: causality still fixes
-$\chi'$ from $\chi''$, but nothing fixes $S$ from $\chi''$. A driven cavity, a bath with a
-nonthermal occupation, or a $1/f$ noise source each have their own $S(\omega)$ and $\chi''(\omega)$,
-and their ratio at a given frequency defines an effective temperature there,
-$\coth(\beta_{\rm eff}(\omega)\,\omega/2)\equiv S(\omega)/\chi''(\omega)$, which can differ between frequencies and even be
-negative (population inversion). Keeping $S$ and $\chi$ on separate lines, which is what
-the Keldysh rotation does, costs nothing and buys this generality: every formula derived
-with $D^K$ and $D^R$ kept apart remains valid without the FDT, and only the final steps
-that use $S=\coth\cdot\chi''$ (for instance the Gibbs steady state in \cref{sec:lec5}) must be
-revisited.
+Putting (i)--(v) together: in a thermal bath the whole environment enters through the single real function $J(\omega)$ on $\omega>0$.
+$\chi''$ is $J$ extended oddly, $\chi'$ follows by Kramers--Kronig, $S$ follows by the FDT, and $C=S+\chi''$.
+The two entries of the Keldysh matrix \eqref{eq:LO} carry no independent information in equilibrium.
+Out of equilibrium the chain breaks at exactly one link: causality still fixes $\chi'$ from $\chi''$, but nothing fixes $S$ from $\chi''$.
+A driven cavity, a bath with a nonthermal occupation, or a $1/f$ noise source each have their own $S(\omega)$ and $\chi''(\omega)$, and their ratio at a given frequency defines an effective temperature there, $\coth(\beta_{\rm eff}(\omega)\,\omega/2)\equiv S(\omega)/\chi''(\omega)$, which can differ between frequencies and even be negative (population inversion).
+Keeping $S$ and $\chi$ on separate lines, which is what the Keldysh rotation does, costs nothing and buys this generality: every formula derived with $D^K$ and $D^R$ kept apart remains valid without the FDT, and only the final steps that use $S=\coth\cdot\chi''$ (for instance the Gibbs steady state in \cref{sec:lec5}) must be revisited.
 
 \begin{exbox}[Example 2.1: two spectral densities used throughout]
-\emph{Ohmic bath.} $J(\omega)=2\pi\alpha\,\omega\,\ee^{-\omega/\omega_c}$. With Leggett's coupling
-normalization (see the warning box) $\alpha$ is the dimensionless Kondo parameter, with the
-famous values $\alpha=\tfrac12$ (Toulouse point) and $\alpha=1$ (localization transition at
-$T=0$)~\cite[Secs.~IV--V]{Leggett1987}. At $T=0$,
+\emph{Ohmic bath.}
+$J(\omega)=2\pi\alpha\,\omega\,\ee^{-\omega/\omega_c}$.
+With Leggett's coupling normalization (see the warning box) $\alpha$ is the dimensionless Kondo parameter, with the famous values $\alpha=\tfrac12$ (Toulouse point) and $\alpha=1$ (localization transition at $T=0$)~\cite[Secs.~IV--V]{Leggett1987}.
+At $T=0$,
 \begin{equation}
   S(t)=2\alpha\,\omega_c^2\,\frac{1-\omega_c^2t^2}{(1+\omega_c^2t^2)^2},\qquad
   \chi(t)=\theta(t)\,\frac{8\alpha\,\omega_c^3\,t}{(1+\omega_c^2t^2)^2},
 \end{equation}
-both decaying as power laws on the scale $1/\omega_c$. At temperature $T$ and for $t\gg1/\omega_c$,
-$S(t)\simeq-2\alpha(\pi T)^2/\sinh^2(\pi Tt)$: the noise correlator becomes negative and
-decays exponentially on the thermal time $1/(\pi T)$. The static susceptibility
-$\chi(\omega{=}0)=\tfrac2\pi\int_0^\infty\dd\omega\,J(\omega)/\omega=4\alpha\omega_c$ is twice the reorganization energy.
+both decaying as power laws on the scale $1/\omega_c$.
+At temperature $T$ and for $t\gg1/\omega_c$, $S(t)\simeq-2\alpha(\pi T)^2/\sinh^2(\pi Tt)$: the noise correlator becomes negative and decays exponentially on the thermal time $1/(\pi T)$.
+The static susceptibility $\chi(\omega{=}0)=\tfrac2\pi\int_0^\infty\dd\omega\,J(\omega)/\omega=4\alpha\omega_c$ is twice the reorganization energy.
 
-\emph{Lorentzian bath (pseudomode).} $J(\omega)=g^2\,\dfrac{\gamma/2}{(\omega-\Omega)^2+\gamma^2/4}$, a single
-broadened mode at $\Omega$ with width $\gamma$. If we allow this $J$ to extend to negative
-frequencies (a good approximation when $\Omega\gg\gamma$, and exactly what the pseudomode
-construction below assumes), then at $T=0$
+\emph{Lorentzian bath (pseudomode).}
+$J(\omega)=g^2\,\dfrac{\gamma/2}{(\omega-\Omega)^2+\gamma^2/4}$, a single broadened mode at $\Omega$ with width $\gamma$.
+If we allow this $J$ to extend to negative frequencies (a good approximation when $\Omega\gg\gamma$, and exactly what the pseudomode construction below assumes), then at $T=0$
 \begin{equation}
   C(t)=g^2\,\ee^{-i\Omega t-\gamma|t|/2},\qquad
   S(t)=g^2\,\ee^{-\gamma|t|/2}\cos\Omega t,\qquad
@@ -354,113 +267,88 @@ construction below assumes), then at $T=0$
   \label{eq:lorentz-kernels}
 \end{equation}
 and $S(\omega)=J(\omega)+J(-\omega)$, $\chi''(\omega)=J(\omega)-J(-\omega)$, $C(\omega)=2J(\omega)$.
-\Cref{fig:bath-kernels} shows these for the parameters used in all numerical figures,
-$\Omega=\omega_0$, $\gamma=0.5\,\omega_0$. The limit $\gamma\to\infty$ at fixed $g^2/\gamma$ is a
-Markovian (white-noise) bath; the limit $\gamma\to0$ is a single undamped mode.
+\Cref{fig:bath-kernels} shows these for the parameters used in all numerical figures, $\Omega=\omega_0$, $\gamma=0.5\,\omega_0$.
+The limit $\gamma\to\infty$ at fixed $g^2/\gamma$ is a Markovian (white-noise) bath; the limit $\gamma\to0$ is a single undamped mode.
 \end{exbox}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_bath_kernels.pdf}
-\caption{The Lorentzian bath used in the numerical examples. Left: noise kernel $S(t)$
-(even in $t$) and response kernel $\chi(t)$ (causal, odd before the step function), from
-\cref{eq:lorentz-kernels}. Right: $\chi''(\omega)$ and the zero-temperature noise spectrum
-$S(\omega)=J(\omega)+J(-\omega)$. A $T_1$ measurement samples these at $\omega=\pm\omega_0$; a
-dephasing measurement samples $S$ near $\omega=0$ (\cref{sec:lec10}).}
+\caption{The Lorentzian bath used in the numerical examples.
+Left: noise kernel $S(t)$ (even in $t$) and response kernel $\chi(t)$ (causal, odd before the step function), from \cref{eq:lorentz-kernels}.
+Right: $\chi''(\omega)$ and the zero-temperature noise spectrum $S(\omega)=J(\omega)+J(-\omega)$.
+A $T_1$ measurement samples these at $\omega=\pm\omega_0$; a dephasing measurement samples $S$ near $\omega=0$ (\cref{sec:lec10}).}
 \label{fig:bath-kernels}
 \end{figure}
 
 \subsection{Why only \texorpdfstring{$J(\omega)$}{J(omega)} matters: Gaussianity and Wick's theorem}
 
-The bath state is Gaussian (thermal state of a quadratic Hamiltonian) and $B$ is linear
-in the $b_k$. Hence all higher moments of $B$ factorize into products of two-point
-functions:
+The bath state is Gaussian (thermal state of a quadratic Hamiltonian) and $B$ is linear in the $b_k$.
+Hence all higher moments of $B$ factorize into products of two-point functions:
 \begin{equation}
   \avg{T_{\mathcal C}\,B(z_1)B(z_2)\cdots B(z_{2n})}=\sum_{\text{pairings}}\ \prod_{\text{pairs }(ij)}\avg{T_{\mathcal C}\,B(z_i)B(z_j)},
   \qquad \avg{T_{\mathcal C}\,B(z_1)\cdots B(z_{2n+1})}=0 ,
   \label{eq:wick}
 \end{equation}
-for any ordering prescription $T_{\mathcal C}$ that is applied consistently inside each pair
-(Wick's theorem; see~\cite[Sec.~2.5]{Kamenev2011} for the contour version). Since the
-two-point function is built from $J(\omega)$ and $\beta$ alone, so is everything the system
-can feel. This is the precise sense in which ``the bath is characterized by its spectral
-density''. Non-Gaussian baths (spins, anharmonic modes, fermionic reservoirs with
-interactions) need higher cumulants; the formalism of the following lectures survives
-with pairings replaced by cumulants~\cite{Schoeller2009}, but we will not need this.
+for any ordering prescription $T_{\mathcal C}$ that is applied consistently inside each pair (Wick's theorem; see~\cite[Sec.~2.5]{Kamenev2011} for the contour version).
+Since the two-point function is built from $J(\omega)$ and $\beta$ alone, so is everything the system can feel.
+This is the precise sense in which ``the bath is characterized by its spectral density''.
+Non-Gaussian baths (spins, anharmonic modes, fermionic reservoirs with interactions) need higher cumulants; the formalism of the following lectures survives with pairings replaced by cumulants~\cite{Schoeller2009}, but we will not need this.
 
-A useful way to say the same thing: for a Gaussian bath, a \emph{linear} coupling, and a
-factorized initial state, the reduced dynamics of the system depends on the bath only
-through $C(t)$. Any two baths with the same $C(t)$ produce identical $\rhoS(t)$. This is
-the basis of the exact reference solution used in the numerics:
+A useful way to say the same thing: for a Gaussian bath, a \emph{linear} coupling, and a factorized initial state, the reduced dynamics of the system depends on the bath only through $C(t)$.
+Any two baths with the same $C(t)$ produce identical $\rhoS(t)$.
+This is the basis of the exact reference solution used in the numerics:
 
 \begin{keybox}[The pseudomode mapping (Garraway~\cite{Garraway1997}; Tamascelli \emph{et al.}~\cite{Tamascelli2018})]
-Consider the qubit coupled to a \emph{single} oscillator $a$ of frequency $\Omega$, which is
-itself damped at rate $\gamma$ by a Markovian environment:
+Consider the qubit coupled to a \emph{single} oscillator $a$ of frequency $\Omega$, which is itself damped at rate $\gamma$ by a Markovian environment:
 \begin{equation}
   \dot\rho=-i\big[H_S+\Omega a^\dagger a+g\,S\otimes(a+a^\dagger),\rho\big]
   +\gamma\big(a\rho a^\dagger-\tfrac12\{a^\dagger a,\rho\}\big),\qquad \rho(0)=\rhoS(0)\otimes\ket0\bra0 .
   \label{eq:pseudomode}
 \end{equation}
-The ``bath'' $B_{\rm pm}=g(a+a^\dagger)$ seen by the qubit is Gaussian with
-$\avg{B_{\rm pm}(t)B_{\rm pm}(0)}=g^2\ee^{-i\Omega t-\gamma|t|/2}$, which is exactly the Lorentzian
-$C(t)$ of \cref{eq:lorentz-kernels}. Therefore the qubit's reduced dynamics in
-\cref{eq:pseudomode} is \emph{identical}, to all orders in $g$ and for all times, to its
-dynamics in the full Lorentzian bosonic bath. The small Hilbert space (qubit $\otimes$ a
-few oscillator levels) makes \cref{eq:pseudomode} trivially solvable numerically. The
-price is the negative-frequency tail of $J$; the reward is an exact benchmark for every
-approximation in these notes.
+The ``bath'' $B_{\rm pm}=g(a+a^\dagger)$ seen by the qubit is Gaussian with $\avg{B_{\rm pm}(t)B_{\rm pm}(0)}=g^2\ee^{-i\Omega t-\gamma|t|/2}$, which is exactly the Lorentzian $C(t)$ of \cref{eq:lorentz-kernels}.
+Therefore the qubit's reduced dynamics in \cref{eq:pseudomode} is \emph{identical}, to all orders in $g$ and for all times, to its dynamics in the full Lorentzian bosonic bath.
+The small Hilbert space (qubit $\otimes$ a few oscillator levels) makes \cref{eq:pseudomode} trivially solvable numerically.
+The price is the negative-frequency tail of $J$; the reward is an exact benchmark for every approximation in these notes.
 \end{keybox}
 
 \subsection{Initial state and pictures}
 
-We take $\rho(0)=\rhoS(0)\otimes\rhoB$ with $\rhoB$ thermal (so $[H_B,\rhoB]=0$ and
-$\avg{B}=0$). Physically this means the coupling is switched on at $t=0$, or that the
-qubit was prepared by a fast operation that does not disturb the bath. Correlated initial
-states (for example the global thermal state of $H$) can be handled, at the price of an
-inhomogeneous term in the master equation (\cref{sec:lec5}) or an imaginary-time branch
-of the contour (\cref{sec:lec9}).
+We take $\rho(0)=\rhoS(0)\otimes\rhoB$ with $\rhoB$ thermal (so $[H_B,\rhoB]=0$ and $\avg{B}=0$).
+Physically this means the coupling is switched on at $t=0$, or that the qubit was prepared by a fast operation that does not disturb the bath.
+Correlated initial states (for example the global thermal state of $H$) can be handled, at the price of an inhomogeneous term in the master equation (\cref{sec:lec5}) or an imaginary-time branch of the contour (\cref{sec:lec9}).
 
-We will move freely between the Schr\"odinger picture, the interaction picture with
-respect to $H_0=H_S+H_B$, and the Heisenberg picture. For the record, in the interaction
-picture
+We will move freely between the Schr\"odinger picture, the interaction picture with respect to $H_0=H_S+H_B$, and the Heisenberg picture.
+For the record, in the interaction picture
 \begin{equation}
   \tilde S(t)=\ee^{iH_St}S\ee^{-iH_St}=\cos\theta\,\sz+\sin\theta\big(\sx\cos\omega_0t-\sy\sin\omega_0t\big)
   =\cos\theta\,\sz+\sin\theta\big(\sigma_+\ee^{i\omega_0t}+\sigma_-\ee^{-i\omega_0t}\big),
   \label{eq:S-int}
 \end{equation}
-with $\sigma_\pm=\tfrac12(\sx\pm i\sy)$. Note that the Heisenberg-picture rotation of $\sx$ is
-clockwise, opposite to the Schr\"odinger-picture rotation of the Bloch vector in
-\cref{eq:LS-bloch}, as it must be. The $\cos\theta$ part is static, the $\sin\theta$
-part oscillates at $\pm\omega_0$: this is why dephasing samples the bath at $\omega\approx0$ and
-relaxation samples it at $\omega=\pm\omega_0$.
+with $\sigma_\pm=\tfrac12(\sx\pm i\sy)$.
+Note that the Heisenberg-picture rotation of $\sx$ is clockwise, opposite to the Schr\"odinger-picture rotation of the Bloch vector in \cref{eq:LS-bloch}, as it must be.
+The $\cos\theta$ part is static, the $\sin\theta$ part oscillates at $\pm\omega_0$: this is why dephasing samples the bath at $\omega\approx0$ and relaxation samples it at $\omega=\pm\omega_0$.
 
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:2-1}
-Derive \cref{eq:C} and check the single-mode case $J(\omega)=\pi g^2\delta(\omega-\omega_b)$ against
-$S(t)=g^2(2\bar n+1)\cos\omega_bt$, $\chi(t)=2g^2\theta(t)\sin\omega_bt$. Verify \cref{eq:FDT} for this case.
+Derive \cref{eq:C} and check the single-mode case $J(\omega)=\pi g^2\delta(\omega-\omega_b)$ against $S(t)=g^2(2\bar n+1)\cos\omega_bt$, $\chi(t)=2g^2\theta(t)\sin\omega_bt$.
+Verify \cref{eq:FDT} for this case.
 \end{exercise}
 
 \begin{exercise}\label{ex:2-2}
-Prove $\chi''(\omega)=\sgn(\omega)J(|\omega|)$ from \cref{eq:chi-def} and derive the Ohmic kernels
-of Example~2.1 at $T=0$. Then show that at finite $T$ and $\omega_c\to\infty$,
-$S(t)\to-2\alpha(\pi T)^2/\sinh^2(\pi Tt)$ for $t\ne0$, and explain how a positive-definite
-$S(\omega)$ can have a negative $S(t)$ at all $t>0$.
+Prove $\chi''(\omega)=\sgn(\omega)J(|\omega|)$ from \cref{eq:chi-def} and derive the Ohmic kernels of Example~2.1 at $T=0$.
+Then show that at finite $T$ and $\omega_c\to\infty$, $S(t)\to-2\alpha(\pi T)^2/\sinh^2(\pi Tt)$ for $t\ne0$, and explain how a positive-definite $S(\omega)$ can have a negative $S(t)$ at all $t>0$.
 \end{exercise}
 
 \begin{exercise}\label{ex:2-3}
-Show that in \cref{eq:pseudomode} the oscillator's two-point function in the absence of
-the qubit is $\avg{a(t)a^\dagger(0)}=\ee^{-(i\Omega+\gamma/2)t}$ for $t>0$ (use the quantum
-regression theorem, or solve the adjoint equation for $a$), and that the state remains
-Gaussian. This is the content of the pseudomode theorem; see~\cite{Tamascelli2018} for
-the general statement.
+Show that in \cref{eq:pseudomode} the oscillator's two-point function in the absence of the qubit is $\avg{a(t)a^\dagger(0)}=\ee^{-(i\Omega+\gamma/2)t}$ for $t>0$ (use the quantum regression theorem, or solve the adjoint equation for $a$), and that the state remains Gaussian.
+This is the content of the pseudomode theorem; see~\cite{Tamascelli2018} for the general statement.
 \end{exercise}
 
 \begin{exercise}\label{ex:2-4}
-Verify the unitary equivalence \cref{eq:leggett-form}, and show that a bath coupled to
-$S=\cos\theta\sz+\sin\theta\sx$ with correlation $C(t)$ is equivalent to \emph{two independent}
-baths coupled to $\sz$ and $\sx$ only if the cross-correlation $\cos\theta\sin\theta\,C(t)$ is
-dropped. We will see in \cref{sec:lec5} where this cross term goes.
+Verify the unitary equivalence \cref{eq:leggett-form}, and show that a bath coupled to $S=\cos\theta\sz+\sin\theta\sx$ with correlation $C(t)$ is equivalent to \emph{two independent} baths coupled to $\sz$ and $\sx$ only if the cross-correlation $\cos\theta\sin\theta\,C(t)$ is dropped.
+We will see in \cref{sec:lec5} where this cross term goes.
 \end{exercise}
 
 \clearpage

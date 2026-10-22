@@ -2,15 +2,13 @@
 \section{Lecture 1: Liouville space, superoperators and the qubit}
 \label{sec:lec1}
 
-Open-system theory is linear algebra on the space of operators. This lecture makes that
-space concrete for a qubit, so that in later lectures every abstract superoperator can be
-written as a $4\times4$ matrix and checked by hand.
+Open-system theory is linear algebra on the space of operators.
+This lecture makes that space concrete for a qubit, so that in later lectures every abstract superoperator can be written as a $4\times4$ matrix and checked by hand.
 
 \subsection{Operators as vectors}
 
-Let $\mathcal H$ be a $d$-dimensional Hilbert space. The linear operators on $\mathcal H$
-form a $d^2$-dimensional vector space, \emph{Liouville space}, with the
-Hilbert--Schmidt inner product
+Let $\mathcal H$ be a $d$-dimensional Hilbert space.
+The linear operators on $\mathcal H$ form a $d^2$-dimensional vector space, \emph{Liouville space}, with the Hilbert--Schmidt inner product
 \begin{equation}
   (A,B)\equiv\Tr\big(A^\dagger B\big).
   \label{eq:HS}
@@ -21,45 +19,41 @@ For a qubit ($d=2$) an orthonormal basis is
   \kket{e_0}=\tfrac{1}{\sqrt2}\Id,\quad \kket{e_1}=\tfrac{1}{\sqrt2}\sx,\quad
   \kket{e_2}=\tfrac{1}{\sqrt2}\sy,\quad \kket{e_3}=\tfrac{1}{\sqrt2}\sz ,
 \end{equation}
-since $\Tr(\sigma_i\sigma_j)=2\delta_{ij}$. Any operator is $X=\tfrac12(x_0\Id+\bm x\cdot\bm\sigma)$ with
-$x_\mu=\Tr(\sigma_\mu X)$, and a density matrix is
+since $\Tr(\sigma_i\sigma_j)=2\delta_{ij}$.
+Any operator is $X=\tfrac12(x_0\Id+\bm x\cdot\bm\sigma)$ with $x_\mu=\Tr(\sigma_\mu X)$, and a density matrix is
 \begin{equation}
   \rho=\tfrac12\big(\Id+\bm r\cdot\bm\sigma\big),\qquad \bm r=\avg{\bm\sigma},\qquad |\bm r|\le1 ,
   \label{eq:bloch}
 \end{equation}
-the Bloch vector~\cite{Bloch1946}. Throughout the notes we use the \emph{coefficient
-convention}: a superoperator $\mathcal M$ is represented by the $4\times4$ matrix $M_{\mu\nu}$
-defined by $\mathcal M\sigma_\nu=\sum_\mu M_{\mu\nu}\sigma_\mu$, i.e.\
-$M_{\mu\nu}=\tfrac12\Tr(\sigma_\mu\,\mathcal M\sigma_\nu)$, which is also the matrix in the
-orthonormal basis $\kket{e_\mu}$. It acts on the coefficient vector $(x_0,x_x,x_y,x_z)$.
+the Bloch vector~\cite{Bloch1946}.
+Throughout the notes we use the \emph{coefficient convention}: a superoperator $\mathcal M$ is represented by the $4\times4$ matrix $M_{\mu\nu}$ defined by $\mathcal M\sigma_\nu=\sum_\mu M_{\mu\nu}\sigma_\mu$, i.e.\ $M_{\mu\nu}=\tfrac12\Tr(\sigma_\mu\,\mathcal M\sigma_\nu)$, which is also the matrix in the orthonormal basis $\kket{e_\mu}$.
+It acts on the coefficient vector $(x_0,x_x,x_y,x_z)$.
 
-A second, equivalent representation is \emph{vectorization}: stack the columns of the
-$d\times d$ matrix $X$ into a $d^2$-vector $\mathrm{vec}(X)$. The identity
+A second, equivalent representation is \emph{vectorization}: stack the columns of the $d\times d$ matrix $X$ into a $d^2$-vector $\mathrm{vec}(X)$.
+The identity
 \begin{equation}
   \mathrm{vec}(AXB)=\big(B^{T}\otimes A\big)\,\mathrm{vec}(X)
   \label{eq:vec}
 \end{equation}
-turns every ``sandwich'' into a matrix. This is what the numerical script uses
-(\cref{sec:numerics}); the coefficient convention is what we use on paper. They are
-related by the unitary change of basis from $\{\ket i\bra j\}$ to $\{\sigma_\mu/\sqrt2\}$.
+turns every ``sandwich'' into a matrix.
+This is what the numerical script uses (\cref{sec:numerics}); the coefficient convention is what we use on paper.
+They are related by the unitary change of basis from $\{\ket i\bra j\}$ to $\{\sigma_\mu/\sqrt2\}$.
 
 \subsection{Superoperators}
 
-A \emph{superoperator} is a linear map on Liouville space. The two elementary ones are
-left and right multiplication by a fixed operator $A$,
+A \emph{superoperator} is a linear map on Liouville space.
+The two elementary ones are left and right multiplication by a fixed operator $A$,
 \begin{equation}
   A^{+}X\equiv AX,\qquad A^{-}X\equiv XA .
   \label{eq:leftright}
 \end{equation}
-The superscripts anticipate \cref{sec:lec3}: $A^+$ acts on the ket side of $\rho$ (the
-forward branch of the Keldysh contour), $A^-$ on the bra side (the backward branch).
-Left and right multiplications by different operators always commute,
-$A^+B^-=B^-A^+$, because $(AX)B=A(XB)$. In vectorized form,
-$A^+=\Id\otimes A$ and $A^-=A^T\otimes\Id$ by \cref{eq:vec}.
+The superscripts anticipate \cref{sec:lec3}: $A^+$ acts on the ket side of $\rho$ (the forward branch of the Keldysh contour), $A^-$ on the bra side (the backward branch).
+Left and right multiplications by different operators always commute, $A^+B^-=B^-A^+$, because $(AX)B=A(XB)$.
+In vectorized form, $A^+=\Id\otimes A$ and $A^-=A^T\otimes\Id$ by \cref{eq:vec}.
 
 \paragraph{Products of operators.}
-What is the superoperator of a product $AB$? On the left side the order is preserved,
-on the right side it is reversed:
+What is the superoperator of a product $AB$?
+On the left side the order is preserved, on the right side it is reversed:
 \begin{equation}
   (AB)^{+}X=ABX=A^{+}B^{+}X,\qquad
   (AB)^{-}X=XAB=(XA)B=B^{-}A^{-}X,
@@ -69,19 +63,15 @@ so that
   \boxed{\;(AB)^{+}=A^{+}B^{+},\qquad (AB)^{-}=B^{-}A^{-}.\;}
   \label{eq:product-rule}
 \end{equation}
-The map $A\mapsto A^+$ is an algebra homomorphism, the map $A\mapsto A^-$ is an
-\emph{anti}-homomorphism (in vectorized form this is just $(AB)^T=B^TA^T$). This
-innocent-looking reversal is the entire origin of the Keldysh contour: a string of
-operators acting on the bra side of $\rho$ is applied in the opposite order, which is why
-the backward branch is anti-time-ordered (\cref{sec:lec3}). Two consequences follow
-immediately: $(A^n)^\pm=(A^\pm)^n$ for powers of a single operator, and the commutators
+The map $A\mapsto A^+$ is an algebra homomorphism, the map $A\mapsto A^-$ is an \emph{anti}-homomorphism (in vectorized form this is just $(AB)^T=B^TA^T$).
+This innocent-looking reversal is the entire origin of the Keldysh contour: a string of operators acting on the bra side of $\rho$ is applied in the opposite order, which is why the backward branch is anti-time-ordered (\cref{sec:lec3}).
+Two consequences follow immediately: $(A^n)^\pm=(A^\pm)^n$ for powers of a single operator, and the commutators
 \begin{equation}
   [A^{+},B^{+}]=\big([A,B]\big)^{+},\qquad [A^{-},B^{-}]=-\big([A,B]\big)^{-},\qquad [A^{+},B^{-}]=0 ,
   \label{eq:super-commutators}
 \end{equation}
-the minus sign in the second being the anti-homomorphism again. The Hermitian conjugates
-with respect to \cref{eq:HS} are $(A^{+})^\dagger=(A^\dagger)^{+}$ and $(A^{-})^\dagger=(A^\dagger)^{-}$,
-since $\Tr[Y^\dagger AX]=\Tr[(A^\dagger Y)^\dagger X]$ and $\Tr[Y^\dagger XA]=\Tr[(YA^\dagger)^\dagger X]$.
+the minus sign in the second being the anti-homomorphism again.
+The Hermitian conjugates with respect to \cref{eq:HS} are $(A^{+})^\dagger=(A^\dagger)^{+}$ and $(A^{-})^\dagger=(A^\dagger)^{-}$, since $\Tr[Y^\dagger AX]=\Tr[(A^\dagger Y)^\dagger X]$ and $\Tr[Y^\dagger XA]=\Tr[(YA^\dagger)^\dagger X]$.
 
 From these we build the two combinations that organize everything that follows:
 \begin{equation}
@@ -89,10 +79,8 @@ From these we build the two combinations that organize everything that follows:
   A^{\qu}\equiv A^{+}-A^{-},\quad A^{\qu}X=[A,X].\;}
   \label{eq:clqu}
 \end{equation}
-Inversely $A^\pm=A^\cl\pm\tfrac12A^\qu$. For Hermitian $A$ both $A^\cl$ and $A^\qu$ map Hermitian
-operators to Hermitian operators (the anticommutator and $i\times$commutator of Hermitian
-operators are Hermitian; note $A^\qu X$ is anti-Hermitian for Hermitian $X$ and the $i$ is
-supplied by the Liouvillian).
+Inversely $A^\pm=A^\cl\pm\tfrac12A^\qu$.
+For Hermitian $A$ both $A^\cl$ and $A^\qu$ map Hermitian operators to Hermitian operators (the anticommutator and $i\times$commutator of Hermitian operators are Hermitian; note $A^\qu X$ is anti-Hermitian for Hermitian $X$ and the $i$ is supplied by the Liouvillian).
 
 \begin{keybox}[Three properties used constantly]
 For any operator $A$ on $\mathcal H$ and any $X$:
@@ -101,7 +89,8 @@ For any operator $A$ on $\mathcal H$ and any $X$:
 \item $\Tr(A^\cl X)=\Tr(AX)$: the classical superoperator ``measures'' $A$.
 \item $[A^\cl,A^\qu]=0$ and $A^\cl A^\qu X=\tfrac12\big(A^2X-XA^2\big)=\tfrac12(A^2)^\qu X$.
 \end{enumerate}
-The first two are the cyclicity of the trace. The third follows from $A^+A^-=A^-A^+$.
+The first two are the cyclicity of the trace.
+The third follows from $A^+A^-=A^-A^+$.
 \end{keybox}
 
 \paragraph{Products in the rotated variables.}
@@ -113,32 +102,26 @@ The product rule \cref{eq:product-rule} translates into the $\cl/\qu$ language a
 \end{aligned}
   \label{eq:product-clqu}
 \end{equation}
-obtained by inserting $A^\pm=A^\cl\pm\tfrac12A^\qu$ into $(AB)^\cl=\tfrac12(A^+B^++B^-A^-)$ and
-$(AB)^\qu=A^+B^+-B^-A^-$ (Exercise~\ref{ex:1-5}). When the superoperators of $A$ and $B$ commute,
-which is the case whenever $A$ and $B$ act on different tensor factors (system and bath)
-or more generally whenever $[A,B]=0$, the commutator terms drop and the rule collapses to
-the familiar Keldysh rule for composite fields,
+obtained by inserting $A^\pm=A^\cl\pm\tfrac12A^\qu$ into $(AB)^\cl=\tfrac12(A^+B^++B^-A^-)$ and $(AB)^\qu=A^+B^+-B^-A^-$ (Exercise~\ref{ex:1-5}).
+When the superoperators of $A$ and $B$ commute, which is the case whenever $A$ and $B$ act on different tensor factors (system and bath) or more generally whenever $[A,B]=0$, the commutator terms drop and the rule collapses to the familiar Keldysh rule for composite fields,
 \begin{equation}
   (AB)^{\cl}=A^{\cl}B^{\cl}+\tfrac14A^{\qu}B^{\qu},\qquad (AB)^{\qu}=A^{\cl}B^{\qu}+A^{\qu}B^{\cl}\qquad([A,B]=0),
   \label{eq:product-clqu-commuting}
 \end{equation}
-which is exactly how the interaction vertex $\Lc_I=-i(S\otimes B)^\qu$ will acquire its
-``one classical, one quantum leg'' structure in \cref{sec:lec3}. For a single operator,
-$A=B$, \cref{eq:product-clqu-commuting} gives $(A^2)^\cl=(A^\cl)^2+\tfrac14(A^\qu)^2$ and
-$(A^2)^\qu=2A^\cl A^\qu$, which is property~3 of the key box above.
+which is exactly how the interaction vertex $\Lc_I=-i(S\otimes B)^\qu$ will acquire its ``one classical, one quantum leg'' structure in \cref{sec:lec3}.
+For a single operator, $A=B$, \cref{eq:product-clqu-commuting} gives $(A^2)^\cl=(A^\cl)^2+\tfrac14(A^\qu)^2$ and $(A^2)^\qu=2A^\cl A^\qu$, which is property~3 of the key box above.
 
 \paragraph{The Liouvillian.}
 The von Neumann equation $\dot\rho=-i[H,\rho]$ reads $\dot\rho=\Lc\rho$ with
 \begin{equation}
   \Lc=-i\big(H^{+}-H^{-}\big)=-iH^\qu ,\qquad \rho(t)=\ee^{\Lc t}\rho(0)=\ee^{-iHt}\rho(0)\ee^{iHt}.
 \end{equation}
-Its adjoint with respect to \cref{eq:HS}, defined by $(A,\Lc X)=(\Lc^\dagger A,X)$, is
-$\Lc^\dagger A=+i[H,A]$, the Heisenberg-picture generator: $\avg{A}_t=(A,\rho(t))=(\ee^{\Lc^\dagger t}A,\rho(0))$.
-This duality, state picture versus operator picture, is exactly the duality between the
-Nakajima--Zwanzig projection (\cref{sec:lec5}) and the Mori projection (\cref{sec:lec8}).
+Its adjoint with respect to \cref{eq:HS}, defined by $(A,\Lc X)=(\Lc^\dagger A,X)$, is $\Lc^\dagger A=+i[H,A]$, the Heisenberg-picture generator: $\avg{A}_t=(A,\rho(t))=(\ee^{\Lc^\dagger t}A,\rho(0))$.
+This duality, state picture versus operator picture, is exactly the duality between the Nakajima--Zwanzig projection (\cref{sec:lec5}) and the Mori projection (\cref{sec:lec8}).
 
 \begin{exbox}[Example 1.1: the free qubit in Bloch form]
-Take $H_S=\frac{\omega_0}{2}\sz$. Using $[\sz,\sx]=2i\sy$, $[\sz,\sy]=-2i\sx$,
+Take $H_S=\frac{\omega_0}{2}\sz$.
+Using $[\sz,\sx]=2i\sy$, $[\sz,\sy]=-2i\sx$,
 \begin{equation}
   \Lc_S\sx=-i\tfrac{\omega_0}{2}[\sz,\sx]=\omega_0\sy,\qquad
   \Lc_S\sy=-\omega_0\sx,\qquad \Lc_S\Id=\Lc_S\sz=0 .
@@ -150,65 +133,49 @@ In the coefficient convention, with rows and columns ordered $(\Id,\sx,\sy,\sz)$
   \ee^{\Lc_St}:\ \begin{cases}x_x\mapsto\cos(\omega_0t)\,x_x-\sin(\omega_0t)\,x_y,\\ x_y\mapsto\sin(\omega_0t)\,x_x+\cos(\omega_0t)\,x_y,\end{cases}
   \label{eq:LS-bloch}
 \end{equation}
-so $\dot r_x=-\omega_0r_y$, $\dot r_y=\omega_0r_x$: the Bloch vector precesses
-counter-clockwise about $\hat z$ at $\omega_0$. The eigenvalues of $\Lc_S$ are
-$0,0,\pm i\omega_0$, with eigenvectors $\Id,\sz$ (populations) and
-$\sigma_\mp=\tfrac12(\sx\mp i\sy)$ (coherences): $\Lc_S\sigma_-=-i\omega_0\sigma_-$. In the
-basis $\{\ket0\bra0,\ket0\bra1,\ket1\bra0,\ket1\bra1\}$ the matrix is
-$\operatorname{diag}(0,-i\omega_0,+i\omega_0,0)$, which is the ``vectorized'' form.
+so $\dot r_x=-\omega_0r_y$, $\dot r_y=\omega_0r_x$: the Bloch vector precesses counter-clockwise about $\hat z$ at $\omega_0$.
+The eigenvalues of $\Lc_S$ are $0,0,\pm i\omega_0$, with eigenvectors $\Id,\sz$ (populations) and $\sigma_\mp=\tfrac12(\sx\mp i\sy)$ (coherences): $\Lc_S\sigma_-=-i\omega_0\sigma_-$.
+In the basis $\{\ket0\bra0,\ket0\bra1,\ket1\bra0,\ket1\bra1\}$ the matrix is $\operatorname{diag}(0,-i\omega_0,+i\omega_0,0)$, which is the ``vectorized'' form.
 \end{exbox}
 
 \begin{exbox}[Example 1.2: $\cl$ and $\qu$ superoperators of the coupling operator]
-The running model couples the bath to $S=\cos\theta\,\sz+\sin\theta\,\sx$. We need
-$S^\cl$ and $S^\qu$ as $4\times4$ matrices. First the building blocks:
+The running model couples the bath to $S=\cos\theta\,\sz+\sin\theta\,\sx$.
+We need $S^\cl$ and $S^\qu$ as $4\times4$ matrices.
+First the building blocks:
 \begin{align}
   \sz^\cl:&\ \Id\mapsto\sz,\ \sz\mapsto\Id,\ \sx\mapsto0,\ \sy\mapsto0; &
   \sz^\qu:&\ \sx\mapsto2i\sy,\ \sy\mapsto-2i\sx,\ \Id\mapsto0,\ \sz\mapsto0;\notag\\
   \sx^\cl:&\ \Id\mapsto\sx,\ \sx\mapsto\Id,\ \sy\mapsto0,\ \sz\mapsto0; &
   \sx^\qu:&\ \sy\mapsto2i\sz,\ \sz\mapsto-2i\sy,\ \Id\mapsto0,\ \sx\mapsto0 .
 \end{align}
-(The $\cl$ map of a Pauli matrix swaps it with the identity; the $\qu$ map rotates the
-other two Pauli matrices into each other with a factor $\pm2i$.) In matrix form, rows and
-columns ordered $(\Id,\sx,\sy,\sz)$,
+(The $\cl$ map of a Pauli matrix swaps it with the identity; the $\qu$ map rotates the other two Pauli matrices into each other with a factor $\pm2i$.)
+In matrix form, rows and columns ordered $(\Id,\sx,\sy,\sz)$,
 \begin{equation}
   S^\cl=\begin{pmatrix}0&\sin\theta&0&\cos\theta\\ \sin\theta&0&0&0\\ 0&0&0&0\\ \cos\theta&0&0&0\end{pmatrix},\qquad
   S^\qu=2i\begin{pmatrix}0&0&0&0\\ 0&0&-\cos\theta&0\\ 0&\cos\theta&0&-\sin\theta\\ 0&0&\sin\theta&0\end{pmatrix}.
   \label{eq:SclSqu}
 \end{equation}
-Read off the three properties: the first row of $S^\qu$ vanishes (traceless-valued), the
-first row of $S^\cl$ is $(0,\sin\theta,0,\cos\theta)=\tfrac12\Tr(S\sigma_\nu)$ (it measures $S$),
-and $S^\qu$ is $2i$ times the generator of rotations about the axis
-$\hat n=(\sin\theta,0,\cos\theta)$ on the Bloch vector, which is what $[S,\cdot]$ should be.
-Note also $S^\qu$ annihilates $S$ itself (the vector $(0,\sin\theta,0,\cos\theta)$) and the
-identity. For $\theta=0$ the matrices reduce to the pure-dephasing case
-$\sz^\cl=\text{``swap }\Id\leftrightarrow\sz\text{''}$, $\sz^\qu=2i\,(\sx\!\to\!\sy\!\to\!-\sx)$.
+Read off the three properties: the first row of $S^\qu$ vanishes (traceless-valued), the first row of $S^\cl$ is $(0,\sin\theta,0,\cos\theta)=\tfrac12\Tr(S\sigma_\nu)$ (it measures $S$), and $S^\qu$ is $2i$ times the generator of rotations about the axis $\hat n=(\sin\theta,0,\cos\theta)$ on the Bloch vector, which is what $[S,\cdot]$ should be.
+Note also $S^\qu$ annihilates $S$ itself (the vector $(0,\sin\theta,0,\cos\theta)$) and the identity.
+For $\theta=0$ the matrices reduce to the pure-dephasing case $\sz^\cl=\text{``swap }\Id\leftrightarrow\sz\text{''}$, $\sz^\qu=2i\,(\sx\!\to\!\sy\!\to\!-\sx)$.
 \end{exbox}
 
 \subsection{Dynamical maps}
 
-For a factorized initial state $\rho(0)=\rhoS(0)\otimes\rhoB$, the reduced state at time $t$
-is a linear function of the initial reduced state,
+For a factorized initial state $\rho(0)=\rhoS(0)\otimes\rhoB$, the reduced state at time $t$ is a linear function of the initial reduced state,
 \begin{equation}
   \rhoS(t)=\Pi(t)\rhoS(0),\qquad \Pi(t)X\equiv\Tr_B\!\big[\ee^{\Lc t}\big(X\otimes\rhoB\big)\big].
   \label{eq:map}
 \end{equation}
-$\Pi(t)$ is the \emph{dynamical map}; in Liouville space it is a $d^2\times d^2$ matrix
-with $\Pi(0)=1$. Three properties follow directly from \cref{eq:map}:
-\emph{trace preservation}, $\Tr_S\Pi(t)X=\Tr X$ (first row of the Bloch matrix is
-$(1,0,0,0)$); \emph{Hermiticity preservation}; and \emph{complete positivity}, since
-$\Pi(t)$ is a partial trace of a unitary conjugation~\cite[Sec.~8.2.3]{Nielsen2010}.
-Complete positivity is equivalent to the existence of a Kraus form
-$\Pi X=\sum_kM_kXM_k^\dagger$~\cite{Choi1975}. Maps obtained from \cref{eq:map} with a
-\emph{correlated} initial state need not be completely positive, or even
-linear in $\rhoS(0)$~\cite{Pechukas1994}; we stay with factorized initial states except
-where noted.
+$\Pi(t)$ is the \emph{dynamical map}; in Liouville space it is a $d^2\times d^2$ matrix with $\Pi(0)=1$.
+Three properties follow directly from \cref{eq:map}: \emph{trace preservation}, $\Tr_S\Pi(t)X=\Tr X$ (first row of the Bloch matrix is $(1,0,0,0)$); \emph{Hermiticity preservation}; and \emph{complete positivity}, since $\Pi(t)$ is a partial trace of a unitary conjugation~\cite[Sec.~8.2.3]{Nielsen2010}.
+Complete positivity is equivalent to the existence of a Kraus form $\Pi X=\sum_kM_kXM_k^\dagger$~\cite{Choi1975}.
+Maps obtained from \cref{eq:map} with a \emph{correlated} initial state need not be completely positive, or even linear in $\rhoS(0)$~\cite{Pechukas1994}; we stay with factorized initial states except where noted.
 
-What $\Pi(t)$ is \emph{not}, in general, is a semigroup: $\Pi(t+s)\ne\Pi(t)\Pi(s)$. The
-bath remembers. The whole subject of these notes is how to write equations of motion for
-$\rhoS(t)$ when the map is not a semigroup, and the two standard answers are: a
-time-nonlocal (Nakajima--Zwanzig) equation $\dot\rhoS=\Lc_S\rhoS+\int_0^tK(t-s)\rhoS(s)\dd s$, and a
-time-local (TCL) equation $\dot\rhoS=\Gc(t)\rhoS(t)$. When $\Gc(t)$ happens to be constant
-and of Gorini--Kossakowski--Sudarshan--Lindblad form~\cite{GKS1976,Lindblad1976},
+What $\Pi(t)$ is \emph{not}, in general, is a semigroup: $\Pi(t+s)\ne\Pi(t)\Pi(s)$.
+The bath remembers.
+The whole subject of these notes is how to write equations of motion for $\rhoS(t)$ when the map is not a semigroup, and the two standard answers are: a time-nonlocal (Nakajima--Zwanzig) equation $\dot\rhoS=\Lc_S\rhoS+\int_0^tK(t-s)\rhoS(s)\dd s$, and a time-local (TCL) equation $\dot\rhoS=\Gc(t)\rhoS(t)$.
+When $\Gc(t)$ happens to be constant and of Gorini--Kossakowski--Sudarshan--Lindblad form~\cite{GKS1976,Lindblad1976},
 \begin{equation}
   \Gc X=-i[H',X]+\sum_j\gamma_j\Big(L_jXL_j^\dagger-\tfrac12\{L_j^\dagger L_j,X\}\Big),\qquad\gamma_j\ge0,
   \label{eq:GKSL}
@@ -216,57 +183,40 @@ and of Gorini--Kossakowski--Sudarshan--Lindblad form~\cite{GKS1976,Lindblad1976}
 the map is a completely positive semigroup; this is the Markovian limit.
 
 \begin{exbox}[Example 1.3: the pure-dephasing map in Bloch form]
-Suppose the only effect of the bath is to multiply the coherence by a real factor:
-$\rho_{01}(t)=\rho_{01}(0)\,\ee^{-i\omega_0t-\Gamma(t)}$ with $\Gamma(t)\ge0$ (we will derive this for
-$\theta=0$ in \cref{sec:lec4}). Then $r_z$ is constant and $(r_x,r_y)$ rotates and shrinks:
+Suppose the only effect of the bath is to multiply the coherence by a real factor: $\rho_{01}(t)=\rho_{01}(0)\,\ee^{-i\omega_0t-\Gamma(t)}$ with $\Gamma(t)\ge0$ (we will derive this for $\theta=0$ in \cref{sec:lec4}).
+Then $r_z$ is constant and $(r_x,r_y)$ rotates and shrinks:
 \begin{equation}
   \Pi(t)=\begin{pmatrix}1&0&0&0\\ 0&\ee^{-\Gamma}\cos\omega_0t&-\ee^{-\Gamma}\sin\omega_0t&0\\
   0&\ee^{-\Gamma}\sin\omega_0t&\ee^{-\Gamma}\cos\omega_0t&0\\ 0&0&0&1\end{pmatrix}.
 \end{equation}
-Its Kraus form has two operators, $M_0=\sqrt{\tfrac{1+\ee^{-\Gamma}}2}\,\ee^{-i\omega_0t\sz/2}$ and
-$M_1=\sqrt{\tfrac{1-\ee^{-\Gamma}}2}\,\sz\ee^{-i\omega_0t\sz/2}$, so it is completely positive for
-every $\Gamma\ge0$. The TCL generator is $\Gc(t)=\dot\Pi\Pi^{-1}=\Lc_S-\dot\Gamma(t)\,\tfrac14(\sz^\qu)^2$,
-where $-\tfrac14(\sz^\qu)^2X=-\tfrac14[\sz,[\sz,X]]=\tfrac12(\sz X\sz-X)$ is the dephasing
-dissipator (check with \cref{eq:SclSqu}: $(\sz^\qu)^2\sx=\sz^\qu(2i\sy)=4\sx$, so
-$-\tfrac14(\sz^\qu)^2\sx=-\sx$, as it should, while $\Id$ and $\sz$ are annihilated). The generator is of GKSL form with rate $\gamma(t)=\dot\Gamma(t)$, which can be
-negative at times when $\Gamma$ decreases: a time-local generator of a completely positive
-map need not have positive rates. This is the simplest example of ``non-Markovian but
-time-local''.
+Its Kraus form has two operators, $M_0=\sqrt{\tfrac{1+\ee^{-\Gamma}}2}\,\ee^{-i\omega_0t\sz/2}$ and $M_1=\sqrt{\tfrac{1-\ee^{-\Gamma}}2}\,\sz\ee^{-i\omega_0t\sz/2}$, so it is completely positive for every $\Gamma\ge0$.
+The TCL generator is $\Gc(t)=\dot\Pi\Pi^{-1}=\Lc_S-\dot\Gamma(t)\,\tfrac14(\sz^\qu)^2$, where $-\tfrac14(\sz^\qu)^2X=-\tfrac14[\sz,[\sz,X]]=\tfrac12(\sz X\sz-X)$ is the dephasing dissipator (check with \cref{eq:SclSqu}: $(\sz^\qu)^2\sx=\sz^\qu(2i\sy)=4\sx$, so $-\tfrac14(\sz^\qu)^2\sx=-\sx$, as it should, while $\Id$ and $\sz$ are annihilated).
+The generator is of GKSL form with rate $\gamma(t)=\dot\Gamma(t)$, which can be negative at times when $\Gamma$ decreases: a time-local generator of a completely positive map need not have positive rates.
+This is the simplest example of ``non-Markovian but time-local''.
 \end{exbox}
 
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:1-1}
-Verify the three properties in the key box above directly from the definitions, and
-show that for Hermitian $A$, $(A^\cl)^\dagger=A^\cl$ and $(A^\qu)^\dagger=-A^\qu$ with respect to
-the Hilbert--Schmidt product. Conclude that $i A^\qu$ is Hermitian as a superoperator.
+Verify the three properties in the key box above directly from the definitions, and show that for Hermitian $A$, $(A^\cl)^\dagger=A^\cl$ and $(A^\qu)^\dagger=-A^\qu$ with respect to the Hilbert--Schmidt product.
+Conclude that $i A^\qu$ is Hermitian as a superoperator.
 \end{exercise}
 
 \begin{exercise}\label{ex:1-2}
-Write $\Lc_S$ for $H_S=\frac{\omega_0}{2}\sz$ in the vectorized basis
-$\{\ket0\bra0,\ket0\bra1,\ket1\bra0,\ket1\bra1\}$ using \cref{eq:vec}, and find the unitary
-$4\times4$ matrix that maps it to \cref{eq:LS-bloch}.
+Write $\Lc_S$ for $H_S=\frac{\omega_0}{2}\sz$ in the vectorized basis $\{\ket0\bra0,\ket0\bra1,\ket1\bra0,\ket1\bra1\}$ using \cref{eq:vec}, and find the unitary $4\times4$ matrix that maps it to \cref{eq:LS-bloch}.
 \end{exercise}
 
 \begin{exercise}\label{ex:1-3}
-Show that the matrix of $\Pi(t)$ in the coefficient convention has the block form
-$\begin{psmallmatrix}1&0\\ \bm c(t)&T(t)\end{psmallmatrix}$ with a $3\times3$ matrix $T$ and a
-vector $\bm c$ (the affine Bloch form $\bm r\mapsto T\bm r+\bm c$). Show that positivity
-requires $|T\bm r+\bm c|\le1$ for all $|\bm r|\le1$ and that for a unital map ($\bm c=0$) complete
-positivity is a stronger condition than this (give the standard counterexample: the
-transposition $T=\operatorname{diag}(1,-1,1)$).
+Show that the matrix of $\Pi(t)$ in the coefficient convention has the block form $\begin{psmallmatrix}1&0\\ \bm c(t)&T(t)\end{psmallmatrix}$ with a $3\times3$ matrix $T$ and a vector $\bm c$ (the affine Bloch form $\bm r\mapsto T\bm r+\bm c$).
+Show that positivity requires $|T\bm r+\bm c|\le1$ for all $|\bm r|\le1$ and that for a unital map ($\bm c=0$) complete positivity is a stronger condition than this (give the standard counterexample: the transposition $T=\operatorname{diag}(1,-1,1)$).
 \end{exercise}
 
 \begin{exercise}\label{ex:1-4}
-Compute $(S^\cl)^2$ and $(S^\qu)^2$ from \cref{eq:SclSqu} and interpret them with property~3
-of the key box (use $S^2=\Id$).
+Compute $(S^\cl)^2$ and $(S^\qu)^2$ from \cref{eq:SclSqu} and interpret them with property~3 of the key box (use $S^2=\Id$).
 \end{exercise}
 
 \begin{exercise}\label{ex:1-5}
-Derive \cref{eq:super-commutators} and \cref{eq:product-clqu}, and check the latter on
-$A=\sx$, $B=\sy$ (so $AB=i\sz$) using the matrices of Example~1.2 with $\theta=0$ and
-$\theta=\pi/2$: verify that $(i\sz)^\cl=i\sz^\cl$ comes out of the right-hand side, including
-the commutator terms, which do not vanish here because $[\sx,\sy]\ne0$.
+Derive \cref{eq:super-commutators} and \cref{eq:product-clqu}, and check the latter on $A=\sx$, $B=\sy$ (so $AB=i\sz$) using the matrices of Example~1.2 with $\theta=0$ and $\theta=\pi/2$: verify that $(i\sz)^\cl=i\sz^\cl$ comes out of the right-hand side, including the commutator terms, which do not vanish here because $[\sx,\sy]\ne0$.
 \end{exercise}
 
 \clearpage

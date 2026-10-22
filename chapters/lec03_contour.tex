@@ -2,12 +2,10 @@
 \section{Lecture 3: The Keldysh contour is already in the von Neumann equation}
 \label{sec:lec3}
 
-The Keldysh formalism is usually introduced by declaring a closed time contour and then
-building Green's functions on it. In this lecture we go the other way: we expand the
-reduced density matrix in powers of $H_I$ and watch the contour, the Keldysh rotation
-and the $2\times2$ matrix structure of the bath propagator appear by themselves. Nothing is
-postulated. At the end we have a set of rules (``contractions'') that \cref{sec:lec4} turns
-into diagrams.
+The Keldysh formalism is usually introduced by declaring a closed time contour and then building Green's functions on it.
+In this lecture we go the other way: we expand the reduced density matrix in powers of $H_I$ and watch the contour, the Keldysh rotation and the $2\times2$ matrix structure of the bath propagator appear by themselves.
+Nothing is postulated.
+At the end we have a set of rules (``contractions'') that \cref{sec:lec4} turns into diagrams.
 
 \begin{figure}[t]
 \centering
@@ -25,24 +23,22 @@ into diagrams.
   \node[right,align=left,font=\small] at (7.0,0.0) {$\rho(t)=U(t)\rho(0)U^\dagger(t)$:\\
   ordering superoperators $A^\pm(t_i)$\\ on one real axis $\Leftrightarrow$ contour ordering};
 \end{tikzpicture}
-\caption{The Keldysh contour~\cite{Schwinger1961,Keldysh1964}. The forward branch carries
-the operators of $U(t)$ acting on the ket side of $\rho(0)$, the backward branch the
-operators of $U^\dagger(t)$ acting on the bra side. Contour ordering means: later contour
-position further from $\rho(0)$.}
+\caption{The Keldysh contour~\cite{Schwinger1961,Keldysh1964}.
+The forward branch carries the operators of $U(t)$ acting on the ket side of $\rho(0)$, the backward branch the operators of $U^\dagger(t)$ acting on the bra side.
+Contour ordering means: later contour position further from $\rho(0)$.}
 \label{fig:contour}
 \end{figure}
 
 \subsection{The Dyson series for \texorpdfstring{$\rho$}{rho} and the origin of the contour}
 \label{sec:contour-from-vN}
 
-Work in the interaction picture with respect to $H_0=H_S+H_B$. Then
-$\tilde\rho(t)=\tilde U(t)\rho(0)\tilde U^\dagger(t)$ with
+Work in the interaction picture with respect to $H_0=H_S+H_B$.
+Then $\tilde\rho(t)=\tilde U(t)\rho(0)\tilde U^\dagger(t)$ with
 \begin{equation}
   \tilde U(t)=T\exp\Big[-i\!\int_0^t\!\dd s\,\tilde H_I(s)\Big]
   =1-i\!\int_0^t\!\dd t_1\tilde H_I(t_1)-\!\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,\tilde H_I(t_1)\tilde H_I(t_2)+\dots
 \end{equation}
-Its adjoint is \emph{anti}-time-ordered: in $\tilde U^\dagger$ the later operator stands to
-the right, $\tilde U^\dagger=1+i\int\tilde H_I-\int_{t_1>t_2}\tilde H_I(t_2)\tilde H_I(t_1)+\dots$
+Its adjoint is \emph{anti}-time-ordered: in $\tilde U^\dagger$ the later operator stands to the right, $\tilde U^\dagger=1+i\int\tilde H_I-\int_{t_1>t_2}\tilde H_I(t_2)\tilde H_I(t_1)+\dots$
 
 \begin{exbox}[Example 3.1: the second-order term, written out]
 Collecting all terms of order $H_I^2$ in $\tilde U\rho(0)\tilde U^\dagger$,
@@ -55,67 +51,54 @@ Collecting all terms of order $H_I^2$ in $\tilde U\rho(0)\tilde U^\dagger$,
    &&\text{(one on each side; \emph{no} mutual ordering)}.
   \label{eq:rho2}
 \end{align}
-The third term is the one that looks unusual: $t_1$ and $t_2$ are integrated
-independently over $[0,t]$, so there is no time ordering between a ket-side and a
-bra-side operator. All three terms become a \emph{single} ordering rule once we say that
-every point on the forward ($+$) branch is ``earlier'' than every point on the backward
-($-$) branch, that time runs forward on $+$ and backward on $-$, and that operators are
-ordered with later contour positions further from $\rho(0)$. That rule is contour
-ordering, \cref{fig:contour}.
+The third term is the one that looks unusual: $t_1$ and $t_2$ are integrated independently over $[0,t]$, so there is no time ordering between a ket-side and a bra-side operator.
+All three terms become a \emph{single} ordering rule once we say that every point on the forward ($+$) branch is ``earlier'' than every point on the backward ($-$) branch, that time runs forward on $+$ and backward on $-$, and that operators are ordered with later contour positions further from $\rho(0)$.
+That rule is contour ordering, \cref{fig:contour}.
 \end{exbox}
 
-The superoperator language of \cref{sec:lec1} makes the rule automatic. With
-$A^{+}X=AX$ and $A^{-}X=XA$,
+The superoperator language of \cref{sec:lec1} makes the rule automatic.
+With $A^{+}X=AX$ and $A^{-}X=XA$,
 \begin{equation}
   \tilde\rho^{(2)}(t)=\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,
   \tilde\Lc_I(t_1)\tilde\Lc_I(t_2)\,\rho(0),\qquad
   \tilde\Lc_I(s)=-i\big[\tilde H_I^{+}(s)-\tilde H_I^{-}(s)\big],
   \label{eq:rho2super}
 \end{equation}
-and multiplying out the two brackets reproduces the three terms of \cref{eq:rho2}:
-$H^+H^+$ gives the first, $H^-H^-$ gives the second (note $H^-(t_1)H^-(t_2)\rho=\rho H(t_2)H(t_1)$,
-automatically anti-ordered), and the cross terms $H^+(t_1)H^-(t_2)+H^-(t_1)H^+(t_2)$ give
-$H(t_1)\rho H(t_2)+H(t_2)\rho H(t_1)$ restricted to $t_1>t_2$, which is the third term with
-its two orderings separated. To all orders,
+and multiplying out the two brackets reproduces the three terms of \cref{eq:rho2}: $H^+H^+$ gives the first, $H^-H^-$ gives the second (note $H^-(t_1)H^-(t_2)\rho=\rho H(t_2)H(t_1)$, automatically anti-ordered), and the cross terms $H^+(t_1)H^-(t_2)+H^-(t_1)H^+(t_2)$ give $H(t_1)\rho H(t_2)+H(t_2)\rho H(t_1)$ restricted to $t_1>t_2$, which is the third term with its two orderings separated.
+To all orders,
 \begin{equation}
   \tilde\rho(t)=T\exp\Big[\int_0^t\!\dd s\,\tilde\Lc_I(s)\Big]\rho(0)
   =\sum_n\int_{t>t_1>\dots>t_n>0}\tilde\Lc_I(t_1)\cdots\tilde\Lc_I(t_n)\,\rho(0),
   \label{eq:dyson-super}
 \end{equation}
-which is just the Dyson series for the superoperator equation
-$\dot{\tilde\rho}=\tilde\Lc_I(t)\tilde\rho$.
+which is just the Dyson series for the superoperator equation $\dot{\tilde\rho}=\tilde\Lc_I(t)\tilde\rho$.
 
 \begin{keybox}[Key point 3.1]
-Ordinary time ordering of the superoperators $\tilde\Lc_I(t_i)$ along the single real axis
-$[0,t]$, with a sum over the branch index $\pm$ at each vertex, \emph{is} Keldysh contour
-ordering. One never has to think about the contour again: it is encoded in the sign of
-$\Lc_I$ and the left/right action of $H^\pm$. Conversely, every Keldysh expression for a
-one-time expectation value can be read as a Liouville-space string.
+Ordinary time ordering of the superoperators $\tilde\Lc_I(t_i)$ along the single real axis $[0,t]$, with a sum over the branch index $\pm$ at each vertex, \emph{is} Keldysh contour ordering.
+One never has to think about the contour again: it is encoded in the sign of $\Lc_I$ and the left/right action of $H^\pm$.
+Conversely, every Keldysh expression for a one-time expectation value can be read as a Liouville-space string.
 \end{keybox}
 
 \subsection{The Keldysh rotation in Liouville space}
 \label{sec:rotation-liouville}
 
-The $\pm$ basis is natural for deriving the contour but awkward for calculations, because
-the two branches are strongly correlated (the trace at the final time glues them
-together). The rotation \cref{eq:clqu} separates ``what the two branches have in common''
-($\cl$) from ``how they differ'' ($\qu$). Since $S$ and $B$ act on different tensor
-factors, $(SB)^\pm=S^\pm B^\pm$ and $S^\pm$ commutes with $B^\pm$. Then with
-$A^\pm=A^\cl\pm\tfrac12A^\qu$,
+The $\pm$ basis is natural for deriving the contour but awkward for calculations, because the two branches are strongly correlated (the trace at the final time glues them together).
+The rotation \cref{eq:clqu} separates ``what the two branches have in common'' ($\cl$) from ``how they differ'' ($\qu$).
+Since $S$ and $B$ act on different tensor factors, $(SB)^\pm=S^\pm B^\pm$ and $S^\pm$ commutes with $B^\pm$.
+Then with $A^\pm=A^\cl\pm\tfrac12A^\qu$,
 \begin{align}
   S^{+}B^{+}-S^{-}B^{-}
   &=\big(S^\cl+\tfrac12S^\qu\big)\big(B^\cl+\tfrac12B^\qu\big)
    -\big(S^\cl-\tfrac12S^\qu\big)\big(B^\cl-\tfrac12B^\qu\big)
   =S^\cl B^\qu+S^\qu B^\cl ,
 \end{align}
-the $S^\cl B^\cl$ and $\frac14S^\qu B^\qu$ terms cancelling. Hence
+the $S^\cl B^\cl$ and $\frac14S^\qu B^\qu$ terms cancelling.
+Hence
 \begin{equation}
   \boxed{\;\Lc_I=-i\big(S^{\qu}B^{\cl}+S^{\cl}B^{\qu}\big).\;}
   \label{eq:LIcq}
 \end{equation}
-The structure ``one $\cl$, one $\qu$ per vertex'' is the same as in the Keldysh action,
-where the interaction term $H_+-H_-$ is odd in the quantum field and so always contains
-at least one $\qu$ leg~\cite[Sec.~2.7]{Kamenev2011}.
+The structure ``one $\cl$, one $\qu$ per vertex'' is the same as in the Keldysh action, where the interaction term $H_+-H_-$ is odd in the quantum field and so always contains at least one $\qu$ leg~\cite[Sec.~2.7]{Kamenev2011}.
 
 \paragraph{The two trace identities.}
 For an arbitrary operator $Y$ on $\mathcal H_S\otimes\mathcal H_B$ and a bath operator $B$,
@@ -124,12 +107,9 @@ For an arbitrary operator $Y$ on $\mathcal H_S\otimes\mathcal H_B$ and a bath op
   \Tr_B\!\big(B^\cl Y\big)=\tfrac12\Tr_B\!\big(BY+YB\big)=\Tr_B\!\big(BY\big),
   \label{eq:trace-identities}
 \end{equation}
-both by cyclicity of the partial trace over the bath factor. The first identity is the
-superoperator form of the Keldysh statement that a correlation function whose
-\emph{latest} point is on a quantum leg vanishes; it is what makes $\avg{\phi_\qu\phi_\qu}=0$
-and $\avg{\phi_\cl\phi_\qu}$ retarded~\cite[Sec.~2.6]{Kamenev2011}. The same identities
-hold with $S$ in place of $B$ and $\Tr_S$ in place of $\Tr_B$, and they will be used on
-both sides.
+both by cyclicity of the partial trace over the bath factor.
+The first identity is the superoperator form of the Keldysh statement that a correlation function whose \emph{latest} point is on a quantum leg vanishes; it is what makes $\avg{\phi_\qu\phi_\qu}=0$ and $\avg{\phi_\cl\phi_\qu}$ retarded~\cite[Sec.~2.6]{Kamenev2011}.
+The same identities hold with $S$ in place of $B$ and $\Tr_S$ in place of $\Tr_B$, and they will be used on both sides.
 
 \begin{exbox}[Example 3.2: what $\cl$ and $\qu$ do to a qubit state]
 From \cref{eq:SclSqu}, acting on $\rho=\tfrac12(\Id+\bm r\cdot\bm\sigma)$:
@@ -137,13 +117,10 @@ From \cref{eq:SclSqu}, acting on $\rho=\tfrac12(\Id+\bm r\cdot\bm\sigma)$:
   S^\cl\rho=\tfrac12\big[(\hat n\cdot\bm r)\Id+\hat n\cdot\bm\sigma\big],\qquad
   S^\qu\rho=i\,(\hat n\times\bm r)\cdot\bm\sigma,\qquad \hat n=(\sin\theta,0,\cos\theta).
 \end{equation}
-$S^\cl$ produces a traceful object whose weight is the expectation value $\avg{S}=\hat n\cdot\bm r$;
-$S^\qu$ produces a traceless object proportional to the torque $\hat n\times\bm r$ that a field
-along $\hat n$ would exert. A state with $\bm r\parallel\hat n$ (a pointer state of the coupling)
-has $S^\qu\rho=0$: it does not ``differ between the branches''. For $\theta=0$ this is the
-statement that a diagonal density matrix has no quantum component with respect to $\sz$.
-This is the operator version of ``the classical field is the physical configuration, the
-quantum field measures the difference between the two branches''.
+$S^\cl$ produces a traceful object whose weight is the expectation value $\avg{S}=\hat n\cdot\bm r$; $S^\qu$ produces a traceless object proportional to the torque $\hat n\times\bm r$ that a field along $\hat n$ would exert.
+A state with $\bm r\parallel\hat n$ (a pointer state of the coupling) has $S^\qu\rho=0$: it does not ``differ between the branches''.
+For $\theta=0$ this is the statement that a diagonal density matrix has no quantum component with respect to $\sz$.
+This is the operator version of ``the classical field is the physical configuration, the quantum field measures the difference between the two branches''.
 \end{exbox}
 
 \subsection{Bath contractions and the \texorpdfstring{$2\times2$}{2x2} Keldysh structure}
@@ -153,8 +130,8 @@ The basic object is the time-ordered two-point function of bath superoperators,
 \begin{equation}
   D^{ab}(t,s)\equiv\Tr_B\!\big[T_{\!\Lc}\,\tilde B^{a}(t)\tilde B^{b}(s)\,\rhoB\big],\qquad a,b\in\{+,-\}\ \text{or}\ \{\cl,\qu\},
 \end{equation}
-where $T_{\!\Lc}$ puts the later superoperator on the left (closer to the trace). In the
-$\pm$ basis the four components are, by direct evaluation for $t>s$,
+where $T_{\!\Lc}$ puts the later superoperator on the left (closer to the trace).
+In the $\pm$ basis the four components are, by direct evaluation for $t>s$,
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{}llll@{}}
@@ -168,12 +145,9 @@ $D^{-+}(t,s)$ & $\Tr_B[B(s)\rhoB B(t)]$ & $C(t-s)$ & greater $D^{>}$\\
 \bottomrule
 \end{tabular}
 \end{center}
-(For $t<s$ the roles of ``later'' and ``earlier'' are exchanged in the string; the
-$+-$ and $-+$ entries then keep their form while $++$ and $--$ switch to $C(s-t)$ and
-$C(t-s)$ respectively.) These are the four contour-ordered Green's functions of
-Keldysh theory up to the overall $-i$ of the usual definition, and the familiar linear
-relation $D^T+D^{\tilde T}=D^<+D^>$ holds entry by entry, which is why the $\pm$ basis is
-redundant. Now rotate, using $B^\cl=\frac12(B^++B^-)$ and $B^\qu=B^+-B^-$ on both legs:
+(For $t<s$ the roles of ``later'' and ``earlier'' are exchanged in the string; the $+-$ and $-+$ entries then keep their form while $++$ and $--$ switch to $C(s-t)$ and $C(t-s)$ respectively.)
+These are the four contour-ordered Green's functions of Keldysh theory up to the overall $-i$ of the usual definition, and the familiar linear relation $D^T+D^{\tilde T}=D^<+D^>$ holds entry by entry, which is why the $\pm$ basis is redundant.
+Now rotate, using $B^\cl=\frac12(B^++B^-)$ and $B^\qu=B^+-B^-$ on both legs:
 \begin{align}
   D^{\cl\cl}(t,s)&=\tfrac14\big(D^{++}+D^{+-}+D^{-+}+D^{--}\big)
    =\tfrac12\big[C(t-s)+C(s-t)\big]=S(t-s),\\
@@ -183,8 +157,8 @@ redundant. Now rotate, using $B^\cl=\frac12(B^++B^-)$ and $B^\qu=B^+-B^-$ on bot
    =-\theta(s-t)\avg{[B(t),B(s)]}=-i\chi(s-t),\\
   D^{\qu\qu}(t,s)&=D^{++}-D^{+-}-D^{-+}+D^{--}=0 .
 \end{align}
-(For the middle two lines evaluate separately for $t>s$ and $t<s$ using the table; the
-$\theta$ functions appear because the ``later'' entry of the table switches.) In matrix form,
+(For the middle two lines evaluate separately for $t>s$ and $t<s$ using the table; the $\theta$ functions appear because the ``later'' entry of the table switches.)
+In matrix form,
 \begin{equation}
   \boxed{\;
   D(t,s)=\begin{pmatrix} D^{\cl\cl} & D^{\cl\qu}\\ D^{\qu\cl} & D^{\qu\qu}\end{pmatrix}

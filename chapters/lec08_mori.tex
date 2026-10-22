@@ -2,27 +2,20 @@
 \section{Lecture 8: Mori's projection, the generalized Langevin equation and the retarded self-energy}
 \label{sec:lec8}
 
-Nakajima--Zwanzig projects \emph{states}. Mori~\cite{Mori1965} projects
-\emph{operators}: pick a few ``slow'' Heisenberg operators, and derive an exact equation
-of motion for them in which everything else appears as a memory term and a random force.
-The output is a generalized Langevin equation (GLE), and its Laplace transform is again a
-Dyson equation, now for correlation functions. This lecture derives the GLE, works it out
-for the qubit's lowering operator, and establishes two precise relations: Mori on the
-\emph{complete} operator basis is the Heisenberg-picture adjoint of NZ, and Mori's memory
-function for a single operator is the retarded self-energy of that operator's Green's
-function.
+Nakajima--Zwanzig projects \emph{states}.
+Mori~\cite{Mori1965} projects \emph{operators}: pick a few ``slow'' Heisenberg operators, and derive an exact equation of motion for them in which everything else appears as a memory term and a random force.
+The output is a generalized Langevin equation (GLE), and its Laplace transform is again a Dyson equation, now for correlation functions.
+This lecture derives the GLE, works it out for the qubit's lowering operator, and establishes two precise relations: Mori on the \emph{complete} operator basis is the Heisenberg-picture adjoint of NZ, and Mori's memory function for a single operator is the retarded self-energy of that operator's Green's function.
 
 \subsection{The generalized Langevin equation}
 
-Work in the Heisenberg picture: $\dot A(t)=i[H,A(t)]\equiv i\mathsf LA(t)$, so $A(t)=\ee^{i\mathsf Lt}A$. Choose
-an inner product $(X,Y)$ on operators, a set of operators $\{A_j\}$ (one, for simplicity;
-the matrix generalization is immediate) and the projector
+Work in the Heisenberg picture: $\dot A(t)=i[H,A(t)]\equiv i\mathsf LA(t)$, so $A(t)=\ee^{i\mathsf Lt}A$.
+Choose an inner product $(X,Y)$ on operators, a set of operators $\{A_j\}$ (one, for simplicity; the matrix generalization is immediate) and the projector
 \begin{equation}
   \mathsf PX=A\,(A,A)^{-1}(A,X),\qquad \mathsf Q=1-\mathsf P .
 \end{equation}
-The derivation parallels \cref{sec:nz-derivation} with the Dyson-type identity
-$\ee^{i\mathsf Lt}=\ee^{i\mathsf Q\mathsf Lt}+\int_0^t\dd s\,\ee^{i\mathsf L(t-s)}\,i\mathsf P\mathsf L\,\ee^{i\mathsf Q\mathsf Ls}$ applied to
-$i\mathsf LA$~\cite[Ch.~8]{ZwanzigBook}, \cite[Secs.~5.2--5.3]{Forster1975}. The result is exact:
+The derivation parallels \cref{sec:nz-derivation} with the Dyson-type identity $\ee^{i\mathsf Lt}=\ee^{i\mathsf Q\mathsf Lt}+\int_0^t\dd s\,\ee^{i\mathsf L(t-s)}\,i\mathsf P\mathsf L\,\ee^{i\mathsf Q\mathsf Ls}$ applied to $i\mathsf LA$~\cite[Ch.~8]{ZwanzigBook}, \cite[Secs.~5.2--5.3]{Forster1975}.
+The result is exact:
 \begin{equation}
   \boxed{\;\dot A(t)=i\Omega\,A(t)-\int_0^t\!\dd s\,M(t-s)\,A(s)+F(t),\qquad
   F(t)=\ee^{i\mathsf Q\mathsf Lt}\,\mathsf Q\,i\mathsf LA,\;}
@@ -33,79 +26,55 @@ with the \emph{frequency} $i\Omega=(A,i\mathsf LA)(A,A)^{-1}$ and the \emph{memo
   M(t)=\big(F(0),F(t)\big)\,(A,A)^{-1}.
   \label{eq:memory-fn}
 \end{equation}
-The random force lives in the orthogonal complement, $(A,F(t))=0$ for all $t$, which is what
-makes the correlation function $C(t)\equiv(A,A(t))$ obey the closed equation
+The random force lives in the orthogonal complement, $(A,F(t))=0$ for all $t$, which is what makes the correlation function $C(t)\equiv(A,A(t))$ obey the closed equation
 \begin{equation}
   \dot C(t)=i\Omega\,C(t)-\int_0^t\!\dd s\,M(t-s)\,C(s)
   \quad\Longrightarrow\quad
   \hat C(z)=\frac{C(0)}{z-i\Omega+\hat M(z)} .
   \label{eq:MoriDyson}
 \end{equation}
-\Cref{eq:memory-fn}, the statement that the memory kernel is the autocorrelation of the
-random force, is Kubo's \emph{second fluctuation--dissipation theorem}~\cite{Kubo1966}.
-Everything depends on the inner product. The two standard choices are the
-\emph{Kubo--Mori} product $(X,Y)=\beta^{-1}\int_0^\beta\dd\lambda\avg{X^\dagger\ee^{-\lambda H}Y\ee^{\lambda H}}$, for which
-$C(t)$ is the canonical (Kubo) correlation and $\mathsf L$ is self-adjoint, and the
-\emph{symmetrized} product $(X,Y)=\tfrac12\avg{\{X^\dagger,Y\}}$, which is simpler for fermions and
-spins; at the order we work, the two agree. In both, $\avg\cdot$ is the thermal average in
-the \emph{correlated} global equilibrium state, not the factorized state of
-\cref{sec:lec5}; this difference will show up.
+\Cref{eq:memory-fn}, the statement that the memory kernel is the autocorrelation of the random force, is Kubo's \emph{second fluctuation--dissipation theorem}~\cite{Kubo1966}.
+Everything depends on the inner product.
+The two standard choices are the \emph{Kubo--Mori} product $(X,Y)=\beta^{-1}\int_0^\beta\dd\lambda\avg{X^\dagger\ee^{-\lambda H}Y\ee^{\lambda H}}$, for which $C(t)$ is the canonical (Kubo) correlation and $\mathsf L$ is self-adjoint, and the \emph{symmetrized} product $(X,Y)=\tfrac12\avg{\{X^\dagger,Y\}}$, which is simpler for fermions and spins; at the order we work, the two agree.
+In both, $\avg\cdot$ is the thermal average in the \emph{correlated} global equilibrium state, not the factorized state of \cref{sec:lec5}; this difference will show up.
 
 \subsection{Mori on the complete basis is the adjoint of Nakajima--Zwanzig}
 
 \begin{proposition}\label{prop:mori-nz}
-Let $\{E_\mu\}_{\mu=1}^{d^2}$ be an orthonormal basis of system operators,
-$\Tr_S(E_\mu^\dagger E_\nu)=\delta_{\mu\nu}$, and take the inner product
-$(X,Y)_B\equiv\Tr\big[X^\dagger Y\,(\Id_S\otimes\rhoB)\big]$ on operators of $S\otimes B$. Mori's projector onto
-the set $\{E_\mu\otimes\Id_B\}$ is the Hilbert--Schmidt adjoint of the NZ projector
-\eqref{eq:P}: $\mathsf P=\Pc^\dagger$, with $\Pc^\dagger Y=\Tr_B[(\Id_S\otimes\rhoB)Y]\otimes\Id_B$. Consequently the
-Mori memory matrix for this set is the adjoint of the NZ kernel, $M(t)=-K(t)^\dagger$ (for the
-Heisenberg generator $\mathsf L^\dagger$ in place of $\mathsf L$), and the GLE \eqref{eq:GLE} for the
-Heisenberg operators $E_\mu(t)$ is the adjoint of the NZ equation.
+Let $\{E_\mu\}_{\mu=1}^{d^2}$ be an orthonormal basis of system operators, $\Tr_S(E_\mu^\dagger E_\nu)=\delta_{\mu\nu}$, and take the inner product $(X,Y)_B\equiv\Tr\big[X^\dagger Y\,(\Id_S\otimes\rhoB)\big]$ on operators of $S\otimes B$.
+Mori's projector onto the set $\{E_\mu\otimes\Id_B\}$ is the Hilbert--Schmidt adjoint of the NZ projector \eqref{eq:P}: $\mathsf P=\Pc^\dagger$, with $\Pc^\dagger Y=\Tr_B[(\Id_S\otimes\rhoB)Y]\otimes\Id_B$.
+Consequently the Mori memory matrix for this set is the adjoint of the NZ kernel, $M(t)=-K(t)^\dagger$ (for the Heisenberg generator $\mathsf L^\dagger$ in place of $\mathsf L$), and the GLE \eqref{eq:GLE} for the Heisenberg operators $E_\mu(t)$ is the adjoint of the NZ equation.
 \end{proposition}
 \begin{proof}
-$\mathsf PX=\sum_\mu E_\mu\,(E_\mu,X)_B=\sum_\mu E_\mu\Tr[(E_\mu^\dagger\otimes\rhoB)X]
-=\sum_\mu E_\mu\Tr_S\!\big[E_\mu^\dagger\Tr_B[(\Id\otimes\rhoB)X]\big]=\Tr_B[(\Id\otimes\rhoB)X]\otimes\Id_B$ by completeness, and
-$(Y,\Pc X)_{\rm HS}=\Tr[Y^\dagger(\rhoB\otimes\Tr_BX)]=\Tr_S\big[\Tr_B[(\Id\otimes\rhoB)Y]^\dagger\,\Tr_BX\big]=(\Pc^\dagger Y,X)_{\rm HS}$.
-The rest is the general fact that taking the adjoint of \cref{eq:NZ} (with
-$\Lc^\dagger=i\mathsf L$ and $\Pc^\dagger=\mathsf P$) gives \cref{eq:GLE} for the full basis, since the
-derivations are identical line by line.
+$\mathsf PX=\sum_\mu E_\mu\,(E_\mu,X)_B=\sum_\mu E_\mu\Tr[(E_\mu^\dagger\otimes\rhoB)X] =\sum_\mu E_\mu\Tr_S\!\big[E_\mu^\dagger\Tr_B[(\Id\otimes\rhoB)X]\big]=\Tr_B[(\Id\otimes\rhoB)X]\otimes\Id_B$ by completeness, and $(Y,\Pc X)_{\rm HS}=\Tr[Y^\dagger(\rhoB\otimes\Tr_BX)]=\Tr_S\big[\Tr_B[(\Id\otimes\rhoB)Y]^\dagger\,\Tr_BX\big]=(\Pc^\dagger Y,X)_{\rm HS}$.
+The rest is the general fact that taking the adjoint of \cref{eq:NZ} (with $\Lc^\dagger=i\mathsf L$ and $\Pc^\dagger=\mathsf P$) gives \cref{eq:GLE} for the full basis, since the derivations are identical line by line.
 \end{proof}
 
-So the two projection techniques are not merely analogous: with the \emph{same}
-reference state and the \emph{complete} set of system operators, they are the same
-equation written in the two pictures. The novelty of Mori's scheme is in the two freedoms
-it adds: a \emph{reduced} set of slow variables (one does not need all $d^2$ of them), and an
-inner product that weights with the \emph{interacting} equilibrium state, so that the
-reference state already knows about the system--bath correlations. The first is what
-makes Mori useful for hydrodynamics and for Green's functions; the second is what makes
-its results differ from factorized-initial-state NZ even at second order, as we now see.
+So the two projection techniques are not merely analogous: with the \emph{same} reference state and the \emph{complete} set of system operators, they are the same equation written in the two pictures.
+The novelty of Mori's scheme is in the two freedoms it adds: a \emph{reduced} set of slow variables (one does not need all $d^2$ of them), and an inner product that weights with the \emph{interacting} equilibrium state, so that the reference state already knows about the system--bath correlations.
+The first is what makes Mori useful for hydrodynamics and for Green's functions; the second is what makes its results differ from factorized-initial-state NZ even at second order, as we now see.
 
 \subsection{Example: Mori for the qubit's lowering operator}
 
 \begin{exbox}[Example 8.1: $A=\sigma_-$ and the retarded self-energy]
-Take $A=\sigma_-$ with the symmetrized product in the state $\rho_S^{\rm eq}\otimes\rhoB$ (the
-lowest-order approximation to the correlated equilibrium state), $\rho_S^{\rm eq}\propto\ee^{-\beta H_S}$. Then
-$(\sigma_-,\sigma_-)=\tfrac12\avg{\{\sigma_+,\sigma_-\}}=\tfrac12$. Using $[\sz,\sigma_-]=-2\sigma_-$ and $[\sx,\sigma_-]=-\sz$,
+Take $A=\sigma_-$ with the symmetrized product in the state $\rho_S^{\rm eq}\otimes\rhoB$ (the lowest-order approximation to the correlated equilibrium state), $\rho_S^{\rm eq}\propto\ee^{-\beta H_S}$.
+Then $(\sigma_-,\sigma_-)=\tfrac12\avg{\{\sigma_+,\sigma_-\}}=\tfrac12$.
+Using $[\sz,\sigma_-]=-2\sigma_-$ and $[\sx,\sigma_-]=-\sz$,
 \begin{equation}
   i\mathsf L\sigma_-=i[H,\sigma_-]=-i\omega_0\sigma_--i\big(2\cos\theta\,\sigma_-+\sin\theta\,\sz\big)B .
 \end{equation}
-The first term is along $A$, so $i\Omega=-i\omega_0$; the second is orthogonal to $A$ (it has
-$\avg B=0$) and is the random force, $F(0)=-iX_-B$ with $X_-\equiv2\cos\theta\sigma_-+\sin\theta\sz$. To
-second order, $F(t)$ evolves freely: $F(t)=-iX_-(t)B(t)$ with
-$X_-(t)=2\cos\theta\sigma_-\ee^{-i\omega_0t}+\sin\theta\sz$. The memory function \eqref{eq:memory-fn} is
-$M(t)=2(F(0),F(t))=\avg{\{X_+B,X_-(t)B(t)\}}$ with $X_+=X_-^\dagger$. The system and bath
-averages factorize, $\avg{X_+BX_-(t)B(t)}=\avg{X_+X_-(t)}\,C(-t)$ and
-$\avg{X_-(t)B(t)X_+B}=\avg{X_-(t)X_+}\,C(t)$; with $\avg{\sigma_+\sigma_-}=p_e$, $\avg{\sigma_-\sigma_+}=p_g$ (excited and
-ground populations) and $\avg{\sz^2}=1$,
+The first term is along $A$, so $i\Omega=-i\omega_0$; the second is orthogonal to $A$ (it has $\avg B=0$) and is the random force, $F(0)=-iX_-B$ with $X_-\equiv2\cos\theta\sigma_-+\sin\theta\sz$.
+To second order, $F(t)$ evolves freely: $F(t)=-iX_-(t)B(t)$ with $X_-(t)=2\cos\theta\sigma_-\ee^{-i\omega_0t}+\sin\theta\sz$.
+The memory function \eqref{eq:memory-fn} is $M(t)=2(F(0),F(t))=\avg{\{X_+B,X_-(t)B(t)\}}$ with $X_+=X_-^\dagger$.
+The system and bath averages factorize, $\avg{X_+BX_-(t)B(t)}=\avg{X_+X_-(t)}\,C(-t)$ and $\avg{X_-(t)B(t)X_+B}=\avg{X_-(t)X_+}\,C(t)$; with $\avg{\sigma_+\sigma_-}=p_e$, $\avg{\sigma_-\sigma_+}=p_g$ (excited and ground populations) and $\avg{\sz^2}=1$,
 \begin{equation}
   M(t)=2\sin^2\theta\,S(t)+4\cos^2\theta\,\ee^{-i\omega_0t}\Big[S(t)-\tfrac i2\tanh\tfrac{\beta\omega_0}{2}\,\chi(t)\Big]\qquad(t>0),
   \label{eq:M-qubit}
 \end{equation}
 where we used $p_gC(t)+p_eC(-t)=S-\tfrac i2(p_g-p_e)\chi$ and $p_g-p_e=\tanh(\beta\omega_0/2)$.
 
-Now the Green's function. With $G^R(t)=-i\theta(t)\avg{\{\sigma_-(t),\sigma_+\}}=-2i\theta(t)C(t)$, the Laplace
-transform of \cref{eq:MoriDyson} at $z=-i\omega+0^+$ gives
+Now the Green's function.
+With $G^R(t)=-i\theta(t)\avg{\{\sigma_-(t),\sigma_+\}}=-2i\theta(t)C(t)$, the Laplace transform of \cref{eq:MoriDyson} at $z=-i\omega+0^+$ gives
 \begin{equation}
   G^R(\omega)=\frac{1}{\omega-\omega_0-\Sigma^R(\omega)},\qquad
   \boxed{\;\Sigma^R(\omega)=-i\hat M(-i\omega+0^+)=-i\int_0^\infty\!\dd t\,\ee^{i\omega t}M(t).\;}
@@ -120,92 +89,56 @@ Evaluating at $\omega=\omega_0$ with \cref{eq:M-qubit}:
   =\underbrace{2\sin^2\theta\int_0^\infty\!S(t)\sin\omega_0t\,\dd t}_{\delta\omega\ \text{of \cref{eq:lamb}}}
   \;-\;2\cos^2\theta\tanh\tfrac{\beta\omega_0}{2}\;\chi(\omega{=}0).
 \end{align}
-The decay rate is exactly the Bloch--Redfield $\Gamma_2$ of \cref{eq:rates-T2}: the
-transverse part of the memory sampled at $\omega_0$ gives $\Gamma_1/2$ (the $(\sigma_-\ee^{-i\omega_0t})$ term
-has been shifted to zero frequency by the $\ee^{i\omega_0t}$, which is why it yields $S(0)$), and the
-longitudinal part gives $\Gamma_\varphi$. The real part contains the Lamb shift $\delta\omega$ of
-\cref{sec:lec5} \emph{plus} a term that \cref{sec:lec5} did not have: a static shift
-$-2\cos^2\theta\tanh(\beta\omega_0/2)\chi(0)$, with $\chi(0)=\tfrac2\pi\int_0^\infty J(\omega)/\omega\,\dd\omega=2\lambda$ twice the
-reorganization energy. It is a Franck--Condon (Stokes) shift: in the \emph{equilibrium}
-state the bath is displaced in opposite directions for the two qubit levels, so a
-vertical transition from the thermally more populated level costs $\omega_0\mp4\lambda$, and the
-thermal average of the two line positions is $\omega_0-4\lambda\tanh(\beta\omega_0/2)$. Mori sees it because
-its reference state is correlated; NZ from a factorized initial state sees it only
-dynamically, through the $\cos\theta\sin\theta\,\chi$ cross terms in the first column of
-\cref{eq:K2-bloch} that the secular approximation discards. Same physics, different
-bookkeeping of the initial condition.
+The decay rate is exactly the Bloch--Redfield $\Gamma_2$ of \cref{eq:rates-T2}: the transverse part of the memory sampled at $\omega_0$ gives $\Gamma_1/2$ (the $(\sigma_-\ee^{-i\omega_0t})$ term has been shifted to zero frequency by the $\ee^{i\omega_0t}$, which is why it yields $S(0)$), and the longitudinal part gives $\Gamma_\varphi$.
+The real part contains the Lamb shift $\delta\omega$ of \cref{sec:lec5} \emph{plus} a term that \cref{sec:lec5} did not have: a static shift $-2\cos^2\theta\tanh(\beta\omega_0/2)\chi(0)$, with $\chi(0)=\tfrac2\pi\int_0^\infty J(\omega)/\omega\,\dd\omega=2\lambda$ twice the reorganization energy.
+It is a Franck--Condon (Stokes) shift: in the \emph{equilibrium} state the bath is displaced in opposite directions for the two qubit levels, so a vertical transition from the thermally more populated level costs $\omega_0\mp4\lambda$, and the thermal average of the two line positions is $\omega_0-4\lambda\tanh(\beta\omega_0/2)$.
+Mori sees it because its reference state is correlated; NZ from a factorized initial state sees it only dynamically, through the $\cos\theta\sin\theta\,\chi$ cross terms in the first column of \cref{eq:K2-bloch} that the secular approximation discards.
+Same physics, different bookkeeping of the initial condition.
 \end{exbox}
 
 \begin{keybox}[Key point 8.1]
-For a single projected operator $A$ with $(A,A)$ normalized, Mori's memory function is
-$-i$ times the retarded self-energy of the Green's function $G^R_{AA^\dagger}$, and the
-frequency $\Omega$ is the static (Hartree--Fock-like) part of that self-energy. Iterating
-the projection (project $F$ onto itself, etc.) produces Mori's continued fraction, which
-is the recursion method for $G^R$~\cite[Ch.~8]{ZwanzigBook}, \cite[Sec.~5.3]{Forster1975};
-for the resonant-level model the construction reproduces the exact hybridization
-self-energy (see the companion working note).
+For a single projected operator $A$ with $(A,A)$ normalized, Mori's memory function is $-i$ times the retarded self-energy of the Green's function $G^R_{AA^\dagger}$, and the frequency $\Omega$ is the static (Hartree--Fock-like) part of that self-energy.
+Iterating the projection (project $F$ onto itself, etc.) produces Mori's continued fraction, which is the recursion method for $G^R$~\cite[Ch.~8]{ZwanzigBook}, \cite[Sec.~5.3]{Forster1975}; for the resonant-level model the construction reproduces the exact hybridization self-energy (see the companion working note).
 \end{keybox}
 
 \subsection{What Mori does \emph{not} give you}
 
-\Cref{eq:MoriDyson} determines the retarded sector. In equilibrium the FDT then fixes
-the Keldysh component, $G^K=\coth(\beta\omega/2)(G^R-G^A)$ for bosonic operators and
-$(1-2f)(G^R-G^A)$ for fermionic ones, so nothing is lost. Out of equilibrium,
-occupations, currents and noise live in $G^<$ (equivalently $G^K$), which the retarded
-function alone does not determine. Three routes supply the missing information:
+\Cref{eq:MoriDyson} determines the retarded sector.
+In equilibrium the FDT then fixes the Keldysh component, $G^K=\coth(\beta\omega/2)(G^R-G^A)$ for bosonic operators and $(1-2f)(G^R-G^A)$ for fermionic ones, so nothing is lost.
+Out of equilibrium, occupations, currents and noise live in $G^<$ (equivalently $G^K$), which the retarded function alone does not determine.
+Three routes supply the missing information:
 \begin{enumerate}[itemsep=1pt]
-\item \emph{Density-matrix projection} (NZ/TCL, \cref{sec:lec5,sec:lec6}), which evolves
-  the one-time state and therefore carries occupations by construction; by
-  Proposition~\ref{prop:mori-nz} this is Mori on the complete basis with a factorized reference state.
-\item \emph{Kadanoff--Baym equations}~\cite{KadanoffBaym,StefanucciVanLeeuwen} for the
-  two-time $G^{\lessgtr}(t,t')$, closed by the generalized Kadanoff--Baym ansatz
-  (GKBA)~\cite{Lipavsky1986}, $G^{\lessgtr}(t,t')\approx i[G^R(t,t')G^{\lessgtr}(t',t')-G^{\lessgtr}(t,t)G^A(t,t')]$, which
-  plays the role of a projection onto one-time quantities.
-\item \emph{Time-dependent Mori projections} with nonstationary reference
-  states~\cite[Ch.~2]{Grabert1982}, which produce two-time memory kernels and are closer in
-  spirit to Kadanoff--Baym.
+\item \emph{Density-matrix projection} (NZ/TCL, \cref{sec:lec5,sec:lec6}), which evolves the one-time state and therefore carries occupations by construction; by Proposition~\ref{prop:mori-nz} this is Mori on the complete basis with a factorized reference state.
+\item \emph{Kadanoff--Baym equations}~\cite{KadanoffBaym,StefanucciVanLeeuwen} for the two-time $G^{\lessgtr}(t,t')$, closed by the generalized Kadanoff--Baym ansatz (GKBA)~\cite{Lipavsky1986}, $G^{\lessgtr}(t,t')\approx i[G^R(t,t')G^{\lessgtr}(t',t')-G^{\lessgtr}(t,t)G^A(t,t')]$, which plays the role of a projection onto one-time quantities.
+\item \emph{Time-dependent Mori projections} with nonstationary reference states~\cite[Ch.~2]{Grabert1982}, which produce two-time memory kernels and are closer in spirit to Kadanoff--Baym.
 \end{enumerate}
 
 \subsection{GLE \texorpdfstring{$\leftrightarrow$}{<->} Keldysh saddle point}
 
-For a linear bath coupled to a continuous coordinate $x$ (Caldeira--Leggett), Example~7.1(ii)
-produced from the influence functional the quantum Langevin equation
-$m\ddot x^\cl+V'(x^\cl)-\int^t\chi(t-s)x^\cl(s)\dd s=\xi(t)$, $\avg{\xi\xi}=S$. This is Mori's
-\cref{eq:GLE} for $A=x$ (with the momentum as a second variable), with
-$M\leftrightarrow\chi$ and $F\leftrightarrow\xi$; Kubo's second FDT \eqref{eq:memory-fn} and the
-equilibrium relation $D^K=\coth(\beta\omega/2)(D^R-D^A)$ between the bath's Keldysh and retarded
-components are the same statement~\cite[Sec.~3.2]{Kamenev2011}, \cite[Ch.~3]{Gardiner2004}.
-For the qubit there is no such classical limit, but the structure is unchanged: the
-memory function \eqref{eq:M-qubit} is a combination of $S$ and $\chi$ with the system's
-own thermal weight $\tanh(\beta\omega_0/2)$ multiplying the response.
+For a linear bath coupled to a continuous coordinate $x$ (Caldeira--Leggett), Example~7.1(ii) produced from the influence functional the quantum Langevin equation $m\ddot x^\cl+V'(x^\cl)-\int^t\chi(t-s)x^\cl(s)\dd s=\xi(t)$, $\avg{\xi\xi}=S$.
+This is Mori's \cref{eq:GLE} for $A=x$ (with the momentum as a second variable), with $M\leftrightarrow\chi$ and $F\leftrightarrow\xi$; Kubo's second FDT \eqref{eq:memory-fn} and the equilibrium relation $D^K=\coth(\beta\omega/2)(D^R-D^A)$ between the bath's Keldysh and retarded components are the same statement~\cite[Sec.~3.2]{Kamenev2011}, \cite[Ch.~3]{Gardiner2004}.
+For the qubit there is no such classical limit, but the structure is unchanged: the memory function \eqref{eq:M-qubit} is a combination of $S$ and $\chi$ with the system's own thermal weight $\tanh(\beta\omega_0/2)$ multiplying the response.
 
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:8-1}
-Derive \cref{eq:GLE} from the Dyson identity and prove $(A,F(t))=0$. Show that
-$M(t)=(F,F(t))(A,A)^{-1}$ requires $\mathsf L$ to be self-adjoint for the chosen product, and
-check this for the Kubo--Mori and symmetrized products in a thermal state.
+Derive \cref{eq:GLE} from the Dyson identity and prove $(A,F(t))=0$.
+Show that $M(t)=(F,F(t))(A,A)^{-1}$ requires $\mathsf L$ to be self-adjoint for the chosen product, and check this for the Kubo--Mori and symmetrized products in a thermal state.
 \end{exercise}
 
 \begin{exercise}\label{ex:8-2}
-Complete the derivation of \cref{eq:M-qubit} (the four anticommutator terms) and verify the
-rate and shift formulas. Then repeat with $A=\sz-\avg{\sz}$ and show that the memory
-function reproduces $\Gamma_1$ (use the FDT) and that the inhomogeneous term is absent (why?).
+Complete the derivation of \cref{eq:M-qubit} (the four anticommutator terms) and verify the rate and shift formulas.
+Then repeat with $A=\sz-\avg{\sz}$ and show that the memory function reproduces $\Gamma_1$ (use the FDT) and that the inhomogeneous term is absent (why?).
 What goes wrong if one projects on $\sz$ itself?
 \end{exercise}
 
 \begin{exercise}\label{ex:8-3}
-Prove Proposition~\ref{prop:mori-nz} in detail for a qubit using the basis
-$E_\mu=\sigma_\mu/\sqrt2$, and show that the Mori memory matrix at second order is
-$-K^{(2)}(t)^T$ in the coefficient convention (the transpose, because the matrices are
-real).
+Prove Proposition~\ref{prop:mori-nz} in detail for a qubit using the basis $E_\mu=\sigma_\mu/\sqrt2$, and show that the Mori memory matrix at second order is $-K^{(2)}(t)^T$ in the coefficient convention (the transpose, because the matrices are real).
 \end{exercise}
 
 \begin{exercise}\label{ex:8-4}
-Mori's continued fraction: project the random force of Example~8.1 onto itself and
-write the second-level memory function. For the Lorentzian bath, show that the
-continued fraction terminates after two levels in the rotating-wave approximation and
-reproduces the exact $c_e(t)$ of \cref{sec:tcl-singular}.
+Mori's continued fraction: project the random force of Example~8.1 onto itself and write the second-level memory function.
+For the Lorentzian bath, show that the continued fraction terminates after two levels in the rotating-wave approximation and reproduces the exact $c_e(t)$ of \cref{sec:tcl-singular}.
 \end{exercise}
 
 \clearpage

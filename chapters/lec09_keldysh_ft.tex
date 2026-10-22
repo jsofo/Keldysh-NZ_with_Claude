@@ -2,12 +2,9 @@
 \section{Lecture 9: The qubit as a Keldysh field theory}
 \label{sec:lec9}
 
-Everything in \cref{sec:lec3,sec:lec4} was ``Keldysh'' in content but Liouville-space in
-form. This lecture translates the same statements into the language of the many-body
-literature (generating functionals, actions, Green's functions and self-energies), so
-that the reader can open Kamenev~\cite{Kamenev2011}, Rammer and Smith~\cite{RammerSmith1986}
-or Sieberer, Buchhold and Diehl~\cite{Sieberer2016} and recognize each object. The
-lecture is deliberately brief on technique and long on dictionary.
+Everything in \cref{sec:lec3,sec:lec4} was ``Keldysh'' in content but Liouville-space in form.
+This lecture translates the same statements into the language of the many-body literature (generating functionals, actions, Green's functions and self-energies), so that the reader can open Kamenev~\cite{Kamenev2011}, Rammer and Smith~\cite{RammerSmith1986} or Sieberer, Buchhold and Diehl~\cite{Sieberer2016} and recognize each object.
+The lecture is deliberately brief on technique and long on dictionary.
 
 \subsection{The generating functional and its two kinds of sources}
 
@@ -15,11 +12,9 @@ The partition function on the closed contour is trivially normalized,
 \begin{equation}
   Z=\Tr\big[U_{\mathcal C}\,\rho(0)\big]=\Tr\big[U^\dagger(t)\,U(t)\,\rho(0)\big]=1 :
 \end{equation}
-there is no vacuum-to-vacuum denominator to divide out, which is the reason the Keldysh technique has no
-disconnected diagrams and no Matsubara-to-real-time continuation. Information is
-extracted by adding sources to $H$ on the two branches separately,
-$H_\pm\to H_\pm-h_\pm(t)S$, and in rotated variables $h^\cl=\tfrac12(h^++h^-)$,
-$h^\qu=h^+-h^-$. Then
+there is no vacuum-to-vacuum denominator to divide out, which is the reason the Keldysh technique has no disconnected diagrams and no Matsubara-to-real-time continuation.
+Information is extracted by adding sources to $H$ on the two branches separately, $H_\pm\to H_\pm-h_\pm(t)S$, and in rotated variables $h^\cl=\tfrac12(h^++h^-)$, $h^\qu=h^+-h^-$.
+Then
 \begin{equation}
 \begin{aligned}
   \frac{\delta Z}{\delta h^\qu(t)}\Big|_{h=0}&=i\avg{S(t)},\qquad
@@ -27,119 +22,73 @@ $h^\qu=h^+-h^-$. Then
   \frac{\delta^2Z}{\delta h^\qu(t)\,\delta h^\qu(t')}\Big|_{h=0}&=-\tfrac12\avg{\{S(t),S(t')\}},
 \end{aligned}
 \end{equation}
-while $\delta^2Z/\delta h^\cl\delta h^\cl=0$ identically ($Z=1$ for any classical source,
-since $h^+=h^-$ is a physical Hamiltonian). In Liouville-space terms: a quantum source
-inserts $S^\qu$ (it is $[S,\cdot]$, the generator of the physical perturbation), a classical
-source inserts $S^\cl$ (it measures $S$), and the three statements are the trace identities
-\eqref{eq:trace-identities} applied to the system. The retarded response of $S$ to a
-force coupling to $S$ is the object Mori computes (\cref{sec:lec8}), the symmetrized
-correlator is the object a sensor measures (\cref{sec:lec10}), and $Z=1$ for classical
-sources is the normalization of probability.
+while $\delta^2Z/\delta h^\cl\delta h^\cl=0$ identically ($Z=1$ for any classical source, since $h^+=h^-$ is a physical Hamiltonian).
+In Liouville-space terms: a quantum source inserts $S^\qu$ (it is $[S,\cdot]$, the generator of the physical perturbation), a classical source inserts $S^\cl$ (it measures $S$), and the three statements are the trace identities \eqref{eq:trace-identities} applied to the system.
+The retarded response of $S$ to a force coupling to $S$ is the object Mori computes (\cref{sec:lec8}), the symmetrized correlator is the object a sensor measures (\cref{sec:lec10}), and $Z=1$ for classical sources is the normalization of probability.
 
 \subsection{The bath as a Gaussian field; integrating it out}
 
-For each mode, the Keldysh action is
-$A_B=\int\dd t\sum_\pm\pm\big[\bar b_\pm(i\partial_t-\omega_k)b_\pm\big]$, and after the rotation its inverse is
-the Larkin--Ovchinnikov matrix. For the collective coordinate $B=\sum_kg_k(b_k+b_k^\dagger)$ that
-couples to the system, the Gaussian integral gives exactly the influence functional
-\eqref{eq:FV}, i.e.\ $-\frac12\int\!\!\int s^aD^{ab}s^b$ with
-$D^{R}(\omega)=-i\chi(\omega)$, $D^A=(D^R)^*$, $D^K(\omega)=-i\coth(\beta\omega/2)\,2\chi''(\omega)$ in Kamenev's
-normalization~\cite[Secs.~2.5--2.7 and 3.2]{Kamenev2011}. The bath enters the system's
-problem only as this $2\times2$ propagator, exactly as in \cref{sec:lec3}. If the bath is
-itself of interest (a cavity, a transmission line: the pseudomode of \cref{sec:lec2} is
-literally a cavity mode), its dressed propagator obeys a Dyson equation with a
-self-energy from the system, $\mathbf D=\mathbf D_0+\mathbf D_0\mathbf\Pi\mathbf D$, whose retarded
-component is what input--output theory measures as reflection or transmission and whose
-Keldysh component is the emitted noise~\cite{ClerkRMP2010}.
+For each mode, the Keldysh action is $A_B=\int\dd t\sum_\pm\pm\big[\bar b_\pm(i\partial_t-\omega_k)b_\pm\big]$, and after the rotation its inverse is the Larkin--Ovchinnikov matrix.
+For the collective coordinate $B=\sum_kg_k(b_k+b_k^\dagger)$ that couples to the system, the Gaussian integral gives exactly the influence functional \eqref{eq:FV}, i.e.\ $-\frac12\int\!\!\int s^aD^{ab}s^b$ with $D^{R}(\omega)=-i\chi(\omega)$, $D^A=(D^R)^*$, $D^K(\omega)=-i\coth(\beta\omega/2)\,2\chi''(\omega)$ in Kamenev's normalization~\cite[Secs.~2.5--2.7 and 3.2]{Kamenev2011}.
+The bath enters the system's problem only as this $2\times2$ propagator, exactly as in \cref{sec:lec3}.
+If the bath is itself of interest (a cavity, a transmission line: the pseudomode of \cref{sec:lec2} is literally a cavity mode), its dressed propagator obeys a Dyson equation with a self-energy from the system, $\mathbf D=\mathbf D_0+\mathbf D_0\mathbf\Pi\mathbf D$, whose retarded component is what input--output theory measures as reflection or transmission and whose Keldysh component is the emitted noise~\cite{ClerkRMP2010}.
 
 \subsection{Representing the spin}
 
-A qubit has no canonical field, so one must choose a representation. Four are in use.
+A qubit has no canonical field, so one must choose a representation.
+Four are in use.
 
 \paragraph{(a) Liouville space.}
-What we did: treat $\rho$ as a vector and $H^\pm$ as superoperators. This is the natural
-``Keldysh field theory'' of any finite-dimensional system and is the formalism of the
-real-time diagrammatics of Schoeller and Sch\"on~\cite{SchoellerSchon1994}, K\"onig
-\emph{et al.}~\cite{Konig1996} and the real-time RG~\cite{Schoeller2009,Keil2001}. Its
-drawback is that the system ``propagator'' $\ee^{\Lc_S\tau}$ is a $d^2\times d^2$ matrix rather
-than a single-particle Green's function; its advantage is that it is exact and needs no
-constraint.
+What we did: treat $\rho$ as a vector and $H^\pm$ as superoperators.
+This is the natural ``Keldysh field theory'' of any finite-dimensional system and is the formalism of the real-time diagrammatics of Schoeller and Sch\"on~\cite{SchoellerSchon1994}, K\"onig \emph{et al.}~\cite{Konig1996} and the real-time RG~\cite{Schoeller2009,Keil2001}.
+Its drawback is that the system ``propagator'' $\ee^{\Lc_S\tau}$ is a $d^2\times d^2$ matrix rather than a single-particle Green's function; its advantage is that it is exact and needs no constraint.
 
 \paragraph{(b) Spin-coherent-state path integral.}
 Paths on the Bloch sphere with a Berry-phase term, on both branches~\cite[Ch.~4]{Altland2010}.
-Elegant for large spins and semiclassics; for a single qubit the measure is awkward and
-the blip--sojourn expansion of \cref{sec:lec7} is the practical form.
+Elegant for large spins and semiclassics; for a single qubit the measure is awkward and the blip--sojourn expansion of \cref{sec:lec7} is the practical form.
 
 \paragraph{(c) Fermionic representations.}
-Abrikosov pseudofermions~\cite{Abrikosov1965}, $\sigma_i=\sum_{ab}f_a^\dagger(\sigma_i)_{ab}f_b$ with the
-constraint $\sum_af^\dagger_af_a=1$, or Schwinger bosons~\cite{Schwinger1965}. Standard Wick's
-theorem applies, at the cost of projecting onto the physical subspace (a chemical
-potential sent to $-\infty$, or Popov--Fedotov phases). These are the representations in
-which the Kondo problem is usually treated.
+Abrikosov pseudofermions~\cite{Abrikosov1965}, $\sigma_i=\sum_{ab}f_a^\dagger(\sigma_i)_{ab}f_b$ with the constraint $\sum_af^\dagger_af_a=1$, or Schwinger bosons~\cite{Schwinger1965}.
+Standard Wick's theorem applies, at the cost of projecting onto the physical subspace (a chemical potential sent to $-\infty$, or Popov--Fedotov phases).
+These are the representations in which the Kondo problem is usually treated.
 
 \paragraph{(d) Majorana representation.}
-Three Majorana fermions $\eta_x,\eta_y,\eta_z$ with $\{\eta_i,\eta_j\}=2\delta_{ij}$ and
-$\sigma_i=-\tfrac i2\epsilon_{ijk}\eta_j\eta_k$ reproduce the Pauli algebra with \emph{no
-constraint}~\cite{ShnirmanMakhlin2003}. The object $\Theta=-i\eta_x\eta_y\eta_z$ commutes with
-every $\sigma_i$ and with $H$, satisfies $\Theta^2=1$ and $\sigma_i=\Theta\eta_i$, so spin--spin
-correlators reduce to Majorana two-point functions,
-$\avg{T\sigma_i(t)\sigma_i(0)}=\avg{T\eta_i(t)\eta_i(0)}$. For the dissipative two-level system this
-gives a genuine single-particle Keldysh diagrammatics: the Majorana propagator
-$\mathbf G_{\eta}$ obeys a Dyson equation, its retarded self-energy at second order is
-built from one bath line $D$ and one Majorana line, and the resulting
-$\Sigma^R_{\eta_-}(\omega)$ for the combination $\eta_x-i\eta_y$ is exactly the Mori self-energy
-of Example~8.1 (the spin-flip operator $\sigma_-\propto\Theta(\eta_x-i\eta_y)$).
+Three Majorana fermions $\eta_x,\eta_y,\eta_z$ with $\{\eta_i,\eta_j\}=2\delta_{ij}$ and $\sigma_i=-\tfrac i2\epsilon_{ijk}\eta_j\eta_k$ reproduce the Pauli algebra with \emph{no constraint}~\cite{ShnirmanMakhlin2003}.
+The object $\Theta=-i\eta_x\eta_y\eta_z$ commutes with every $\sigma_i$ and with $H$, satisfies $\Theta^2=1$ and $\sigma_i=\Theta\eta_i$, so spin--spin correlators reduce to Majorana two-point functions, $\avg{T\sigma_i(t)\sigma_i(0)}=\avg{T\eta_i(t)\eta_i(0)}$.
+For the dissipative two-level system this gives a genuine single-particle Keldysh diagrammatics: the Majorana propagator $\mathbf G_{\eta}$ obeys a Dyson equation, its retarded self-energy at second order is built from one bath line $D$ and one Majorana line, and the resulting $\Sigma^R_{\eta_-}(\omega)$ for the combination $\eta_x-i\eta_y$ is exactly the Mori self-energy of Example~8.1 (the spin-flip operator $\sigma_-\propto\Theta(\eta_x-i\eta_y)$).
 
 \begin{keybox}[Key point 9.1]
-Whichever representation is chosen, the second-order retarded self-energy of the
-spin-flip propagator is the Mori memory function \eqref{eq:M-qubit}, and the second-order
-Liouville-space kernel is $K^{(2)}$ of \cref{eq:K2}. They are different projections of the
-same two diagrams (one noise line, one response line). The representation decides how
-convenient the \emph{higher} orders and the \emph{resummations} are.
+Whichever representation is chosen, the second-order retarded self-energy of the spin-flip propagator is the Mori memory function \eqref{eq:M-qubit}, and the second-order Liouville-space kernel is $K^{(2)}$ of \cref{eq:K2}.
+They are different projections of the same two diagrams (one noise line, one response line).
+The representation decides how convenient the \emph{higher} orders and the \emph{resummations} are.
 \end{keybox}
 
 \subsection{Markovian limit: the Keldysh action of a Lindblad equation}
 
-When the kernel is time-local and the generator is of GKSL form \eqref{eq:GKSL}, the
-Liouville-space evolution $\ee^{\Gc t}$ can be written as a Keldysh path integral with the
-action~\cite{Sieberer2016}
+When the kernel is time-local and the generator is of GKSL form \eqref{eq:GKSL}, the Liouville-space evolution $\ee^{\Gc t}$ can be written as a Keldysh path integral with the action~\cite{Sieberer2016}
 \begin{equation}
   A_K=\int\!\dd t\,\Big[\bar\psi_+i\partial_t\psi_+-\bar\psi_-i\partial_t\psi_--H_++H_-
   -i\sum_j\gamma_j\Big(L_{j+}\bar L_{j-}-\tfrac12\big(\bar L_{j+}L_{j+}+\bar L_{j-}L_{j-}\big)\Big)\Big],
   \label{eq:lindblad-action}
 \end{equation}
-where $\psi_\pm$ are the (bosonic or fermionic) fields representing the system on the two
-branches and $L_{j\pm}$ the jump operators evaluated on them. The term with mixed
-branches, $L_+\bar L_-$, is the ``jump'' $L\rho L^\dagger$; the branch-diagonal terms are the
-anticommutator. In rotated variables the quadratic part has a \emph{frequency-independent}
-$\Sigma^K$ and a \emph{time-local} $\Sigma^R$: a Lindblad equation is a Keldysh theory with
-white noise and instantaneous damping. The three Lindblad terms of the secular Bloch
-equations (Exercise~\ref{ex:5-3}) translate into $\Sigma^R=-i\Gamma_2$ on the spin-flip propagator and a
-constant $\Sigma^K$ fixed by $\Gamma_\downarrow$ and $\Gamma_\uparrow$, with the ratio $\Sigma^K/(\Sigma^R-\Sigma^A)$ equal to
-$\coth(\beta\omega_0/2)$ only if the rates obey detailed balance: a Lindblad equation whose rates
-do not obey the FDT describes a nonthermal (effective-temperature) steady state, and the
-Keldysh language makes this visible at a glance~\cite[Sec.~4]{Sieberer2016}.
+where $\psi_\pm$ are the (bosonic or fermionic) fields representing the system on the two branches and $L_{j\pm}$ the jump operators evaluated on them.
+The term with mixed branches, $L_+\bar L_-$, is the ``jump'' $L\rho L^\dagger$; the branch-diagonal terms are the anticommutator.
+In rotated variables the quadratic part has a \emph{frequency-independent} $\Sigma^K$ and a \emph{time-local} $\Sigma^R$: a Lindblad equation is a Keldysh theory with white noise and instantaneous damping.
+The three Lindblad terms of the secular Bloch equations (Exercise~\ref{ex:5-3}) translate into $\Sigma^R=-i\Gamma_2$ on the spin-flip propagator and a constant $\Sigma^K$ fixed by $\Gamma_\downarrow$ and $\Gamma_\uparrow$, with the ratio $\Sigma^K/(\Sigma^R-\Sigma^A)$ equal to $\coth(\beta\omega_0/2)$ only if the rates obey detailed balance: a Lindblad equation whose rates do not obey the FDT describes a nonthermal (effective-temperature) steady state, and the Keldysh language makes this visible at a glance~\cite[Sec.~4]{Sieberer2016}.
 
 \subsection{Self-consistent resummations}
 
-Beyond strict perturbation theory, the field theory offers resummations that are
-awkward in Liouville space:
+Beyond strict perturbation theory, the field theory offers resummations that are awkward in Liouville space:
 \begin{itemize}[itemsep=1pt]
-\item \textbf{Kadanoff--Baym.} Replace the free system propagator inside the self-energy by
-  the dressed one, $\Sigma=\Sigma[\mathbf G]$, and solve the two-time equations
-  self-consistently~\cite{KadanoffBaym,StefanucciVanLeeuwen}. In Liouville-space terms this
-  dresses the propagators \emph{between} vertices inside $K$ with the full $\Pi$, which NZ
-  never does. The GKBA reduces the two-time problem to a one-time one; it is to
-  Kadanoff--Baym what TCL is to NZ.
-\item \textbf{Real-time RG.} Integrate out bath modes shell by shell in the Liouville-space
-  diagrammatics, generating a flowing effective Liouvillian~\cite{Schoeller2009,Keil2001}.
-  For the spin-boson model this reproduces the renormalized tunnelling
-  $\Delta_r\sim\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}$ of Exercise~\ref{ex:7-4}.
-\item \textbf{Large-$N$, DMFT.} For many coupled open systems the Keldysh action is the
-  starting point of mean-field and dynamical mean-field schemes, e.g.\ open-system
-  DMFT~\cite{Scarlatella2021}, where the local problem is precisely an impurity in a
-  self-consistent bath, i.e.\ the problem of these notes with a $\mathbf D$ that is determined
-  self-consistently.
+\item \textbf{Kadanoff--Baym.}
+  Replace the free system propagator inside the self-energy by the dressed one, $\Sigma=\Sigma[\mathbf G]$, and solve the two-time equations self-consistently~\cite{KadanoffBaym,StefanucciVanLeeuwen}.
+  In Liouville-space terms this dresses the propagators \emph{between} vertices inside $K$ with the full $\Pi$, which NZ never does.
+  The GKBA reduces the two-time problem to a one-time one; it is to Kadanoff--Baym what TCL is to NZ.
+\item \textbf{Real-time RG.}
+  Integrate out bath modes shell by shell in the Liouville-space diagrammatics, generating a flowing effective Liouvillian~\cite{Schoeller2009,Keil2001}.
+  For the spin-boson model this reproduces the renormalized tunnelling $\Delta_r\sim\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}$ of Exercise~\ref{ex:7-4}.
+\item \textbf{Large-$N$, DMFT.}
+  For many coupled open systems the Keldysh action is the starting point of mean-field and dynamical mean-field schemes, e.g.\ open-system DMFT~\cite{Scarlatella2021}, where the local problem is precisely an impurity in a self-consistent bath, i.e.\ the problem of these notes with a $\mathbf D$ that is determined self-consistently.
 \end{itemize}
 
 \subsection{Dictionary}
@@ -171,22 +120,17 @@ Local $\Sigma^R$, constant $\Sigma^K$ & GKSL / Lindblad & Markovian $M(t)\propto
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:9-1}
-Prove the three source derivatives at the top of the lecture from the Liouville-space
-Dyson series, and show that $\delta^nZ/\delta h^\cl\cdots\delta h^\cl=0$ to all orders.
+Prove the three source derivatives at the top of the lecture from the Liouville-space Dyson series, and show that $\delta^nZ/\delta h^\cl\cdots\delta h^\cl=0$ to all orders.
 \end{exercise}
 
 \begin{exercise}\label{ex:9-2}
-Verify the Majorana representation: show that $\sigma_i=-\tfrac i2\epsilon_{ijk}\eta_j\eta_k$ obey the
-Pauli algebra, that $\Theta=-i\eta_x\eta_y\eta_z$ commutes with all $\sigma_i$, and that
-$\sigma_i=\Theta\eta_i$. Write $H$ of \cref{eq:model} in Majoranas and identify the
-interaction vertex (one bath line, two Majorana lines).
+Verify the Majorana representation: show that $\sigma_i=-\tfrac i2\epsilon_{ijk}\eta_j\eta_k$ obey the Pauli algebra, that $\Theta=-i\eta_x\eta_y\eta_z$ commutes with all $\sigma_i$, and that $\sigma_i=\Theta\eta_i$.
+Write $H$ of \cref{eq:model} in Majoranas and identify the interaction vertex (one bath line, two Majorana lines).
 \end{exercise}
 
 \begin{exercise}\label{ex:9-3}
-Starting from the secular GKSL generator of Exercise~\ref{ex:5-3} for $\theta=\pi/2$, write the
-Keldysh action \eqref{eq:lindblad-action} in the Majorana representation and read off
-$\Sigma^R$ and $\Sigma^K$ of the spin-flip propagator. Verify the detailed-balance statement
-in the text.
+Starting from the secular GKSL generator of Exercise~\ref{ex:5-3} for $\theta=\pi/2$, write the Keldysh action \eqref{eq:lindblad-action} in the Majorana representation and read off $\Sigma^R$ and $\Sigma^K$ of the spin-flip propagator.
+Verify the detailed-balance statement in the text.
 \end{exercise}
 
 \clearpage

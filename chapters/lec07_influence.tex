@@ -2,25 +2,18 @@
 \section{Lecture 7: Path integrals: the influence functional, the polaron frame and NIBA}
 \label{sec:lec7}
 
-So far we have organized the perturbation series by what the bath does to the
-\emph{system superoperators}. The path integral does the opposite: it replaces the system
-operators by c-number paths, so that the bath can be integrated out \emph{exactly} into
-an exponential, the Feynman--Vernon influence functional~\cite{FeynmanVernon1963}. For a
-qubit the paths are discrete, which leads to the blip--sojourn expansion of Leggett
-\emph{et al.}~\cite{Leggett1987} and to the noninteracting-blip approximation (NIBA), the
-workhorse of the dissipative two-level system. We show that NIBA is nothing but the
-second-order Nakajima--Zwanzig kernel in the polaron frame.
+So far we have organized the perturbation series by what the bath does to the \emph{system superoperators}.
+The path integral does the opposite: it replaces the system operators by c-number paths, so that the bath can be integrated out \emph{exactly} into an exponential, the Feynman--Vernon influence functional~\cite{FeynmanVernon1963}.
+For a qubit the paths are discrete, which leads to the blip--sojourn expansion of Leggett \emph{et al.}~\cite{Leggett1987} and to the noninteracting-blip approximation (NIBA), the workhorse of the dissipative two-level system.
+We show that NIBA is nothing but the second-order Nakajima--Zwanzig kernel in the polaron frame.
 
 \subsection{The influence functional as Wick's theorem with a commutative system}
 \label{sec:FV-derivation}
 
-Suppose the system superoperators at different times commuted. Then the sum over all
-pairings of $2n$ vertices would be $\frac{1}{n!}$ times the $n$-th power of the single
-contraction, and the whole Dyson series \eqref{eq:dyson-super} would exponentiate.
-Operators do not commute, but in a path integral they are replaced by c-number paths: on
-the forward branch $S\to s^+(t)$, on the backward branch $S\to s^-(t)$, and in rotated
-variables $s^\cl=\frac12(s^++s^-)$, $s^\qu=s^+-s^-$. Repeating \cref{sec:feynman-rules} with
-c-number vertices, the sum over pairings exponentiates to
+Suppose the system superoperators at different times commuted.
+Then the sum over all pairings of $2n$ vertices would be $\frac{1}{n!}$ times the $n$-th power of the single contraction, and the whole Dyson series \eqref{eq:dyson-super} would exponentiate.
+Operators do not commute, but in a path integral they are replaced by c-number paths: on the forward branch $S\to s^+(t)$, on the backward branch $S\to s^-(t)$, and in rotated variables $s^\cl=\frac12(s^++s^-)$, $s^\qu=s^+-s^-$.
+Repeating \cref{sec:feynman-rules} with c-number vertices, the sum over pairings exponentiates to
 \begin{equation}
   \boxed{\;
   \Phi[s^\cl,s^\qu]=-\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,
@@ -31,70 +24,45 @@ and the reduced density matrix is
 \begin{equation}
   \rhoS(t)=\int\!\mathcal Ds^+\mathcal Ds^-\;\ee^{\,iA_S[s^+]-iA_S[s^-]+\Phi[s^\cl,s^\qu]}\;(\text{boundary terms}),
 \end{equation}
-with $A_S$ the system action. In the original $\pm$ variables and with $C=S-\tfrac i2\chi$,
-\cref{eq:FV} is Feynman and Vernon's
-$\Phi=-\int_{t_1>t_2}\big(s^+_1-s^-_1\big)\big[C(t_1-t_2)s^+_2-C^*(t_1-t_2)s^-_2\big]$, which the reader should
-check (Exercise~\ref{ex:7-1}). The rotated form \cref{eq:FV} says: the \emph{noise} kernel couples
-the quantum path to itself, the \emph{response} kernel couples the quantum path to the
-earlier classical path, and there is no $\cl$--$\cl$ term. Equivalently,
-$\Phi=-\frac12\int\!\!\int s^aD^{ab}s^b$ with $D$ the Larkin--Ovchinnikov matrix \eqref{eq:LO}: this is
-how the influence functional appears when a Gaussian bath is integrated out of the
-Keldysh action~\cite[Sec.~3.2]{Kamenev2011}, \cite[Secs.~3--4]{Grabert1988},
-\cite[Ch.~5]{Weiss2012}. For a single Gaussian bath, \cref{eq:FV} contains \emph{all} the
-information that any method uses; they differ only in how they handle the
-non-commutativity that the path integral pushes into the measure.
+with $A_S$ the system action.
+In the original $\pm$ variables and with $C=S-\tfrac i2\chi$, \cref{eq:FV} is Feynman and Vernon's $\Phi=-\int_{t_1>t_2}\big(s^+_1-s^-_1\big)\big[C(t_1-t_2)s^+_2-C^*(t_1-t_2)s^-_2\big]$, which the reader should check (Exercise~\ref{ex:7-1}).
+The rotated form \cref{eq:FV} says: the \emph{noise} kernel couples the quantum path to itself, the \emph{response} kernel couples the quantum path to the earlier classical path, and there is no $\cl$--$\cl$ term.
+Equivalently, $\Phi=-\frac12\int\!\!\int s^aD^{ab}s^b$ with $D$ the Larkin--Ovchinnikov matrix \eqref{eq:LO}: this is how the influence functional appears when a Gaussian bath is integrated out of the Keldysh action~\cite[Sec.~3.2]{Kamenev2011}, \cite[Secs.~3--4]{Grabert1988}, \cite[Ch.~5]{Weiss2012}.
+For a single Gaussian bath, \cref{eq:FV} contains \emph{all} the information that any method uses; they differ only in how they handle the non-commutativity that the path integral pushes into the measure.
 
 \begin{exbox}[Example 7.1: reading the influence functional]
-\emph{(i) Pure dephasing.} With $S=\sz$ and the system restricted to the coherence
-$\ket0\bra1$, the path variables are frozen at $s^+=+1$, $s^-=-1$, so $s^\cl=0$ and $s^\qu=2$. Then
-$\Phi=-4\int_{t_1>t_2}S(t_1-t_2)=-\Gamma(t)$ and $\rho_{01}(t)=\rho_{01}(0)\ee^{-i\omega_0t-\Gamma(t)}$,
-reproducing \cref{eq:dephasing-exact} in one line. The coherence is a path on which the
-two branches maximally disagree, and only the noise sees it.
+\emph{(i) Pure dephasing.}
+With $S=\sz$ and the system restricted to the coherence $\ket0\bra1$, the path variables are frozen at $s^+=+1$, $s^-=-1$, so $s^\cl=0$ and $s^\qu=2$.
+Then $\Phi=-4\int_{t_1>t_2}S(t_1-t_2)=-\Gamma(t)$ and $\rho_{01}(t)=\rho_{01}(0)\ee^{-i\omega_0t-\Gamma(t)}$, reproducing \cref{eq:dephasing-exact} in one line.
+The coherence is a path on which the two branches maximally disagree, and only the noise sees it.
 
-\emph{(ii) Semiclassical limit and Langevin equation.} $\Phi$ is at most quadratic in
-$s^\qu$. Decouple the quadratic term with an auxiliary real field $\xi$ (Hubbard--Stratonovich),
-$\exp[-\tfrac12\!\int\!\!\int s^\qu Ss^\qu]=\int\!\mathcal D\xi\,
-\exp[-\tfrac12\!\int\!\!\int\xi S^{-1}\xi+i\!\int\!\xi s^\qu]$, and expand the system action to
-first order in $s^\qu$ (exact for a harmonic system). The $s^\qu$ integral then produces a
-delta functional enforcing an equation of motion for $s^\cl$ with damping kernel $\chi$ and
-a Gaussian force $\xi$ of correlator $S$: the quantum Langevin
-equation~\cite{FordKacMazur1965,CaldeiraLeggett1983}. The $\qu$ field has become the
-Martin--Siggia--Rose response field~\cite{MartinSiggiaRose1973}, the $\qu\qu=0$ rule of
-\cref{eq:LO} is the statement that the response field has no self-correlation
-(causality), and in the high-temperature limit $S(\omega)\to2T\chi''(\omega)/\omega$ is the classical
-FDT~\cite[Ch.~4]{Kamenev2011}. \Cref{sec:lec8} returns to this from Mori's side.
+\emph{(ii) Semiclassical limit and Langevin equation.}
+$\Phi$ is at most quadratic in $s^\qu$.
+Decouple the quadratic term with an auxiliary real field $\xi$ (Hubbard--Stratonovich), $\exp[-\tfrac12\!\int\!\!\int s^\qu Ss^\qu]=\int\!\mathcal D\xi\, \exp[-\tfrac12\!\int\!\!\int\xi S^{-1}\xi+i\!\int\!\xi s^\qu]$, and expand the system action to first order in $s^\qu$ (exact for a harmonic system).
+The $s^\qu$ integral then produces a delta functional enforcing an equation of motion for $s^\cl$ with damping kernel $\chi$ and a Gaussian force $\xi$ of correlator $S$: the quantum Langevin equation~\cite{FordKacMazur1965,CaldeiraLeggett1983}.
+The $\qu$ field has become the Martin--Siggia--Rose response field~\cite{MartinSiggiaRose1973}, the $\qu\qu=0$ rule of \cref{eq:LO} is the statement that the response field has no self-correlation (causality), and in the high-temperature limit $S(\omega)\to2T\chi''(\omega)/\omega$ is the classical FDT~\cite[Ch.~4]{Kamenev2011}.
+\Cref{sec:lec8} returns to this from Mori's side.
 \end{exbox}
 
 \subsection{Spin paths: blips and sojourns}
 
-For a qubit there is no continuous coordinate, but \cref{eq:FV} still applies if we
-expand in the part of $H_S$ that does not commute with $S$. Use the Leggett form
-\eqref{eq:leggett-form}: $S=\sz'$ is diagonal, the bias $\varepsilon$ is diagonal, and the
-tunnelling $-\tfrac\Delta2\sx'$ flips the spin. Expanding $\ee^{-iHt}$ and $\ee^{iHt}$ in $\Delta$,
-each branch becomes a piecewise-constant path $s^\pm(t)=\pm1$ with flips at the vertices
-(a factor $i\Delta/2$ each, and the bias phase $\ee^{\mp i\varepsilon s^\pm\dd t/2}$ along the way). The
-pair $(s^+,s^-)$ then alternates between \emph{sojourns}, $s^+=s^-$ (so $s^\qu=0$, $s^\cl=\pm1$),
-and \emph{blips}, $s^+=-s^-$ (so $s^\qu=\pm2$, $s^\cl=0$)~\cite[Sec.~IV]{Leggett1987}, \cite[Ch.~21]{Weiss2012}.
-In Keldysh language a sojourn is a segment where the two branches agree, a classical
-configuration, and a blip is where they differ, a quantum excursion. Inserting such
-paths in \cref{eq:FV}, two integrations by parts convert the kernels into the functions
+For a qubit there is no continuous coordinate, but \cref{eq:FV} still applies if we expand in the part of $H_S$ that does not commute with $S$.
+Use the Leggett form \eqref{eq:leggett-form}: $S=\sz'$ is diagonal, the bias $\varepsilon$ is diagonal, and the tunnelling $-\tfrac\Delta2\sx'$ flips the spin.
+Expanding $\ee^{-iHt}$ and $\ee^{iHt}$ in $\Delta$, each branch becomes a piecewise-constant path $s^\pm(t)=\pm1$ with flips at the vertices (a factor $i\Delta/2$ each, and the bias phase $\ee^{\mp i\varepsilon s^\pm\dd t/2}$ along the way).
+The pair $(s^+,s^-)$ then alternates between \emph{sojourns}, $s^+=s^-$ (so $s^\qu=0$, $s^\cl=\pm1$), and \emph{blips}, $s^+=-s^-$ (so $s^\qu=\pm2$, $s^\cl=0$)~\cite[Sec.~IV]{Leggett1987}, \cite[Ch.~21]{Weiss2012}.
+In Keldysh language a sojourn is a segment where the two branches agree, a classical configuration, and a blip is where they differ, a quantum excursion.
+Inserting such paths in \cref{eq:FV}, two integrations by parts convert the kernels into the functions
 \begin{equation}
   Q_2(\tau)=\frac4\pi\int_0^\infty\!\dd\omega\,\frac{J(\omega)}{\omega^2}\coth\tfrac{\beta\omega}2\,(1-\cos\omega\tau),\qquad
   Q_1(\tau)=\frac4\pi\int_0^\infty\!\dd\omega\,\frac{J(\omega)}{\omega^2}\sin\omega\tau,
   \label{eq:Q12}
 \end{equation}
-with $\ddot Q_2=4S$ and $\ddot Q_1=-2\chi$ for $\tau>0$ (the factor 4 is again ``$\sz$ versus
-$\sz/2$''; with Leggett's coupling the prefactor is $1/\pi$). The influence functional
-becomes a sum of pairwise interactions: blip--blip through $Q_2$ (noise), and
-blip--sojourn through $Q_1$ (response), with the sojourn \emph{preceding} the blip, as
-causality requires.
+with $\ddot Q_2=4S$ and $\ddot Q_1=-2\chi$ for $\tau>0$ (the factor 4 is again ``$\sz$ versus $\sz/2$''; with Leggett's coupling the prefactor is $1/\pi$).
+The influence functional becomes a sum of pairwise interactions: blip--blip through $Q_2$ (noise), and blip--sojourn through $Q_1$ (response), with the sojourn \emph{preceding} the blip, as causality requires.
 
 \begin{keybox}[The noninteracting-blip approximation]
-Keep, for each blip of duration $\tau$, only its self-interaction $\ee^{-Q_2(\tau)}$ and its
-interaction with the immediately preceding sojourn, $\ee^{\mp iQ_1(\tau)}$; drop all
-interactions between different blips and between a blip and earlier sojourns. The
-resulting series for the population $P(t)\equiv\avg{\sz'}_t$ sums to the integro-differential
-equation
+Keep, for each blip of duration $\tau$, only its self-interaction $\ee^{-Q_2(\tau)}$ and its interaction with the immediately preceding sojourn, $\ee^{\mp iQ_1(\tau)}$; drop all interactions between different blips and between a blip and earlier sojourns.
+The resulting series for the population $P(t)\equiv\avg{\sz'}_t$ sums to the integro-differential equation
 \begin{equation}
   \boxed{\;\dot P(t)=-\int_0^t\!\dd\tau\Big[K^s(\tau)\,P(t-\tau)+K^a(\tau)\Big],\qquad
   \begin{aligned}
@@ -104,120 +72,86 @@ equation
   \label{eq:NIBA}
 \end{equation}
 \end{keybox}
-This is the NIBA of Leggett \emph{et al.}~\cite[Sec.~V]{Leggett1987}; see
-\cite[Ch.~21]{Weiss2012} for its many extensions. It is exact to leading order in $\Delta$;
-it is also exact for the Ohmic bath at $\alpha=\tfrac12$ (Toulouse) and very accurate at
-high temperature or strong damping, where blips are short and dilute. It fails for a
-biased system at low temperature and weak damping, where the long-time Boltzmann
-weights come out wrong (Exercise~\ref{ex:7-4}); the reason will be transparent below.
+This is the NIBA of Leggett \emph{et al.}~\cite[Sec.~V]{Leggett1987}; see \cite[Ch.~21]{Weiss2012} for its many extensions.
+It is exact to leading order in $\Delta$; it is also exact for the Ohmic bath at $\alpha=\tfrac12$ (Toulouse) and very accurate at high temperature or strong damping, where blips are short and dilute.
+It fails for a biased system at low temperature and weak damping, where the long-time Boltzmann weights come out wrong (Exercise~\ref{ex:7-4}); the reason will be transparent below.
 
 \subsection{NIBA is the second-order NZ kernel in the polaron frame}
 
-The blip language suggests a unitary transformation: a blip is a segment in which the
-bath is displaced in opposite directions on the two branches. Displace it once and for
-all with the polaron transformation~\cite{SilbeyHarris1984}
+The blip language suggests a unitary transformation: a blip is a segment in which the bath is displaced in opposite directions on the two branches.
+Displace it once and for all with the polaron transformation~\cite{SilbeyHarris1984}
 \begin{equation}
   U=\exp\Big[-\sz'\sum_k\frac{g_k}{\omega_k}\big(b_k^\dagger-b_k\big)\Big],\qquad
   U^\dagger b_kU=b_k-\sz'\frac{g_k}{\omega_k},
 \end{equation}
-which gives $U^\dagger(H_B+\sz'B)U=H_B-\sum_kg_k^2/\omega_k$: the diagonal coupling is removed
-at the price of dressing the tunnelling,
+which gives $U^\dagger(H_B+\sz'B)U=H_B-\sum_kg_k^2/\omega_k$: the diagonal coupling is removed at the price of dressing the tunnelling,
 \begin{equation}
   H'=U^\dagger HU=\frac{\varepsilon}{2}\sz'+H_B-\frac{\Delta}{2}\big(\sigma_+'B_++\sigma_-'B_-\big)+\text{const},\qquad
   B_\pm=\exp\Big[\pm2\sum_k\frac{g_k}{\omega_k}\big(b_k^\dagger-b_k\big)\Big].
   \label{eq:polaron-H}
 \end{equation}
-Now treat $V=-\tfrac\Delta2(\sigma_+'B_++\sigma_-'B_-)$ as the perturbation and use the NZ equation
-with Zwanzig's \emph{diagonal} projector $\Pc_dX=\sum_{i=\uparrow\downarrow}\ket i\bra i\otimes\rhoB\,\Tr_B\bra iX\ket i$,
-which keeps only the populations. Since $V$ is off-diagonal, $\Pc_dV\Pc_d=0$ exactly and the
-second-order kernel needs no $\Qc$:
+Now treat $V=-\tfrac\Delta2(\sigma_+'B_++\sigma_-'B_-)$ as the perturbation and use the NZ equation with Zwanzig's \emph{diagonal} projector $\Pc_dX=\sum_{i=\uparrow\downarrow}\ket i\bra i\otimes\rhoB\,\Tr_B\bra iX\ket i$, which keeps only the populations.
+Since $V$ is off-diagonal, $\Pc_dV\Pc_d=0$ exactly and the second-order kernel needs no $\Qc$:
 \begin{equation}
   \dot P_\uparrow(t)=\int_0^t\!\dd\tau\Big[w_{\uparrow\leftarrow\downarrow}(\tau)P_\downarrow(t-\tau)-w_{\downarrow\leftarrow\uparrow}(\tau)P_\uparrow(t-\tau)\Big],
   \qquad w_{\uparrow\leftarrow\downarrow}(\tau)=\frac{\Delta^2}{2}\Re\Big[\ee^{i\varepsilon\tau}\avg{B_-(0)B_+(\tau)}\Big],
 \end{equation}
-and $w_{\downarrow\leftarrow\uparrow}(\tau)=\frac{\Delta^2}2\Re[\ee^{-i\varepsilon\tau}\avg{B_+(0)B_-(\tau)}]$. The dressing operators
-are displacement operators, and the thermal expectation of a product of two
-displacements is a Gaussian (Exercise~\ref{ex:7-3}):
+and $w_{\downarrow\leftarrow\uparrow}(\tau)=\frac{\Delta^2}2\Re[\ee^{-i\varepsilon\tau}\avg{B_+(0)B_-(\tau)}]$.
+The dressing operators are displacement operators, and the thermal expectation of a product of two displacements is a Gaussian (Exercise~\ref{ex:7-3}):
 \begin{equation}
   \avg{B_-(0)B_+(\tau)}=\avg{B_+(0)B_-(\tau)}=\ee^{-Q_2(\tau)+iQ_1(\tau)},
   \label{eq:FC}
 \end{equation}
-with exactly the $Q_{1,2}$ of \cref{eq:Q12}. Hence
-$w_{\downarrow\leftarrow\uparrow}=\tfrac{\Delta^2}2\ee^{-Q_2}\cos(\varepsilon\tau-Q_1)$,
-$w_{\uparrow\leftarrow\downarrow}=\tfrac{\Delta^2}2\ee^{-Q_2}\cos(\varepsilon\tau+Q_1)$, and with
-$P=P_\uparrow-P_\downarrow$, $P_{\uparrow\downarrow}=\tfrac12(1\pm P)$, the two rate equations combine into
-\cref{eq:NIBA} with $K^s=w_{\downarrow\leftarrow\uparrow}+w_{\uparrow\leftarrow\downarrow}$ and
-$K^a=w_{\downarrow\leftarrow\uparrow}-w_{\uparrow\leftarrow\downarrow}$. This identification is due to Aslangul, Pottier
-and Saint-James~\cite{Aslangul1986} and Dekker~\cite{Dekker1987}.
+with exactly the $Q_{1,2}$ of \cref{eq:Q12}.
+Hence $w_{\downarrow\leftarrow\uparrow}=\tfrac{\Delta^2}2\ee^{-Q_2}\cos(\varepsilon\tau-Q_1)$, $w_{\uparrow\leftarrow\downarrow}=\tfrac{\Delta^2}2\ee^{-Q_2}\cos(\varepsilon\tau+Q_1)$, and with $P=P_\uparrow-P_\downarrow$, $P_{\uparrow\downarrow}=\tfrac12(1\pm P)$, the two rate equations combine into \cref{eq:NIBA} with $K^s=w_{\downarrow\leftarrow\uparrow}+w_{\uparrow\leftarrow\downarrow}$ and $K^a=w_{\downarrow\leftarrow\uparrow}-w_{\uparrow\leftarrow\downarrow}$.
+This identification is due to Aslangul, Pottier and Saint-James~\cite{Aslangul1986} and Dekker~\cite{Dekker1987}.
 
 \begin{keybox}[Key point 7.1]
-NIBA $=$ Born approximation (second-order NZ) for the populations, in the polaron frame,
-with the full (unsubtracted) Franck--Condon correlator \eqref{eq:FC}. Interblip
-interactions are the fourth- and higher-order irreducible diagrams of Theorem~\ref{thm:irreducible}
-in that frame. The two expansions of the course, in $g$ (\cref{sec:lec5}) and in $\Delta$
-(this lecture), are second-order NZ kernels with respect to two different projectors and
-two different ``free'' dynamics.
+NIBA $=$ Born approximation (second-order NZ) for the populations, in the polaron frame, with the full (unsubtracted) Franck--Condon correlator \eqref{eq:FC}.
+Interblip interactions are the fourth- and higher-order irreducible diagrams of Theorem~\ref{thm:irreducible} in that frame.
+The two expansions of the course, in $g$ (\cref{sec:lec5}) and in $\Delta$ (this lecture), are second-order NZ kernels with respect to two different projectors and two different ``free'' dynamics.
 \end{keybox}
 
 \begin{exbox}[Example 7.2: where NIBA goes wrong, and why]
-The steady state of \cref{eq:NIBA} is $P_\infty=-\hat K^a(0)/\hat K^s(0)$. At weak coupling expand
-$\ee^{-Q_2}\cos Q_1\approx1-Q_2$, $\ee^{-Q_2}\sin Q_1\approx Q_1$; the $\tau$-integrals pick out
-$J(\varepsilon)$ and give
+The steady state of \cref{eq:NIBA} is $P_\infty=-\hat K^a(0)/\hat K^s(0)$.
+At weak coupling expand $\ee^{-Q_2}\cos Q_1\approx1-Q_2$, $\ee^{-Q_2}\sin Q_1\approx Q_1$; the $\tau$-integrals pick out $J(\varepsilon)$ and give
 \begin{equation}
   \hat K^s(0)\simeq\frac{2\Delta^2}{\varepsilon^2}J(\varepsilon)\coth\frac{\beta\varepsilon}{2},\qquad
   \hat K^a(0)\simeq\frac{2\Delta^2}{\varepsilon^2}J(\varepsilon),\qquad P_\infty\simeq-\tanh\frac{\beta\varepsilon}{2}.
 \end{equation}
-The individual rates are $w_{\downarrow\leftarrow\uparrow}\simeq2\Delta^2J(\varepsilon)[1+n(\varepsilon)]/\varepsilon^2$ and
-$w_{\uparrow\leftarrow\downarrow}\simeq2\Delta^2J(\varepsilon)n(\varepsilon)/\varepsilon^2$: golden-rule rates with detailed balance,
-but with the bath sampled at the \emph{bias} $\varepsilon$ and weighted by $(\Delta/\varepsilon)^2$. Compare
-\cref{eq:rates-T1}: the correct weak-coupling rates sample the bath at the \emph{level
-splitting} $\omega_0=\sqrt{\varepsilon^2+\Delta^2}$ with weight $\sin^2\theta=(\Delta/\omega_0)^2$, and the correct
-$P_\infty$ is the Gibbs state of $H_S$, $-\cos\theta\tanh(\beta\omega_0/2)$ along $\sz'$. The two agree
-only for $\Delta\ll\varepsilon$. The second-order-in-$\Delta$ kernel cannot know that the true
-eigenstates are superpositions of the pointer states; that information sits in the
-interblip diagrams. Conversely, the expansion in $g$ cannot describe the strong-coupling
-regime where $Q_2$ is large and tunnelling is incoherent, which NIBA handles well. Each
-projector has its domain.
+The individual rates are $w_{\downarrow\leftarrow\uparrow}\simeq2\Delta^2J(\varepsilon)[1+n(\varepsilon)]/\varepsilon^2$ and $w_{\uparrow\leftarrow\downarrow}\simeq2\Delta^2J(\varepsilon)n(\varepsilon)/\varepsilon^2$: golden-rule rates with detailed balance, but with the bath sampled at the \emph{bias} $\varepsilon$ and weighted by $(\Delta/\varepsilon)^2$.
+Compare \cref{eq:rates-T1}: the correct weak-coupling rates sample the bath at the \emph{level splitting} $\omega_0=\sqrt{\varepsilon^2+\Delta^2}$ with weight $\sin^2\theta=(\Delta/\omega_0)^2$, and the correct $P_\infty$ is the Gibbs state of $H_S$, $-\cos\theta\tanh(\beta\omega_0/2)$ along $\sz'$.
+The two agree only for $\Delta\ll\varepsilon$.
+The second-order-in-$\Delta$ kernel cannot know that the true eigenstates are superpositions of the pointer states; that information sits in the interblip diagrams.
+Conversely, the expansion in $g$ cannot describe the strong-coupling regime where $Q_2$ is large and tunnelling is incoherent, which NIBA handles well.
+Each projector has its domain.
 \end{exbox}
 
 \subsection{What the Keldysh field theory adds}
 
-Reading \cref{eq:NIBA} from the Keldysh side: $K^s$ is built from the real part of the
-dressed propagator $\ee^{-Q}$ (the Keldysh component), $K^a$ from the imaginary part (the
-retarded component). The full blip--sojourn series is a Keldysh diagrammatics in which
-blips are quantum lines and sojourns are classical ones, and a renormalization-group
-treatment of it is the real-time RG of Keil and Schoeller~\cite{Keil2001}. We return to
-the field-theory formulation of the qubit in \cref{sec:lec9}.
+Reading \cref{eq:NIBA} from the Keldysh side: $K^s$ is built from the real part of the dressed propagator $\ee^{-Q}$ (the Keldysh component), $K^a$ from the imaginary part (the retarded component).
+The full blip--sojourn series is a Keldysh diagrammatics in which blips are quantum lines and sojourns are classical ones, and a renormalization-group treatment of it is the real-time RG of Keil and Schoeller~\cite{Keil2001}.
+We return to the field-theory formulation of the qubit in \cref{sec:lec9}.
 
 \subsection{Exercises}
 
 \begin{exercise}\label{ex:7-1}
-Show that the Feynman--Vernon form
-$\Phi=-\int_{t_1>t_2}(s^+_1-s^-_1)[C_{12}s^+_2-C_{12}^*s^-_2]$ is identical to \cref{eq:FV}, and derive
-\cref{eq:FV} from the Wick sum by induction on the number of lines.
+Show that the Feynman--Vernon form $\Phi=-\int_{t_1>t_2}(s^+_1-s^-_1)[C_{12}s^+_2-C_{12}^*s^-_2]$ is identical to \cref{eq:FV}, and derive \cref{eq:FV} from the Wick sum by induction on the number of lines.
 \end{exercise}
 
 \begin{exercise}\label{ex:7-2}
-For piecewise-constant paths, perform the two integrations by parts that convert
-\cref{eq:FV} into a sum of blip--blip and blip--sojourn terms, and verify $\ddot Q_2=4S$,
-$\ddot Q_1=-2\chi$. Write the full influence functional for one blip (duration $\tau$)
-preceded by one sojourn and recover the factor $\ee^{-Q_2(\tau)\mp iQ_1(\tau)}$.
+For piecewise-constant paths, perform the two integrations by parts that convert \cref{eq:FV} into a sum of blip--blip and blip--sojourn terms, and verify $\ddot Q_2=4S$, $\ddot Q_1=-2\chi$.
+Write the full influence functional for one blip (duration $\tau$) preceded by one sojourn and recover the factor $\ee^{-Q_2(\tau)\mp iQ_1(\tau)}$.
 \end{exercise}
 
 \begin{exercise}\label{ex:7-3}
-Derive \cref{eq:FC}. Use $D(\beta)D(\gamma)=\ee^{(\beta\gamma^*-\beta^*\gamma)/2}D(\beta+\gamma)$ for displacement
-operators and $\avg{D(\mu)}_\beta=\ee^{-|\mu|^2(2\bar n+1)/2}$ for a thermal mode. Check the sign of
-$Q_1$ by verifying the detailed-balance relation of Example~7.2.
+Derive \cref{eq:FC}.
+Use $D(\beta)D(\gamma)=\ee^{(\beta\gamma^*-\beta^*\gamma)/2}D(\beta+\gamma)$ for displacement operators and $\avg{D(\mu)}_\beta=\ee^{-|\mu|^2(2\bar n+1)/2}$ for a thermal mode.
+Check the sign of $Q_1$ by verifying the detailed-balance relation of Example~7.2.
 \end{exercise}
 
 \begin{exercise}\label{ex:7-4}
-Solve \cref{eq:NIBA} in Laplace space, $\hat P(z)=[P(0)-\hat K^a(z)/z]/[z+\hat K^s(z)]$, and
-analyze (a) $\varepsilon=0$, $J$ Ohmic at $T=0$, where $Q_2=\alpha\ln(1+\omega_c^2\tau^2)$, $Q_1=2\alpha\arctan\omega_c\tau$ and
-$K^s(\tau)=\Delta^2(1+\omega_c^2\tau^2)^{-\alpha}\cos[2\alpha\arctan\omega_c\tau]$ in Leggett's normalization
-(replace $\alpha\to4\alpha$ for ours): find the renormalized tunnelling frequency
-$\Delta_r\propto\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}$ and show that the dynamics is incoherent for
-$\alpha\ge\tfrac12$; (b) the weak-coupling biased case of
-Example~7.2.
+Solve \cref{eq:NIBA} in Laplace space, $\hat P(z)=[P(0)-\hat K^a(z)/z]/[z+\hat K^s(z)]$, and analyze (a) $\varepsilon=0$, $J$ Ohmic at $T=0$, where $Q_2=\alpha\ln(1+\omega_c^2\tau^2)$, $Q_1=2\alpha\arctan\omega_c\tau$ and $K^s(\tau)=\Delta^2(1+\omega_c^2\tau^2)^{-\alpha}\cos[2\alpha\arctan\omega_c\tau]$ in Leggett's normalization (replace $\alpha\to4\alpha$ for ours): find the renormalized tunnelling frequency $\Delta_r\propto\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}$ and show that the dynamics is incoherent for $\alpha\ge\tfrac12$; (b) the weak-coupling biased case of Example~7.2.
 \end{exercise}
 
 \clearpage
