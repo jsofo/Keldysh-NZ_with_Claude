@@ -28,7 +28,7 @@ It is exactly solvable for any Gaussian bath (\cref{sec:lec4,sec:lec7}).
 \paragraph{Transverse coupling, $\theta=\pi/2$.}
 $H_I=\sx\otimes B$ flips the qubit.
 This is the model of ``$T_1$'' processes: spontaneous and stimulated emission, absorption, and the associated Lamb shift.
-In the rotating-wave approximation it becomes the damped Jaynes--Cummings model, which is again exactly solvable for a single excitation.
+In the rotating-wave approximation (RWA) it becomes the damped Jaynes--Cummings model, which is again exactly solvable for a single excitation.
 
 \paragraph{The dissipative two-level system.}
 For general $\theta$, rotate the qubit about $\hat y$ so that $S$ becomes the new $\sz$: define $\sz'\equiv S=\cos\theta\sz+\sin\theta\sx$ and $\sx'\equiv\cos\theta\sx-\sin\theta\sz$, which satisfy the Pauli algebra with $\sy'=\sy$.
@@ -155,7 +155,7 @@ From \cref{eq:S-def}, and using $\int\dd t\,\ee^{i\omega t}\cos\omega't=\pi[\del
   S(\omega)=J(|\omega|)\coth\tfrac{\beta|\omega|}{2}=\underbrace{\coth\tfrac{\beta\omega}{2}}_{\text{odd}}\cdot\underbrace{\sgn(\omega)J(|\omega|)}_{\chi''(\omega),\ \text{odd}},
 \end{equation}
 even in $\omega$ as the transform of a real even $S(t)$ must be.
-This is the fluctuation--dissipation theorem in the form of Callen and Welton~\cite{CallenWelton1951,Kubo1966}: the symmetrized noise at frequency $\omega$ is fixed by the dissipative response at the same frequency, through a universal factor that depends only on temperature.
+This is the fluctuation--dissipation theorem (FDT) in the form of Callen and Welton~\cite{CallenWelton1951,Kubo1966}: the symmetrized noise at frequency $\omega$ is fixed by the dissipative response at the same frequency, through a universal factor that depends only on temperature.
 Two limits are worth memorizing:
 \begin{equation}
 \begin{aligned}
