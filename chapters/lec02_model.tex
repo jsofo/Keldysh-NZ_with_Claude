@@ -179,11 +179,41 @@ The noise does not vanish at $T=0$. In \cref{fig:bath-kernels}, drawn at $T=0$, 
 coincides with $\chi''$ for $\omega>0$ and is its mirror image for $\omega<0$.
 
 \paragraph{(iii) The full correlator is noise plus response.}
-The first equality in the third line is linearity: $C(t)=S(t)-\tfrac i2\chi(t)$ for $t>0$ and,
-from $C(-t)=C(t)^*$, $C(t)=S(t)+\tfrac i2\chi(-t)$ for $t<0$; the odd combination
-$-\tfrac i2[\chi(t)-\chi(-t)]$ transforms to $-\tfrac i2[\chi(\omega)-\chi(\omega)^*]=\chi''(\omega)$. So $S$ is the
-\emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this is the
-cleanest way to remember the Keldysh decomposition.
+The first equality in the third line, $C(\omega)=S(\omega)+\chi''(\omega)$, is linearity of the Fourier
+transform applied to the real and imaginary parts of $C(t)$, but the bookkeeping of the
+$\theta$ function deserves to be written out. Split $C(t)=\Re C(t)+i\,\Im C(t)$ for all $t$.
+The real part is $S(t)$ by \cref{eq:S-def}. For the imaginary part, the definition
+\eqref{eq:chi-def} gives $\avg{[B(t),B(0)]}=-i\chi(t)$ for $t>0$, so
+$\Im C(t)=\tfrac{1}{2i}\avg{[B(t),B(0)]}=-\tfrac12\chi(t)$ for $t>0$; and since $C(-t)=C(t)^*$ makes
+$\Im C$ odd, $\Im C(t)=+\tfrac12\chi(-t)$ for $t<0$. With the $\theta$ function already inside
+$\chi$, both cases are the single formula
+\begin{equation}
+  C(t)=S(t)-\tfrac i2\big[\chi(t)-\chi(-t)\big]\qquad(\text{all }t),
+  \label{eq:C-split}
+\end{equation}
+in which the bracket is the odd extension of $\chi$: $\chi(t)$ lives on $t>0$, $\chi(-t)$ on
+$t<0$. Now transform term by term. $S(t)\mapsto S(\omega)$. For the bracket use
+$\int\dd t\,\ee^{i\omega t}\chi(-t)=\int\dd t'\,\ee^{-i\omega t'}\chi(t')=\chi(-\omega)=\chi(\omega)^*$, the last step because
+$\chi(t)$ is real. Hence
+\begin{equation}
+  C(\omega)=S(\omega)-\tfrac i2\big[\chi(\omega)-\chi(\omega)^*\big]=S(\omega)-\tfrac i2\cdot2i\,\Im\chi(\omega)=S(\omega)+\chi''(\omega).
+\end{equation}
+Only the imaginary part of $\chi(\omega)$ survives: the real (reactive) part $\chi'$ cancels
+between $\chi(\omega)$ and $\chi(\omega)^*$, which is why the noise spectrum knows about dissipation
+but not about reactive response. The same result can be read off without any $\theta$
+functions from the golden-rule form \eqref{eq:C-golden}, which shows that $C(\omega)$ is real
+(and nonnegative) for every $\omega$: then $C(-\omega)=\int\ee^{i\omega t}C(-t)\dd t=\int\ee^{i\omega t}C(t)^*\dd t$ is the
+transform of $C^*$, and the even and odd parts of the spectrum are
+\begin{equation}
+\begin{aligned}
+  \tfrac12\big[C(\omega)+C(-\omega)\big]&=\int\!\dd t\,\ee^{i\omega t}\,\Re C(t)=S(\omega),\\
+  \tfrac12\big[C(\omega)-C(-\omega)\big]&=\int\!\dd t\,\ee^{i\omega t}\,i\,\Im C(t)=\chi''(\omega).
+\end{aligned}
+  \label{eq:C-even-odd}
+\end{equation}
+So $S$ is the \emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this
+is the cleanest way to remember the Keldysh decomposition, and \cref{eq:C-even-odd} is how
+one extracts both kernels from a measured or computed $C(\omega)$.
 
 \begin{remark}
 Two different facts are packed into $C(-t)=C(t)^*$, and only one of them is general. For
