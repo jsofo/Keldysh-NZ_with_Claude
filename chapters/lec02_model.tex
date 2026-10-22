@@ -183,7 +183,28 @@ The first equality in the third line is linearity: $C(t)=S(t)-\tfrac i2\chi(t)$ 
 from $C(-t)=C(t)^*$, $C(t)=S(t)+\tfrac i2\chi(-t)$ for $t<0$; the odd combination
 $-\tfrac i2[\chi(t)-\chi(-t)]$ transforms to $-\tfrac i2[\chi(\omega)-\chi(\omega)^*]=\chi''(\omega)$. So $S$ is the
 \emph{even} part of the spectrum $C(\omega)$ and $\chi''$ is its \emph{odd} part; this is the
-cleanest way to remember the Keldysh decomposition. The second equality uses the
+cleanest way to remember the Keldysh decomposition.
+
+\begin{remark}
+Two different facts are packed into $C(-t)=C(t)^*$, and only one of them is general. For
+the two-time correlator $C(t,s)=\avg{B(t)B(s)}$ one always has $C(t,s)^*=C(s,t)$, in any
+state of the bath, because $\avg X^*=\avg{X^\dagger}$ and $(B(t)B(s))^\dagger=B(s)B(t)$ for Hermitian
+$B$; this is what makes $S(t,s)=\Re C(t,s)$ real and symmetric and $\tfrac12\avg{[B(t),B(s)]}$ real
+and antisymmetric. Writing $C$ with a single argument, $C(t,s)=C(t-s)$, is a separate
+assumption: invariance under a common shift of both times, which holds if and only if
+$[H_B,\rhoB]=0$ (move $\ee^{\pm iH_B\tau}$ onto $\rhoB$ by cyclicity). Only with stationarity does
+$C(t,s)^*=C(s,t)$ become $C(-t)=C(t)^*$ and a one-frequency $C(\omega)$ exist; for a
+non-stationary bath (a driven one, or one prepared in a coherent or squeezed state) the
+analysis of (ii)--(iii) must be done in two times or in Wigner coordinates
+$(t-s,\tfrac{t+s}2)$. One piece survives in general, and it is a nice illustration of the
+Keldysh split: for a harmonic bath with linear $B$ the commutator $[B(t),B(s)]$ is a
+c-number, so $\chi(t,s)=i\theta(t-s)\avg{[B(t),B(s)]}$ depends on $t-s$ alone in \emph{every}
+state, stationary or not, and only the noise kernel $S(t,s)$ becomes a genuine two-time
+function. A non-stationary Gaussian bath has a state-independent $D^R$ and a two-time
+$D^K$.
+\end{remark}
+
+\noindent The second equality uses the
 identity $\coth\tfrac{\beta\omega}{2}=1+2n(\omega)$, valid for all real $\omega$ including negative ones,
 so that $S+\chi''=(\coth+1)\chi''=2(1+n)\chi''$. Computing $C(\omega)$ directly from \cref{eq:C}
 confirms it and exhibits the physics:
