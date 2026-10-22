@@ -241,8 +241,60 @@ Putting (i)--(v) together: in a thermal bath the whole environment enters throug
 $\chi''$ is $J$ extended oddly, $\chi'$ follows by Kramers--Kronig, $S$ follows by the FDT, and $C=S+\chi''$.
 The two entries of the Keldysh matrix \eqref{eq:LO} carry no independent information in equilibrium.
 Out of equilibrium the chain breaks at exactly one link: causality still fixes $\chi'$ from $\chi''$, but nothing fixes $S$ from $\chi''$.
-A driven cavity, a bath with a nonthermal occupation, or a $1/f$ noise source each have their own $S(\omega)$ and $\chi''(\omega)$, and their ratio at a given frequency defines an effective temperature there, $\coth(\beta_{\rm eff}(\omega)\,\omega/2)\equiv S(\omega)/\chi''(\omega)$, which can differ between frequencies and even be negative (population inversion).
-Keeping $S$ and $\chi$ on separate lines, which is what the Keldysh rotation does, costs nothing and buys this generality: every formula derived with $D^K$ and $D^R$ kept apart remains valid without the FDT, and only the final steps that use $S=\coth\cdot\chi''$ (for instance the Gibbs steady state in \cref{sec:lec5}) must be revisited.
+
+\paragraph{(vi) Out of equilibrium: what survives and what changes.}
+``Out of equilibrium'' covers several distinct situations, and it pays to separate them, because they break different links of the chain.
+We keep the bath \emph{stationary} throughout this item (so that a one-frequency $C(\omega)$ exists; the non-stationary case was discussed in the Remark of (iii)).
+
+\emph{What survives for any stationary state.}
+Three statements rest on nothing but Hermiticity, stationarity and the golden-rule form \eqref{eq:C-golden}.
+First, $C(\omega)\ge0$ for every $\omega$, because it is a sum of squared matrix elements with positive weights.
+Second, therefore, $S(\omega)=\tfrac12[C(\omega)+C(-\omega)]$ and $\chi''(\omega)=\tfrac12[C(\omega)-C(-\omega)]$ obey
+\begin{equation}
+  S(\omega)\;\ge\;|\chi''(\omega)|\qquad\text{for all }\omega ,
+  \label{eq:S-chi-ineq}
+\end{equation}
+with equality only when one of $C(\pm\omega)$ vanishes (a bath that can only absorb, or only emit, at that frequency).
+Third, the Kramers--Kronig relation \eqref{eq:KK} between $\chi'$ and $\chi''$ holds unchanged, since it uses only causality.
+What is \emph{lost} is the FDT: the ratio $S/\chi''$ is no longer $\coth(\beta\omega/2)$ with a single $\beta$.
+Because of \cref{eq:S-chi-ineq} the ratio still has modulus $\ge1$, so one can always \emph{define} a frequency-dependent effective temperature by
+\begin{equation}
+  \coth\frac{\beta_{\rm eff}(\omega)\,\omega}{2}\equiv\frac{S(\omega)}{\chi''(\omega)},\qquad\text{equivalently}\qquad
+  \frac{C(-\omega)}{C(\omega)}\equiv\ee^{-\beta_{\rm eff}(\omega)\omega},
+  \label{eq:Teff}
+\end{equation}
+which is just a way of recording the absorption/emission asymmetry at each frequency separately.
+It is a genuine temperature only if it is the same at all frequencies.
+
+\emph{Harmonic bath with mode-dependent occupations.}
+The simplest non-equilibrium Gaussian state is stationary and diagonal in the mode number basis, with each mode thermal at its own temperature, $\bar n_k=n_B(\omega_k;T_k)$; this describes, for example, a cavity mode held at a different temperature from the phonons, or a transmission line with a nonthermal photon distribution.
+Then \cref{eq:C} holds with $\bar n_k$ arbitrary, and the frequency-domain relations become
+\begin{equation}
+\begin{aligned}
+  \chi''(\omega)&=\sgn(\omega)J(|\omega|)\quad(\text{unchanged}),\qquad
+  S(\omega)=J(|\omega|)\big[1+2\bar n(|\omega|)\big],\\
+  C(+|\omega|)&=2J(|\omega|)\big[1+\bar n(|\omega|)\big],\qquad
+  C(-|\omega|)=2J(|\omega|)\,\bar n(|\omega|),
+\end{aligned}
+  \label{eq:noneq-harmonic}
+\end{equation}
+with $\bar n(\omega)\ge0$ the occupation of the modes at frequency $\omega$.
+The response is literally unchanged, because for a harmonic bath $[B(t),B(s)]$ is a c-number (item (i)).
+Only the noise knows about the state, through $1+2\bar n$, and $\beta_{\rm eff}(\omega)$ is simply the temperature that would produce the occupation $\bar n(\omega)$: positive at every frequency, because $\bar n\ge0$.
+Wick's theorem still holds (the state is Gaussian), so every result of \cref{sec:lec3,sec:lec4,sec:lec5} goes through with the new $S$.
+Two further Gaussian cases are worth naming.
+A \emph{coherently driven} mode, $\avg{b_k}\ne0$, gives $\avg B\ne0$: the mean acts on the qubit as a classical drive (absorb $S\avg{B(t)}$ into a time-dependent $H_S$) and the fluctuations about the mean are those of \cref{eq:noneq-harmonic}.
+A \emph{squeezed} mode is Gaussian but not stationary: $S$ becomes a two-time function while $\chi$ does not, as noted in the Remark of (iii).
+
+\emph{Non-Gaussian environments.}
+A bath of two-level fluctuators, of spins, or of anharmonic modes can be stationary and still violate everything beyond the first paragraph of this item: $\chi''$ becomes state dependent (the commutator is no longer a c-number), Wick's theorem fails and the diagrams of \cref{sec:lec4} acquire cumulant vertices~\cite{Schoeller2009}, and $\beta_{\rm eff}(\omega)$ can be \emph{negative} when the environment is population inverted, $C(-\omega)>C(\omega)$, so that it emits more readily than it absorbs; a pumped medium is the standard example.
+\Cref{eq:S-chi-ineq,eq:Teff} remain valid, because they used only positivity of $C(\pm\omega)$.
+
+\emph{What the qubit sees.}
+\Cref{sec:lec5} will show that, to second order, the qubit samples the bath at three places: $S(\omega_0)$ and $\chi''(\omega_0)$ through the two population rates, $S(0)$ through pure dephasing, and the Hilbert transform of $S$ through the Lamb shift.
+Out of equilibrium these are independent data.
+The steady-state polarization is $r_z^{\rm ss}=-\chi''(\omega_0)/S(\omega_0)=-\tanh[\beta_{\rm eff}(\omega_0)\omega_0/2]$, so the qubit thermalizes to the effective temperature \emph{at its own frequency}, whatever the rest of the spectrum does; the dephasing rate is governed by $S(0)$, i.e.\ by $\beta_{\rm eff}(0)$, which can be completely different (this is the typical $1/f$ situation: an enormous $S$ near zero frequency that barely affects $T_1$); and the Lamb shift, being the Hilbert transform of the \emph{noise}, shifts with the occupation of the modes near $\omega_0$, which is the second-order origin of the photon-number-dependent (ac Stark, or dispersive) shift of a qubit coupled to a populated cavity.
+Keeping $S$ and $\chi$ on separate lines, which is what the Keldysh rotation does, costs nothing and buys exactly this generality: every formula derived with $D^K$ and $D^R$ kept apart remains valid without the FDT, and only the final steps that insert $S=\coth\cdot\chi''$ (for instance the identification of the steady state with the Gibbs state in \cref{sec:lec5}) must be revisited.
 
 \begin{exbox}[Example 2.1: two spectral densities used throughout]
 \emph{Ohmic bath.}
