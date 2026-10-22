@@ -352,14 +352,32 @@ Any two baths with the same $C(t)$ produce identical $\rhoS(t)$.
 This is the basis of the exact reference solution used in the numerics:
 
 \begin{keybox}[The pseudomode mapping (Garraway~\cite{Garraway1997}; Tamascelli \emph{et al.}~\cite{Tamascelli2018})]
-Consider the qubit coupled to a \emph{single} oscillator $a$ of frequency $\Omega$, which is itself damped at rate $\gamma$ by a Markovian environment:
+Consider the qubit coupled to a \emph{single} oscillator $a$ of frequency $\Omega$, which is itself damped at rate $\gamma$ by a Markovian environment.
+Its state obeys the GKSL equation \eqref{eq:GKSL} of \cref{sec:lec1} for the enlarged system qubit\,$\otimes$\,mode, with the Hamiltonian $H_S+\Omega a^\dagger a+gS(a+a^\dagger)$ and the single jump operator $a$:
 \begin{equation}
   \dot\rho=-i\big[H_S+\Omega a^\dagger a+g\,S\otimes(a+a^\dagger),\rho\big]
   +\gamma\big(a\rho a^\dagger-\tfrac12\{a^\dagger a,\rho\}\big),\qquad \rho(0)=\rhoS(0)\otimes\ket0\bra0 .
   \label{eq:pseudomode}
 \end{equation}
-The ``bath'' $B_{\rm pm}=g(a+a^\dagger)$ seen by the qubit is Gaussian with $\avg{B_{\rm pm}(t)B_{\rm pm}(0)}=g^2\ee^{-i\Omega t-\gamma|t|/2}$, which is exactly the Lorentzian $C(t)$ of \cref{eq:lorentz-kernels}.
-Therefore the qubit's reduced dynamics in \cref{eq:pseudomode} is \emph{identical}, to all orders in $g$ and for all times, to its dynamics in the full Lorentzian bosonic bath.
+This is nothing but a qubit in a lossy cavity, and the claim is that the qubit's reduced dynamics in \cref{eq:pseudomode} is \emph{identical}, to all orders in $g$ and for all times, to its dynamics in the full Lorentzian bosonic bath.
+The argument has three steps.
+
+\emph{Where \cref{eq:pseudomode} comes from.}
+Start from a unitary model in which the mode $a$ is coupled linearly to a continuum $c_k$ with a flat density of states, $H=H_S+\Omega a^\dagger a+gS(a+a^\dagger)+\sum_k\nu_kc_k^\dagger c_k+\sum_k\kappa_k(a^\dagger c_k+c_k^\dagger a)$, with the continuum in its vacuum.
+Tracing out a flat continuum of infinite bandwidth gives an exactly Markovian damping of the mode with $\gamma=2\pi\kappa^2\varrho$ ($\varrho$ the density of states), the Weisskopf--Wigner limit~\cite[Ch.~3]{Gardiner2004}, \cite[Sec.~3.4]{BreuerPetruccione}; the result is \cref{eq:pseudomode}.
+The flat continuum is the only approximation, and it is the same idealization that defines a Lorentzian $J$ on the whole real axis.
+
+\emph{Why the qubit sees a Lorentzian.}
+Eliminate the mode instead of the continuum.
+The qubit couples linearly to $B_{\rm pm}=g(a+a^\dagger)$, and the damped mode's retarded propagator is $(\omega-\Omega+i\gamma/2)^{-1}$, so the response the qubit sees is $\chi(\omega)=g^2\big[(\Omega-\omega-i\gamma/2)^{-1}+(\Omega+\omega+i\gamma/2)^{-1}\big]$ (Exercise~\ref{ex:3-4}), whose imaginary part is the Lorentzian $J(\omega)=g^2(\gamma/2)/[(\omega-\Omega)^2+\gamma^2/4]$ extended to all $\omega$.
+A mode with a flat reservoir \emph{is} a Lorentzian bath; conversely, a Lorentzian $J$ is a single pole of the response at $\omega=\Omega-i\gamma/2$, and Garraway's construction~\cite{Garraway1997} assigns one damped ``pseudomode'' to each such pole, with the pole's imaginary part as its decay rate.
+In the time domain, the quantum regression theorem gives $\avg{a(t)a^\dagger(0)}=\ee^{-(i\Omega+\gamma/2)t}$ in the vacuum (Exercise~\ref{ex:2-3}), hence $\avg{B_{\rm pm}(t)B_{\rm pm}(0)}=g^2\ee^{-i\Omega t-\gamma|t|/2}$, exactly the $C(t)$ of \cref{eq:lorentz-kernels}.
+
+\emph{Why that is enough.}
+The paragraph preceding this box is the theorem: for a Gaussian environment, a linear coupling and a factorized initial state, the reduced dynamics depends on the environment only through $C(t)$, because every diagram is built from two-point contractions.
+The damped mode in its vacuum is a Gaussian environment (a Lindbladian quadratic in $a,a^\dagger$ maps Gaussian states to Gaussian states, Exercise~\ref{ex:2-3}) with the Lorentzian $C(t)$, so its reduced qubit dynamics coincides with that of any bath having the same $C(t)$, without the rotating-wave approximation and at any coupling.
+Garraway proved this in the RWA, single-excitation setting; Tamascelli \emph{et al.}~\cite{Tamascelli2018} proved the general statement, including the realization of the pseudomode by the Lindblad equation \eqref{eq:pseudomode}.
+
 The small Hilbert space (qubit $\otimes$ a few oscillator levels) makes \cref{eq:pseudomode} trivially solvable numerically.
 The price is the negative-frequency tail of $J$; the reward is an exact benchmark for every approximation in these notes.
 \end{keybox}
