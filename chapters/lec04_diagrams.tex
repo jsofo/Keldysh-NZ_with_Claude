@@ -37,6 +37,88 @@ Reading from right (earliest) to left:
 Consequently the latest vertex of every diagram is $S^\qu$, which preserves $\Tr_S$ (trace preservation of $\Pi$), and the earliest vertex of every line can be either.
 \end{keybox}
 
+\Cref{fig:rules} shows the rules in pictures.
+We draw time increasing to the right, vertices as dots labelled by their system index $\cl$ or $\qu$, noise lines as solid arcs and response lines as dashed arcs with an arrow from the earlier ($\cl$) end to the later ($\qu$) end; the baseline between consecutive vertices stands for the free propagator $\ee^{\Lc_S\Delta t}$ in the Schr\"odinger picture.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[>=Stealth,scale=0.9,
+  v/.style={circle,fill=black,inner sep=1.4pt},
+  noise/.style={thick,ForestGreen},
+  resp/.style={thick,RoyalBlue,dashed,->},
+  lab/.style={font=\footnotesize},
+  every label/.style={font=\footnotesize}]
+% ---- row 1: second-order configurations
+\begin{scope}
+  \node[lab,anchor=west] at (-0.2,1.7) {(a) noise line (allowed)};
+  \draw[->] (0,0)--(3.6,0);
+  \node[v,label=below:{$S^\qu(t_2)$}] (a2) at (0.8,0) {};
+  \node[v,label=below:{$S^\qu(t_1)$}] (a1) at (2.8,0) {};
+  \draw[noise] (a2) .. controls (1.3,1.1) and (2.3,1.1) .. (a1);
+  \node[lab] at (1.8,1.15) {$S(t_1-t_2)$};
+\end{scope}
+\begin{scope}[xshift=5.0cm]
+  \node[lab,anchor=west] at (-0.2,1.7) {(b) response line (allowed)};
+  \draw[->] (0,0)--(3.6,0);
+  \node[v,label=below:{$S^\cl(t_2)$}] (b2) at (0.8,0) {};
+  \node[v,label=below:{$S^\qu(t_1)$}] (b1) at (2.8,0) {};
+  \draw[resp] (b2) .. controls (1.3,1.1) and (2.3,1.1) .. (b1);
+  \node[lab] at (1.8,1.15) {$-i\chi(t_1-t_2)$};
+\end{scope}
+\begin{scope}[xshift=10.0cm]
+  \node[lab,anchor=west] at (-0.2,1.7) {(c) $\cl$--$\cl$ line (forbidden)};
+  \draw[->] (0,0)--(3.6,0);
+  \node[v,label=below:{$S^\cl(t_2)$}] (c2) at (0.8,0) {};
+  \node[v,label=below:{$S^\cl(t_1)$}] (c1) at (2.8,0) {};
+  \draw[thick,gray] (c2) .. controls (1.3,1.1) and (2.3,1.1) .. (c1);
+  \draw[red,very thick] (1.55,0.5)--(2.05,1.0) (1.55,1.0)--(2.05,0.5);
+  \node[lab] at (1.8,1.2) {$D^{\qu\qu}=0$};
+\end{scope}
+% ---- row 2
+\begin{scope}[yshift=-4.3cm]
+  \node[lab,anchor=west] at (-0.2,1.7) {(d) later end $\cl$ (forbidden)};
+  \draw[->] (0,0)--(3.6,0);
+  \node[v,label=below:{$S^\qu(t_2)$}] (d2) at (0.8,0) {};
+  \node[v,label=below:{$S^\cl(t_1)$}] (d1) at (2.8,0) {};
+  \draw[thick,gray,dashed] (d2) .. controls (1.3,1.1) and (2.3,1.1) .. (d1);
+  \draw[red,very thick] (1.55,0.5)--(2.05,1.0) (1.55,1.0)--(2.05,0.5);
+  \node[lab] at (1.8,1.2) {$D^{\qu\cl}(t_1{>}t_2)=0$};
+\end{scope}
+\begin{scope}[xshift=5.0cm,yshift=-4.3cm]
+  \node[lab,anchor=west] at (-0.2,1.9) {(e) fourth order, crossed: one noise line $(t_2t_4)$ and one response line $(t_1t_3)$};
+  \draw[->] (0,0)--(8.6,0);
+  \node[v,label=below:{$S^\qu(t_4)$}] (e4) at (0.8,0) {};
+  \node[v,label=below:{$S^\cl(t_3)$}] (e3) at (2.9,0) {};
+  \node[v,label=below:{$S^\qu(t_2)$}] (e2) at (5.0,0) {};
+  \node[v,label=below:{$S^\qu(t_1)$}] (e1) at (7.1,0) {};
+  \draw[noise] (e4) .. controls (1.8,1.5) and (4.0,1.5) .. (e2);
+  \draw[resp]  (e3) .. controls (3.9,1.5) and (6.1,1.5) .. (e1);
+  \node[lab] at (2.3,1.45) {$S(t_2-t_4)$};
+  \node[lab] at (5.9,1.45) {$-i\chi(t_1-t_3)$};
+  \node[lab] at (1.85,-0.95) {$\ee^{\Lc_S(t_3-t_4)}$};
+  \node[lab] at (3.95,-0.95) {$\ee^{\Lc_S(t_2-t_3)}$};
+  \node[lab] at (6.05,-0.95) {$\ee^{\Lc_S(t_1-t_2)}$};
+\end{scope}
+\end{tikzpicture}
+\caption{The system-side Feynman rules in pictures.
+Time runs to the right; dots are vertices labelled by their system superoperator; solid arcs are noise lines $S$, dashed arcs with an arrow (from the $\cl$ end to the $\qu$ end) are response lines $-i\chi$; baseline segments are free propagators.
+(a), (b): the two allowed second-order diagrams, which together make up $K^{(2)}$, \cref{eq:K2}.
+(c), (d): the two forbidden configurations, killed by $D^{\qu\qu}=0$ and by the retardation of $\chi$ respectively.
+(e): a fourth-order irreducible (crossed) diagram with one line of each kind; its value is written in \cref{eq:crossed-value}.}
+\label{fig:rules}
+\end{figure}
+
+Reading the pictures back into formulas is mechanical.
+Diagram (a) is $(-i)^2S^\qu\ee^{\Lc_S(t_1-t_2)}S^\qu\,S(t_1-t_2)$ and diagram (b) is $(-i)^2S^\qu\ee^{\Lc_S(t_1-t_2)}S^\cl\,[-i\chi(t_1-t_2)]$; their sum, with $\tau=t_1-t_2$, is the Born kernel $K^{(2)}(\tau)$ of \cref{eq:K2} below.
+Diagram (e), with $t_1>t_2>t_3>t_4$, is
+\begin{equation}
+  (-i)^4\,S^\qu\,\ee^{\Lc_S(t_1-t_2)}\,S^\qu\,\ee^{\Lc_S(t_2-t_3)}\,S^\cl\,\ee^{\Lc_S(t_3-t_4)}\,S^\qu\;\times\;\big[-i\chi(t_1-t_3)\big]\,S(t_2-t_4),
+  \label{eq:crossed-value}
+\end{equation}
+to be integrated over the ordered times and sandwiched between $\ee^{\Lc_S(t-t_1)}$ on the left and $\ee^{\Lc_St_4}$ on the right.
+Note how the labels are forced: once the pairing $(t_1t_3)(t_2t_4)$ is chosen, the two ends of the $(t_2t_4)$ line must both be $\qu$ if it is a noise line, and the $(t_1t_3)$ line can be a response line only with $\qu$ at $t_1$ and $\cl$ at $t_3$, never the other way round; the same pairing with $(t_2t_4)$ as a response line ($\qu$ at $t_2$, $\cl$ at $t_4$) and $(t_1t_3)$ as a noise line is a second, distinct allowed diagram.
+In general each pairing of $2n$ vertices generates several diagrams, one for every admissible assignment of $\cl/\qu$ labels, and the sum over labels is what \cref{eq:wick-sum} in \cref{sec:lec5} denotes by $\sum_{a_j}$.
+
 The last rule has a direct physical reading.
 A $\cl$ vertex is where the bath \emph{acts} on the system (a force, through $\chi$); a $\qu$ vertex is where the system \emph{acts} on the bath or where noise enters.
 Causality says the bath can only respond to earlier system history, hence the response line points from an earlier $\cl$ to a later $\qu$.
