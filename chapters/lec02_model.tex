@@ -53,8 +53,9 @@ We flag this at each place where it matters.
 \end{warnbox}
 
 \subsection{Bath correlation function; noise and response}
+\label{sec:bath-kernels}
 
-In the interaction picture with respect to $H_B$, $B(t)=\sum_kg_k(b_k\ee^{-i\omega_kt}+b_k^\dagger\ee^{i\omega_kt})$.
+In the interaction picture with respect to $H_B$ (defined in general in \cref{sec:pictures}; for a bath operator it coincides with the picture with respect to $H_0=H_S+H_B$), $B(t)=\sum_kg_k(b_k\ee^{-i\omega_kt}+b_k^\dagger\ee^{i\omega_kt})$.
 For a thermal bath $\rhoB=\ee^{-\beta H_B}/Z_B$ with $\bar n_k=(\ee^{\beta\omega_k}-1)^{-1}$,
 \begin{equation}
   C(t)\equiv\avg{B(t)B(0)}=\sum_kg_k^2\Big[(\bar n_k+1)\ee^{-i\omega_kt}+\bar n_k\ee^{i\omega_kt}\Big]
@@ -388,16 +389,83 @@ We take $\rho(0)=\rhoS(0)\otimes\rhoB$ with $\rhoB$ thermal (so $[H_B,\rhoB]=0$ 
 Physically this means the coupling is switched on at $t=0$, or that the qubit was prepared by a fast operation that does not disturb the bath.
 Correlated initial states (for example the global thermal state of $H$) can be handled, at the price of an inhomogeneous term in the master equation (\cref{sec:lec5}) or an imaginary-time branch of the contour (\cref{sec:lec9}).
 
-We will move freely between the Schr\"odinger picture, the interaction picture with respect to $H_0=H_S+H_B$, and the Heisenberg picture.
-For the record, in the interaction picture
+\subsubsection{The interaction picture, for operators and for superoperators}
+\label{sec:pictures}
+
+The notes use the tilde, $\tilde X(t)$, for interaction-picture quantities, and the three pictures are related as follows.
+Write $H=H_0+H_I$ with $H_0=H_S+H_B$ and $U_0(t)=\ee^{-iH_0t}$.
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ & state & observable $A$\\
+\midrule
+Schr\"odinger & $\rho(t)=\ee^{-iHt}\rho(0)\ee^{iHt}$ & $A$\\
+Heisenberg & $\rho(0)$ & $A_{\rm H}(t)=\ee^{iHt}A\ee^{-iHt}$\\
+interaction & $\tilde\rho(t)=U_0^\dagger(t)\rho(t)U_0(t)$ & $\tilde A(t)=U_0^\dagger(t)AU_0(t)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+All three give the same expectation values, $\Tr[A\rho(t)]=\Tr[A_{\rm H}(t)\rho(0)]=\Tr[\tilde A(t)\tilde\rho(t)]$, by cyclicity of the trace.
+In the interaction picture the free evolution is removed from the state and attached to the operators, so $\tilde\rho$ moves only because of $H_I$:
+\begin{equation}
+  \dot{\tilde\rho}(t)=-i\big[\tilde H_I(t),\tilde\rho(t)\big],\qquad
+  \tilde H_I(t)=U_0^\dagger(t)H_IU_0(t)=\tilde S(t)\tilde B(t),\qquad \tilde\rho(0)=\rho(0),
+  \label{eq:int-picture-vN}
+\end{equation}
+where $\tilde S(t)=\ee^{iH_St}S\ee^{-iH_St}$ and $\tilde B(t)=\ee^{iH_Bt}B\ee^{-iH_Bt}$ because $H_S$ and $H_B$ act on different factors and commute.
+Two remarks on signs.
+First, the state transforms with $U_0^\dagger$ on the left, the same way a Heisenberg operator does and the opposite of a Schr\"odinger ket ($\ket{\tilde\psi}=U_0^\dagger\ket\psi$ gives $\tilde\rho=\ket{\tilde\psi}\bra{\tilde\psi}=U_0^\dagger\rho U_0$, consistently).
+Second, interaction-picture operators rotate ``the Heisenberg way'': an operator that would precess counterclockwise as a Bloch vector in the Schr\"odinger picture precesses clockwise as $\tilde A(t)$, see \cref{eq:S-int} below.
+Unless stated otherwise, a tilde always refers to $H_0=H_S+H_B$.
+For a bath operator this is the same as the picture with respect to $H_B$ alone, which is what \cref{sec:bath-kernels} used for $B(t)$; we drop the tilde on bath operators when no confusion is possible, as there.
+
+The same construction applies to superoperators, and it is the form we use from \cref{sec:lec3} on.
+With $\Lc_0=\Lc_S+\Lc_B$, $\Lc_0X=-i[H_0,X]$, define
+\begin{equation}
+  \tilde\rho(t)=\ee^{-\Lc_0t}\rho(t),\qquad
+  \tilde\Lc_I(t)=\ee^{-\Lc_0t}\,\Lc_I\,\ee^{\Lc_0t},\qquad\text{so that}\qquad
+  \dot{\tilde\rho}(t)=\tilde\Lc_I(t)\,\tilde\rho(t).
+  \label{eq:int-picture-super}
+\end{equation}
+The equation of motion follows in one line from $\dot\rho=(\Lc_0+\Lc_I)\rho$: $\dot{\tilde\rho}=-\Lc_0\ee^{-\Lc_0t}\rho+\ee^{-\Lc_0t}(\Lc_0+\Lc_I)\rho=\ee^{-\Lc_0t}\Lc_I\ee^{\Lc_0t}\tilde\rho$.
+That \cref{eq:int-picture-super} is the \emph{same} interaction picture as \cref{eq:int-picture-vN}, and not merely an analogous one, rests on two identities.
+
+\begin{lemma}[Operator and superoperator interaction pictures agree]\label{lem:int-picture}
+For $\Lc_0X=-i[H_0,X]$ and any operator $A$,
+\begin{enumerate}
+\item[(i)] $\ee^{-\Lc_0t}X=\ee^{iH_0t}X\ee^{-iH_0t}=U_0^\dagger(t)XU_0(t)$; in particular $\ee^{-\Lc_0t}\rho(t)=\tilde\rho(t)$ and $\ee^{-\Lc_0t}A=\tilde A(t)$;
+\item[(ii)] $\ee^{-\Lc_0t}A^{\pm}\ee^{\Lc_0t}=\big(\tilde A(t)\big)^{\pm}$, and therefore the same for $A^\cl$, $A^\qu$ and for products: $\ee^{-\Lc_0t}\,S^aB^b\,\ee^{\Lc_0t}=\tilde S^a(t)\tilde B^b(t)$ with $a,b\in\{\cl,\qu\}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Both sides equal $X$ at $t=0$ and obey the same linear differential equation: $\partial_t(U_0^\dagger XU_0)=iH_0U_0^\dagger XU_0-iU_0^\dagger XU_0H_0=i[H_0,U_0^\dagger XU_0]=-\Lc_0(U_0^\dagger XU_0)$, while $\partial_t\ee^{-\Lc_0t}X=-\Lc_0\ee^{-\Lc_0t}X$.
+(ii) Apply both sides to an arbitrary $X$ and use (i) twice: $\ee^{-\Lc_0t}A^{+}\ee^{\Lc_0t}X=U_0^\dagger\big(A\,U_0XU_0^\dagger\big)U_0=\tilde A(t)X=\big(\tilde A(t)\big)^{+}X$, and similarly for $A^-$ with $X$ on the left.
+Since $A^\cl$ and $A^\qu$ are linear combinations of $A^\pm$ with constant coefficients, and conjugation by $\ee^{-\Lc_0t}$ respects products, the rest follows.
+\end{proof}
+
+The consequences are used constantly.
+By (ii) and \cref{eq:LIcq} of \cref{sec:lec3}, the interaction-picture vertex is $\tilde\Lc_I(t)=-i[\tilde S^\qu(t)\tilde B^\cl(t)+\tilde S^\cl(t)\tilde B^\qu(t)]$: the superoperator built from the interaction-picture operator is the interaction-picture superoperator.
+Conversely, a string of interaction-picture vertices is converted back to the Schr\"odinger picture by writing $\tilde\Lc_I(t_i)=\ee^{-\Lc_0t_i}\Lc_I\ee^{\Lc_0t_i}$ and collecting the exponentials between consecutive vertices,
+\begin{equation}
+  \ee^{\Lc_0t}\,\tilde\Lc_I(t_1)\tilde\Lc_I(t_2)\cdots\tilde\Lc_I(t_n)
+  =\ee^{\Lc_0(t-t_1)}\,\Lc_I\,\ee^{\Lc_0(t_1-t_2)}\,\Lc_I\cdots\Lc_I\,\ee^{\Lc_0t_n},
+  \label{eq:int-to-schr}
+\end{equation}
+which is the ``free propagator between vertices'' prescription of the Feynman rules in \cref{sec:lec4} and of the kernel formula in \cref{sec:lec5}.
+Note that the two pictures agree on the reduced state at the times we care about only after this conversion: $\rhoS(t)=\Tr_B\rho(t)=\ee^{\Lc_St}\Tr_B\tilde\rho(t)$, because $\Tr_B\ee^{\Lc_Bt}=\Tr_B$.
+
+\paragraph{Example: the coupling operator of the qubit.}
+For $H_S=\frac{\omega_0}{2}\sz$ and $S=\cos\theta\,\sz+\sin\theta\,\sx$,
 \begin{equation}
   \tilde S(t)=\ee^{iH_St}S\ee^{-iH_St}=\cos\theta\,\sz+\sin\theta\big(\sx\cos\omega_0t-\sy\sin\omega_0t\big)
   =\cos\theta\,\sz+\sin\theta\big(\sigma_+\ee^{i\omega_0t}+\sigma_-\ee^{-i\omega_0t}\big),
   \label{eq:S-int}
 \end{equation}
 with $\sigma_\pm=\tfrac12(\sx\pm i\sy)$.
-Note that the Heisenberg-picture rotation of $\sx$ is clockwise, opposite to the Schr\"odinger-picture rotation of the Bloch vector in \cref{eq:LS-bloch}, as it must be.
+Note that the rotation of $\sx$ is clockwise, opposite to the Schr\"odinger-picture rotation of the Bloch vector in \cref{eq:LS-bloch}, as it must be.
 The $\cos\theta$ part is static, the $\sin\theta$ part oscillates at $\pm\omega_0$: this is why dephasing samples the bath at $\omega\approx0$ and relaxation samples it at $\omega=\pm\omega_0$.
+As a check of Lemma~\ref{lem:int-picture}(i) in the Bloch basis, $\ee^{-\Lc_St}$ with $\Lc_S$ of \cref{eq:LS-bloch} maps $x_x\mapsto\cos(\omega_0t)x_x+\sin(\omega_0t)x_y$, $x_y\mapsto-\sin(\omega_0t)x_x+\cos(\omega_0t)x_y$, which applied to $\sx$ (coefficients $x_x=1$, $x_y=0$) gives $\cos\omega_0t\,\sx-\sin\omega_0t\,\sy$, in agreement with \cref{eq:S-int}.
 
 \subsection{Exercises}
 

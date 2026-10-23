@@ -32,8 +32,8 @@ Contour ordering means: later contour position further from $\rho(0)$.}
 \subsection{The Dyson series for \texorpdfstring{$\rho$}{rho} and the origin of the contour}
 \label{sec:contour-from-vN}
 
-Work in the interaction picture with respect to $H_0=H_S+H_B$.
-Then $\tilde\rho(t)=\tilde U(t)\rho(0)\tilde U^\dagger(t)$ with
+Work in the interaction picture with respect to $H_0=H_S+H_B$, \cref{sec:pictures}: $\tilde\rho(t)=\ee^{iH_0t}\rho(t)\ee^{-iH_0t}$ obeys $\dot{\tilde\rho}=-i[\tilde H_I(t),\tilde\rho]$ with $\tilde H_I(t)=\ee^{iH_0t}H_I\ee^{-iH_0t}$, \cref{eq:int-picture-vN}.
+Integrating, $\tilde\rho(t)=\tilde U(t)\rho(0)\tilde U^\dagger(t)$ with
 \begin{equation}
   \tilde U(t)=T\exp\Big[-i\!\int_0^t\!\dd s\,\tilde H_I(s)\Big]
   =1-i\!\int_0^t\!\dd t_1\tilde H_I(t_1)-\!\int_0^t\!\dd t_1\!\int_0^{t_1}\!\dd t_2\,\tilde H_I(t_1)\tilde H_I(t_2)+\dots
@@ -71,7 +71,7 @@ To all orders,
   =\sum_n\int_{t>t_1>\dots>t_n>0}\tilde\Lc_I(t_1)\cdots\tilde\Lc_I(t_n)\,\rho(0),
   \label{eq:dyson-super}
 \end{equation}
-which is just the Dyson series for the superoperator equation $\dot{\tilde\rho}=\tilde\Lc_I(t)\tilde\rho$.
+which is just the Dyson series for the superoperator equation $\dot{\tilde\rho}=\tilde\Lc_I(t)\tilde\rho$ of \cref{eq:int-picture-super}, with $\tilde\Lc_I(t)=\ee^{-\Lc_0t}\Lc_I\ee^{\Lc_0t}$; that this agrees with the operator definition $\tilde\Lc_I=-i[\tilde H_I^+-\tilde H_I^-]$ used in \cref{eq:rho2super} is Lemma~\ref{lem:int-picture}(ii).
 
 \begin{keybox}[Key point 3.1]
 Ordinary time ordering of the superoperators $\tilde\Lc_I(t_i)$ along the single real axis $[0,t]$, with a sum over the branch index $\pm$ at each vertex, \emph{is} Keldysh contour ordering.
