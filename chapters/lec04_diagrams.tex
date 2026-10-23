@@ -10,7 +10,20 @@ The second-order result is the Born kernel that every master equation uses; the 
 
 Insert \cref{eq:LIcq} into \cref{eq:dyson-super} and take $\Tr_B$.
 Every vertex is either $S^\qu B^\cl$ or $S^\cl B^\qu$, so the bath index at a vertex is the \emph{opposite} of the system index.
-Apply Wick's theorem to the bath string and translate \cref{eq:LO} to the system side:
+Apply Wick's theorem to the bath string: the bath operators disappear into the contractions $D^{ab}(t,s)$ of \cref{eq:LO}, and what is left is a string of system superoperators $S^{\cl/\qu}$, one per vertex.
+The contractions in \cref{eq:LO} are labelled by the \emph{bath} indices $a,b$ of $B^a(t)B^b(s)$; to read them as rules for the system string we relabel each entry by the system index that sits at the same vertex, which is the opposite one.
+This gives the following dictionary (``translating \cref{eq:LO} to the system side''):
+\begin{equation}
+\begin{aligned}
+  D^{\cl\cl}(t,s)&=S(t-s) &&\longrightarrow&& \text{a line joining } S^\qu(t)\text{ and }S^\qu(s),\\
+  D^{\cl\qu}(t,s)&=-i\chi(t-s)\ \ (t>s) &&\longrightarrow&& \text{a line joining the later } S^\qu(t)\text{ to the earlier }S^\cl(s),\\
+  D^{\qu\qu}(t,s)&=0 &&\longrightarrow&& \text{no line joining } S^\cl\text{ to }S^\cl,\\
+  D^{\qu\cl}(t,s)&=0\ \ (t>s) &&\longrightarrow&& \text{no line whose later end is }S^\cl .
+\end{aligned}
+\label{eq:system-dictionary}
+\end{equation}
+The last two lines are the trace identity \eqref{eq:trace-identities} for the bath, seen from the system: a bath contraction vanishes whenever its later operator is $B^\qu$, and $B^\qu$ is accompanied by $S^\cl$.
+In words:
 
 \begin{keybox}[System-side Feynman rules for $\Pi(t)$]
 A term of order $2n$ is a time-ordered string of $2n$ vertices at $t>t_1>\dots>t_{2n}>0$, with a pairing of the vertices into $n$ lines.
