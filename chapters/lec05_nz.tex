@@ -72,17 +72,125 @@ For ordered times $t_0>t_1>\dots>t_{k}$ and a system operator $X$, the \emph{Wic
   \label{eq:wick-string}
 \end{equation}
 Its $k$ \emph{gaps} are the intervals $(t_{j+1},t_j)$ between consecutive vertices, $j=0,\dots,k-1$.
-By Wick's theorem \eqref{eq:wick} applied to the bath factors (every vertex carries exactly one bath superoperator), $W$ is a sum over \emph{pairings} $\pi$ of the $k+1$ vertices (so $k+1$ must be even, otherwise $W=0$):
+\end{definition}
+
+\paragraph{What a pairing is.}
+Before expanding $W$ we need the combinatorial object that organizes Wick's theorem.
+Label the vertices of the string by their position $0,1,\dots,k$ in it; vertex $0$ is the latest one, at $t_0$.
+
+\begin{definition}[Pairing]\label{def:pairing}
+A \emph{pairing} $\pi$ of the vertex set $\{0,1,\dots,k\}$ is a partition of it into disjoint two-element blocks, called \emph{pairs} or \emph{lines}, such that every vertex belongs to exactly one pair.
+We write a pair as $(il)$ with $i<l$, so that $t_i>t_l$: vertex $i$ is the \emph{later end} of the line and vertex $l$ its \emph{earlier end}.
+\end{definition}
+
+Equivalently, a pairing is a fixed-point-free involution of $\{0,\dots,k\}$ (each vertex is sent to its partner).
+Drawn with the vertices on a time axis and each pair as an arc, it is a \emph{chord diagram}; this is how \cref{fig:rules,fig:fourth-order} draw them.
+Three elementary facts follow from the definition.
+\begin{itemize}[itemsep=1pt]
+\item A pairing exists only if the number of vertices $k+1$ is even.
+\item For $2n$ vertices there are $(2n-1)!!=(2n)!/(2^nn!)$ pairings.
+  Vertex $0$ can be paired with any of the other $2n-1$ vertices, the lowest unpaired vertex then with any of the remaining $2n-3$, and so on.
+  This gives $1,3,15,105$ pairings for $2n=2,4,6,8$.
+\item A pairing is pure combinatorics: it records \emph{which} vertices are joined, and nothing else.
+  It does not fix the $\cl/\qu$ labels, the values of the times, or the order of the system superoperators; these enter only when a value $W_\pi$ is attached to it.
+\end{itemize}
+
+\paragraph{Where pairings come from.}
+Insert $\tilde\Lc_I(t_j)=-i\sum_{a_j\in\{\cl,\qu\}}\tilde S^{a_j}(t_j)\,\tilde B^{\bar a_j}(t_j)$ at every vertex, where $\bar a$ denotes the index opposite to $a$ ($\bar\cl=\qu$, $\bar\qu=\cl$).
+A system superoperator $S^a$ acts on the system factor only and a bath superoperator $B^b$ on the bath factor only, so the two commute as superoperators, and on the product input $X\otimes\rhoB$ the string factorizes:
+\begin{equation}
+  W(t_0,\dots,t_k)X=\sum_{a_0,\dots,a_k}\Big[\prod_{j=0}^{k}\big(-i\,\tilde S^{a_j}(t_j)\big)X\Big]\;
+  \Tr_B\!\big[\tilde B^{\bar a_0}(t_0)\,\tilde B^{\bar a_1}(t_1)\cdots\tilde B^{\bar a_k}(t_k)\,\rhoB\big],
+  \label{eq:string-factorized}
+\end{equation}
+where the system product keeps the time order of the string (latest on the left).
+The bath factor is a number, a $(k+1)$-point function in a Gaussian state with $\avg B=0$.
+Wick's theorem \eqref{eq:wick} writes it as a sum over pairings of products of the two-point contractions \eqref{eq:LO}, one contraction per line:
+\begin{equation}
+  \Tr_B\!\big[\tilde B^{b_0}(t_0)\cdots\tilde B^{b_k}(t_k)\,\rhoB\big]=\sum_\pi\prod_{(il)\in\pi}D^{b_ib_l}(t_i,t_l).
+  \label{eq:bath-wick}
+\end{equation}
+For four vertices, with the shorthand $D^{ab}_{il}\equiv D^{ab}(t_i,t_l)$ and $\tilde B^{b}_j\equiv\tilde B^{b}(t_j)$,
+\begin{equation}
+  \Tr_B\!\big[\tilde B^{b_0}_0\tilde B^{b_1}_1\tilde B^{b_2}_2\tilde B^{b_3}_3\,\rhoB\big]
+  =D^{b_0b_1}_{01}D^{b_2b_3}_{23}+D^{b_0b_2}_{02}D^{b_1b_3}_{13}+D^{b_0b_3}_{03}D^{b_1b_2}_{12},
+  \label{eq:wick-four}
+\end{equation}
+one term for each of the three pairings $(01)(23)$, $(02)(13)$ and $(03)(12)$.
+Inserting \cref{eq:bath-wick} with $b_j=\bar a_j$ into \cref{eq:string-factorized} and exchanging the two sums, $W$ becomes a sum over pairings $\pi$ of the $k+1$ vertices (so $k+1$ must be even, otherwise $W=0$):
 \begin{equation}
   W(t_0,\dots,t_k)=\sum_{\pi}W_\pi(t_0,\dots,t_k),\qquad
-  W_\pi=\prod_{\text{vertices}}\big(-i\,\tilde S^{a_j}(t_j)\big)\prod_{(ij)\in\pi}D^{\bar a_i\bar a_j}(t_i,t_j),
+  W_\pi=\prod_{\text{vertices}}\big(-i\,\tilde S^{a_j}(t_j)\big)\prod_{(il)\in\pi}D^{\bar a_i\bar a_l}(t_i,t_l),
   \label{eq:wick-sum}
 \end{equation}
 where $a_j\in\{\cl,\qu\}$ is the system index at vertex $j$, $\bar a_j$ the opposite index, and the sum over the $a_j$ is understood.
-$W_\pi$ is what we called a \emph{diagram} in \cref{sec:lec4}; the Feynman rules there are just \cref{eq:wick-sum} with \cref{eq:LO} inserted (recall $D^{\qu\qu}=0$ and $D^{\qu\cl}(t_i,t_j)=0$ for $t_i>t_j$, which kills many assignments).
-\end{definition}
+$W_\pi$ is the sum of the \emph{diagrams} of \cref{sec:lec4} that share the pairing $\pi$ (one diagram per surviving label assignment); the Feynman rules there are just \cref{eq:wick-sum} with \cref{eq:LO} inserted (recall $D^{\qu\qu}=0$ and $D^{\qu\cl}(t_i,t_l)=0$ for $t_i>t_l$, which kills many assignments).
 
-\begin{definition}[Cuts, reducibility]
+\begin{exbox}[Pairings by example]
+\textbf{(a) Two vertices.}
+There is one pairing, $\pi=\{(01)\}$.
+The label sum in \cref{eq:wick-sum} has four terms, and for $t_0>t_1$ \cref{eq:LO} gives
+\begin{equation*}
+  D^{\bar a_0\bar a_1}(t_0,t_1)=
+  \begin{cases}
+    D^{\cl\cl}=S(t_0-t_1), & (a_0,a_1)=(\qu,\qu),\\
+    D^{\cl\qu}=-i\chi(t_0-t_1), & (a_0,a_1)=(\qu,\cl),\\
+    D^{\qu\cl}=-i\chi(t_1-t_0)=0, & (a_0,a_1)=(\cl,\qu),\\
+    D^{\qu\qu}=0, & (a_0,a_1)=(\cl,\cl).
+  \end{cases}
+\end{equation*}
+Hence $W_{(01)}=-\tilde S^\qu(t_0)\big[S(t_0-t_1)\,\tilde S^\qu(t_1)-i\chi(t_0-t_1)\,\tilde S^\cl(t_1)\big]$.
+With $t_0=\tau$, $t_1=0$ and the factor $\ee^{\Lc_S\tau}$ of \cref{eq:K-irred} this is the Born kernel $K^{(2)}(\tau)$ of \cref{eq:K2}: diagrams (a) and (b) of \cref{fig:rules}.
+
+\medskip \textbf{(b) Three vertices.}
+No pairing exists, so $W(t_0,t_1,t_2)=0$: an odd moment of a zero-mean Gaussian vanishes.
+This is the parity argument used in Example~5.1 below to discard a $\Pc$ in the first or last gap.
+
+\medskip \textbf{(c) Four vertices.}
+The three pairings of \cref{eq:wick-four} are drawn in \cref{fig:fourth-order}:
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+pairing $\pi$ & name & bath factor & cuts $U(\pi)$ (Definition~\ref{def:cuts})\\
+\midrule
+$(01)(23)$ & sequential & $D_{01}D_{23}$ & $\{1\}$: no line joins $\{0,1\}$ to $\{2,3\}$\\
+$(02)(13)$ & crossed & $D_{02}D_{13}$ & $\varnothing$: $(02)$ crosses gaps $0,1$; $(13)$ crosses $1,2$\\
+$(03)(12)$ & nested & $D_{03}D_{12}$ & $\varnothing$: $(03)$ crosses all three gaps\\
+\bottomrule
+\end{tabular}
+\end{center}
+All three multiply the \emph{same} time-ordered system string $\tilde S^{a_0}(t_0)\tilde S^{a_1}(t_1)\tilde S^{a_2}(t_2)\tilde S^{a_3}(t_3)$.
+What the pairing changes is which pairs of times appear as arguments of $S$ and $\chi$, and which label assignments survive.
+For example, the crossed pairing with $(a_0,a_1,a_2,a_3)=(\qu,\qu,\cl,\qu)$ contributes
+\begin{equation*}
+  (-i)^4\,\tilde S^\qu(t_0)\,\tilde S^\qu(t_1)\,\tilde S^\cl(t_2)\,\tilde S^\qu(t_3)\;\big[-i\chi(t_0-t_2)\big]\,S(t_1-t_3),
+\end{equation*}
+since the line $(02)$ has $(\bar a_0,\bar a_2)=(\cl,\qu)$ and the line $(13)$ has $(\bar a_1,\bar a_3)=(\cl,\cl)$.
+This is diagram (e) of \cref{fig:rules}, \cref{eq:crossed-value} (there with the times called $t_1,\dots,t_4$).
+When the vertices commute (pure dephasing, Example~4.3) the three pairings give the same operator with different time arguments; for non-commuting $\tilde S^a(t)$ they are genuinely different superoperators.
+
+\medskip \textbf{(d) Which labels survive, in general.}
+For a line $(il)$, $t_i>t_l$, the contraction $D^{\bar a_i\bar a_l}(t_i,t_l)$ is nonzero only if $\bar a_i=\cl$, i.e.\ $a_i=\qu$: \emph{the later end of every line carries $S^\qu$}.
+The earlier end is free: $a_l=\qu$ gives a noise line $S(t_i-t_l)$, and $a_l=\cl$ gives a response line $-i\chi(t_i-t_l)$.
+Since every vertex is the end of exactly one line, these choices are independent, so each pairing of $2n$ vertices carries exactly $2^n$ nonvanishing label assignments, and the label sum can be done line by line:
+\begin{gather*}
+  W_\pi=(-1)^n\,\hat S_0\hat S_1\cdots\hat S_{2n-1},\\
+  \hat S_j=
+  \begin{cases}
+    \tilde S^\qu(t_j), & j\ \text{later end of its line},\\
+    S(t_i-t_j)\,\tilde S^\qu(t_j)-i\chi(t_i-t_j)\,\tilde S^\cl(t_j), & j\ \text{earlier end of}\ (ij)\in\pi,
+  \end{cases}
+\end{gather*}
+with $(-1)^n=(-i)^{2n}$ from the vertex factors; item (a) is the case $n=1$.
+At fourth order this gives $3\times4=12$ diagrams, of which the $8$ belonging to the crossed and nested pairings are irreducible; at sixth order $15\times8=120$ diagrams, of which $10\times8=80$ are irreducible (Example~5.2).
+
+\medskip \textbf{(e) Non-examples.}
+On four vertices, $\{(01),(12)\}$ is not a pairing (vertex $1$ is in two lines and vertex $3$ in none), and neither is $\{(01)\}$ (vertices $2,3$ are unpaired).
+An unpaired vertex would carry a factor $\avg B=0$.
+A block joining three or more vertices is what a non-Gaussian bath produces (a higher cumulant, see the remark after Theorem~\ref{thm:irreducible}); for the Gaussian bath it never appears.
+\end{exbox}
+
+\begin{definition}[Cuts, reducibility]\label{def:cuts}
 A pairing $\pi$ \emph{crosses} gap $j$ if some pair $(il)\in\pi$ has $i\le j<l$, i.e.\ one vertex before the gap and one after it.
 A gap not crossed by $\pi$ is a \emph{cut} of $\pi$.
 Write $U(\pi)\subseteq\{0,\dots,k-1\}$ for the set of cuts of $\pi$.
