@@ -402,6 +402,199 @@ def check_fourth_order(N=8, n=50):
                 g, tau, np.abs(Kx - K2v).max(), np.abs(K4v).max(), np.abs(Kx - K2v - K4v).max()))
 
 
+def check_rwa_kernel(N=4):
+    """Lecture 5, Sec. 'Can the kernel be computed exactly?': the damped Jaynes-Cummings
+    model (theta = pi/2 in the rotating-wave approximation, T = 0, Lorentzian bath, resonance).
+    Compares the exact kernel P L_I e^{Q L tau} Q L_I P of the RWA pseudomode model with the
+    closed forms  K_eg(tau) = -g^2 e^{-gamma tau/2}  (coherence) and
+    K_ee(tau) = -2 g^2 e^{-3 gamma tau/4} [cos(nu tau) + gamma/(4 nu) sin(nu tau)],
+    nu = sqrt(32 g^2 - gamma^2)/4  (population), both in the frame rotating at omega_0,
+    and the fourth-order term of the geometric series with K - K2 at small g."""
+    sp_ = np.array([[0, 1], [0, 0]], complex); sm_ = sp_.T.conj()
+    a = np.diag(np.sqrt(np.arange(1, N)), 1).astype(complex); IN = np.eye(N)
+    D = 2 * N
+    H0 = np.kron(H_S, IN) + Omega * np.kron(I2, a.conj().T @ a)
+    vac = np.zeros((N, N)); vac[0, 0] = 1
+
+    def P_matrix():
+        P = np.zeros((D * D, D * D), complex)
+        for k in range(D * D):
+            E = np.zeros(D * D, complex); E[k] = 1
+            RS = partial_trace_osc(E, N)
+            P[:, k] = vec(np.kron(RS, vac))
+        return P
+
+    P = P_matrix(); Q = np.eye(D * D) - P
+    Ee = np.diag([1, 0]).astype(complex)         # |e><e|, e = upper level of sigma_z
+    Eeg = np.array([[0, 1], [0, 0]], complex)    # |e><g|
+
+    def kernels(g, taus):
+        HI = g * (np.kron(sp_, a) + np.kron(sm_, a.conj().T))
+        LI = liouvillian(HI); L0 = liouvillian(H0) + dissipator(np.kron(I2, a), gamma); L = L0 + LI
+        out = []
+        for tau in taus:
+            Kt = P @ LI @ expm(Q @ L @ Q * tau) @ (Q @ LI @ P)
+            # rotate back to the frame rotating at omega_0 (populations are unaffected)
+            R = expm(-L_S * tau)
+            kee = partial_trace_osc(Kt @ vec(np.kron(Ee, vac)), N)[0, 0]
+            keg = (R @ vec(partial_trace_osc(Kt @ vec(np.kron(Eeg, vac)), N)))[2]  # vec index of |e><g| is 2
+            out.append((kee, keg))
+        return np.array(out)
+
+    taus = np.array([0.0, 0.5, 1.0, 2.0, 4.0, 8.0])
+    print("Damped Jaynes-Cummings model (RWA, T=0, Lorentzian, resonance): exact NZ kernel vs closed forms")
+    for g in (0.1, 0.3):
+        nu = np.sqrt(32 * g ** 2 - gamma ** 2 + 0j) / 4
+        kee_f = -2 * g ** 2 * np.exp(-3 * gamma * taus / 4) * (np.cos(nu * taus) + gamma / (4 * nu) * np.sin(nu * taus))
+        keg_f = -g ** 2 * np.exp(-gamma * taus / 2)
+        num = kernels(g, taus)
+        print("  g=%.2f  max|K_ee - formula| = %.1e   max|K_eg - formula| = %.1e" % (
+            g, np.abs(num[:, 0] - kee_f).max(), np.abs(num[:, 1] - keg_f).max()))
+    # fourth-order term of the geometric series vs  K_ee - K_ee^(2)
+    print("  fourth-order check (population):  K - K2  vs  K4 = (8g^4/gamma) tau e^{-gamma tau/2} - (16g^4/gamma^2)(e^{-gamma tau/2} - e^{-gamma tau})")
+    for g in (0.05, 0.1, 0.2):
+        num = kernels(g, taus)
+        k2 = -2 * g ** 2 * np.exp(-gamma * taus / 2)
+        k4 = 8 * g ** 4 / gamma * taus * np.exp(-gamma * taus / 2) - 16 * g ** 4 / gamma ** 2 * (np.exp(-gamma * taus / 2) - np.exp(-gamma * taus))
+        print("    g=%.2f  max|K-K2| = %.2e  max|K-K2-K4| = %.2e" % (g, np.abs(num[:, 0] - k2).max(), np.abs(num[:, 0] - k2 - k4).max()))
+
+
+
+def check_influence_kernel():
+    """Lecture 7, Sec. 'From the influence functional to the memory kernel' (Ivander, Lindoy and Lee 2024).
+    Discretized Feynman-Vernon path sum in the S eigenbasis (symmetric Trotter split, step dt):
+      U_N = G [prod I_0] [prod F] [prod_{k>k'} I_{k-k'}] G,   I_n(x',x) = exp[-(s'^+ - s'^-)(eta_n s^+ - eta_n^* s^-)],
+    with eta_n the double cell integral of C(t) = g^2 e^{-(i Omega + gamma/2) t}.  Checks:
+      (i)   U_N^{Trotter} vs the exact pseudomode map (O(dt^3) per step);
+      (ii)  the discrete NZ kernels K_n (transfer tensors) from exact propagators vs the continuous K(n dt);
+      (iii) K_n from the transfer-tensor recursion == K_n from the chain (Dyck-path) rule, to machine precision;
+      (iv)  the inverse map K -> I recovers the influence functions;
+      (v)   Hamiltonian learning: (Omega, gamma, g^2) from eta_{1+m}/eta_1, with Trotter-consistent and with exact data."""
+    import itertools
+    R = expm(-1j * theta / 2 * sy)                     # S = R sz R^dag
+    HSp = R.conj().T @ H_S @ R                         # H_S in the S eigenbasis
+    LSp = liouvillian(HSp)
+    Rs = np.kron(R.T, R.conj().T); Rsi = np.linalg.inv(Rs)   # vec(R^dag X R) = Rs vec X
+    sval = np.array([1, -1])
+    spl = lambda x: sval[x % 2]      # s^+ (ket index)
+    smi = lambda x: sval[x // 2]     # s^- (bra index)
+    a_b = 1j * Omega + gamma / 2
+
+    def eta(g, dt, n):
+        if n == 0:
+            return g ** 2 * (dt - (1 - np.exp(-a_b * dt)) / a_b) / a_b
+        return 4 * g ** 2 * np.sinh(a_b * dt / 2) ** 2 / a_b ** 2 * np.exp(-a_b * n * dt)
+
+    def I_mat(g, dt, n):
+        e = eta(g, dt, n)
+        if n == 0:
+            return np.array([np.exp(-(spl(x) - smi(x)) * (e * spl(x) - np.conj(e) * smi(x))) for x in range(4)])
+        return np.array([[np.exp(-(spl(xl) - smi(xl)) * (e * spl(xe) - np.conj(e) * smi(xe))) for xe in range(4)] for xl in range(4)])
+
+    def U_discrete(g, dt, N):
+        G = expm(LSp * dt / 2); F = G @ G
+        I0 = I_mat(g, dt, 0); Ik = {n: I_mat(g, dt, n) for n in range(1, N)}
+        U = np.zeros((4, 4), complex)
+        for path in itertools.product(range(4), repeat=N):
+            w = 1.0 + 0j
+            for n in range(N): w *= I0[path[n]]
+            for n in range(N - 1): w *= F[path[n + 1], path[n]]
+            for k in range(N):
+                for kp in range(k + 1, N): w *= Ik[kp - k][path[kp], path[k]]
+            U += w * np.outer(G[:, path[-1]], G[path[0], :])
+        return U
+
+    def chains(n):
+        out = []
+        def rec(ch):
+            a, b = ch[-1]
+            if b == n: out.append(list(ch)); return
+            for a2 in range(a + 1, b + 1):
+                for b2 in range(b + 1, n + 1): rec(ch + [(a2, b2)])
+        for b in range(1, n + 1): rec([(0, b)])
+        return out
+
+    def ttm(U, L, dt):
+        K = []
+        for N in range(1, len(U)):
+            rest = U[N] - L @ U[N - 1]
+            for mm in range(2, N + 1): rest -= dt ** 2 * K[N - mm] @ U[mm - 1]
+            K.append(rest / dt ** 2)
+        return K
+
+    def chain_core(n, I0, Ik, F, skip_crest_arc=False):
+        """Sum over chains of the dressed influence-function products; returns (crest dressing, rest) if skip_crest_arc."""
+        arcs = [(a, b) for a in range(n + 1) for b in range(a + 1, n + 1)]
+        crest_d = np.zeros((4, 4), complex); rest = np.zeros((4, 4), complex)
+        for ch in chains(n):
+            crest = (ch == [(0, n)])
+            for path in itertools.product(range(4), repeat=n + 1):
+                w = 1.0 + 0j
+                for p in range(n + 1): w *= I0[path[p]]
+                for p in range(n): w *= F[path[p + 1], path[p]]
+                for (a, b) in arcs:
+                    if skip_crest_arc and crest and (a, b) == (0, n): continue
+                    if (a, b) in ch: w *= Ik[b - a][path[b], path[a]] - 1
+                    elif any(c[0] <= a and b <= c[1] for c in ch): w *= Ik[b - a][path[b], path[a]]
+                (crest_d if crest else rest)[path[-1], path[0]] += w
+        return crest_d, rest
+
+    def K_chain(g, dt, n):
+        G = expm(LSp * dt / 2); F = G @ G
+        I0 = I_mat(g, dt, 0); Ik = {k: I_mat(g, dt, k) for k in range(1, n + 1)}
+        if n == 0: return G @ np.diag(I0 - 1) @ G / dt ** 2
+        c, r = chain_core(n, I0, Ik, F)
+        return G @ (c + r) @ G / dt ** 2
+
+    def invert(dt, K):
+        G = expm(LSp * dt / 2); F = G @ G; Gi = np.linalg.inv(G)
+        I0 = np.diag(Gi @ (dt ** 2 * K[0] + F) @ Gi)
+        Irec = {0: I0}
+        for n in range(1, len(K)):
+            core = Gi @ K[n] @ Gi * dt ** 2
+            dress, rest = chain_core(n, I0, Irec, F, skip_crest_arc=True)
+            Irec[n] = 1 + (core - rest) / dress
+        return Irec
+
+    def eta_from_I(I):   # x = i + 2j: (+,-) -> 2, (+,+) -> 0
+        return (-np.log(I[2, 2]) / 4).real + 1j * (np.log(I[2, 0]) / (-4j)).real
+
+    g = g_strong
+    print("Influence functional -> memory kernel (Ivander, Lindoy, Lee 2024), S eigenbasis, g=%.2f, theta=pi/4" % g)
+    print("  (i) Trotterized path sum vs exact pseudomode map:")
+    for dt in (0.2, 0.1, 0.05):
+        ts = np.arange(0, 4 * dt + 1e-9, dt); Pi, _, _ = exact_propagator(ts, g, N=12)
+        errs = [np.abs(U_discrete(g, dt, N) - Rs @ Pi[N] @ Rsi).max() for N in (1, 2, 4)]
+        print("     dt=%.2f  N=1,2,4: %.1e %.1e %.1e" % (dt, *errs))
+    print("  (ii) discrete kernel K_n from EXACT propagators vs continuous K(n dt), tau=1,2 (error O(dt)):")
+    for dt in (0.2, 0.1, 0.05):
+        ts = np.arange(0, 3.0001, dt); Pi, _, Kex = exact_propagator(ts, g, N=12)
+        Kd = ttm([Pi[n] for n in range(len(ts))], expm(L_S * dt), dt)
+        print("     dt=%.2f  " % dt + "  ".join("tau=%.0f: %.2e" % (tau, np.abs(Kd[int(round(tau / dt))] - Kex[int(round(tau / dt))]).max()) for tau in (1.0, 2.0)))
+    dt = 0.1
+    print("  (iii) transfer-tensor recursion vs chain rule, dt=%.1f:" % dt)
+    U = [np.eye(4)] + [U_discrete(g, dt, N) for N in range(1, 5)]
+    Kt = ttm(U, expm(LSp * dt), dt)
+    for n in range(4):
+        print("     n=%d  max|K_ttm - K_chain| = %.1e   (|K_n| = %.3f)" % (n, np.abs(Kt[n] - K_chain(g, dt, n)).max(), np.abs(Kt[n]).max()))
+    print("  (iv) inverse map K -> I (Trotter-consistent data):")
+    Irec = invert(dt, Kt)
+    print("     " + "  ".join("n=%d: %.1e" % (n, np.abs(Irec[n] - I_mat(g, dt, n)).max()) for n in range(4)))
+    e = {n: eta_from_I(Irec[n]) for n in (1, 2)}
+    a = -np.log(e[2] / e[1]) / dt; g2 = e[1] * a ** 2 / (4 * np.sinh(a * dt / 2) ** 2 * np.exp(-a * dt))
+    print("     learned: Omega=%.6f gamma=%.6f g^2=%.6f   (exact %.1f, %.1f, %.2f)" % (a.imag, 2 * a.real, g2.real, Omega, gamma, g ** 2))
+    print("  (v) Hamiltonian learning from the EXACT map (Trotter mismatch), dt=%.1f: Omega, gamma from eta_{1+m}/eta_1" % dt)
+    nmax = 4
+    ts = np.arange(0, (nmax + 1) * dt + 1e-9, dt); Pi, _, _ = exact_propagator(ts, g, N=12)
+    Kx = ttm([Rs @ Pi[n] @ Rsi for n in range(nmax + 2)], expm(LSp * dt), dt)
+    Irec = invert(dt, Kx); e = {n: eta_from_I(Irec[n]) for n in range(1, nmax + 1)}
+    for n in range(1, nmax + 1):
+        print("     eta_%d: relative error %.2e" % (n, abs(e[n] / eta(g, dt, n) - 1)))
+    for mm in range(1, nmax):
+        a = -np.log(e[1 + mm] / e[1]) / (mm * dt)
+        print("     m=%d: Omega=%.4f gamma=%.4f" % (mm, a.imag, 2 * a.real))
+
+
 # ----------------------------------------------------------------------------
 def main():
     ts = np.arange(0, T_MAX + DT / 2, DT)
@@ -436,6 +629,8 @@ def main():
     err = np.max(np.abs(Pi20 - results[g_strong]["Pi"][:200]))
     print("pseudomode truncation check (N=14 vs 20), max |dPi| over t<4: %.2e" % err)
     check_fourth_order()
+    check_rwa_kernel()
+    check_influence_kernel()
 
 
 if __name__ == "__main__":
