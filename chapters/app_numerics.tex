@@ -45,6 +45,13 @@ The nonsecular generator has $\Gc_{xx}=-\Gamma_\varphi$ and $\Gc_{yy}=-\Gamma_\v
 \paragraph{Check of Theorem~\ref{thm:irreducible}.}
 The function \texttt{check\_fourth\_order} evaluates the fourth-order irreducible kernel $K^{(4)}$ as a double time integral of $\Pc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\ee^{\Lc_0\cdot}\Qc\Lc_I\Pc$ in the pseudomode space and compares $K-K^{(2)}$ with $K^{(4)}$ for $g=0.05,0.1,0.2$ (Example~5.1).
 
+\paragraph{Check of Example~5.4.}
+The function \texttt{check\_rwa\_kernel} builds the rotating-wave pseudomode model, $H_I=g(\sigma_+a+\sigma_-a^\dagger)$ with the same $\Omega=\omega_0$ and $\gamma$ (truncation $N=4$ suffices at $T=0$, where at most one excitation is ever present), evaluates $\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ literally, and compares the $ee$ and $eg$ elements with the closed forms \eqref{eq:Kee-exact-t} and \eqref{eq:Keg-exact} at $\tau\omega_0=0,0.5,1,2,4,8$ for $g=0.1,0.3$ (agreement $3\times10^{-17}$), then compares $K_{ee}-K^{(2)}_{ee}$ with the fourth-order term of \cref{eq:Kee-geometric} for $g=0.05,0.1,0.2$.
+
+\paragraph{Check of \cref{sec:ill}.}
+The function \texttt{check\_influence\_kernel} builds the discretized Feynman--Vernon path sum \eqref{eq:ill-U} in the $S$ eigenbasis for the Lorentzian bath ($\eta_n$ from \cref{eq:ill-eta}, $4^N$ paths) and prints: (i) $|U_N-\Pi(N\Delta t)|$ for $\Delta t=0.2,0.1,0.05$; (ii) the transfer tensors \eqref{eq:ill-ttm} computed from the exact $\Pi$ against the continuous kernel $K(n\Delta t)$; (iii) the transfer tensors of the Trotterized $U_N$ against the chain formula \eqref{eq:ill-chain} for $n\le3$; (iv) the inverse map \eqref{eq:ill-inverse}; (v) the Hamiltonian-learning numbers of Example~7.3, with Trotter-consistent and with exact input.
+It runs in a few seconds.
+
 \paragraph{Filter functions.}
 \Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling $\tfrac12\sz\otimes B$) and $g=0.2$, for Ramsey, Hahn and CPMG-4 sequences.
 
