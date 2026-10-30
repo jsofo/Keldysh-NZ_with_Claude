@@ -123,6 +123,14 @@ $K(0)=\Tr_B[\Lc_I\Qc\Lc_I(X\otimes\rhoB)]=\Tr_B[\Lc_I\Lc_I(X\otimes\rhoB)]$ sinc
 Laplace: invert \cref{eq:Dyson}.
 For $\theta=0$, $\hat\Pi_{01}(z)=\int_0^\infty\ee^{-(z+i\omega_0)t-\Gamma(t)}\dd t$, and $\hat K_{01}(z)=z+i\omega_0-1/\hat\Pi_{01}$; expanding $\ee^{-\Gamma}=1-\Gamma+\Gamma^2/2-\dots$ with $\Gamma=O(g^2)$ produces all powers of $g^2$ in $\hat K$: the irreducible crossed and nested diagrams do not cancel.
 
+\paragraph{Exercise~\ref{ex:5-5}.}
+(a) $i\dot c_e=\sum_kg_k\ee^{i(\omega_0-\omega_k)t}c_k$, $i\dot c_k=g_k\ee^{-i(\omega_0-\omega_k)t}c_e$ in the interaction picture; integrate the second with $c_k(0)=0$ and substitute: $f(\tau)=\sum_kg_k^2\ee^{-i(\omega_k-\omega_0)\tau}=C(\tau)\ee^{i\omega_0\tau}$ with the $T=0$ ($\bar n_k=0$) form of \cref{eq:C}.
+(b) $c_e^2=\ee^{-\gamma t/2}\big[\tfrac12(1+\cosh\tfrac{dt}2)+\tfrac{\gamma^2}{2d^2}(\cosh\tfrac{dt}2-1)+\tfrac\gamma d\sinh\tfrac{dt}2\big]$; with $(z+\gamma/2)^2-d^2/4=z^2+\gamma z+4g^2$ the three transforms combine into \cref{eq:Kee-exact}.
+Large $z$: $\widehat{|c_e|^2}=z^{-1}-2g^2z^{-3}+O(z^{-4})$ (no $z^{-2}$ term because $\dot c_e(0)=0$), so $\hat K_{ee}=-2g^2/z+O(z^{-2})$ and $K_{ee}(0)=-2g^2$; the Born value is $-2\Re f(0)=-2g^2$.
+(c) Partial fractions, $\frac{4g^4}{(z+\gamma/2)^2(z+\gamma)}=\frac{8g^4/\gamma}{(z+\gamma/2)^2}-\frac{16g^4/\gamma^2}{z+\gamma/2}+\frac{16g^4/\gamma^2}{z+\gamma}$, give the $K^{(4)}_{ee}$ quoted in Example~5.4; expanding, the $O(\tau)$ terms cancel ($8g^4\tau/\gamma-8g^4\tau/\gamma$) and $K^{(4)}_{ee}=-2g^4\tau^2+O(\tau^3)$.
+(d) $\widehat{|c_e|^2}(z)=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}\hat c_e(s)\,\hat c_e(z-s)\,\dd s$ (for real $c_e$); if $\hat c_e$ is rational the integral is a finite sum of residues and the result is rational, so $\hat K_{ee}$ is rational and $K_{ee}(\tau)$ a finite sum of exponentials.
+For a Lorentzian $J$, $\hat c_e=(z+\gamma/2)/(z^2+\gamma z/2+g^2)$ is rational; for Ohmic or other $J$ with a branch cut, $\hat c_e$ has a cut and the convolution does not close.
+
 \paragraph{Exercise~\ref{ex:6-1}.}
 $\Sigma(t)=\int_0^t\hat G(t,s)\Qc\tilde\Lc_I(s)\Pc\tilde G(s,t)\dd s$ is explicitly $O(\Lc_I)$ and vanishes at $t=0$.
 Expanding $\hat G$, $\tilde G$ and $[1-\Sigma]^{-1}$ and using $\Pc\tilde\Lc_I\Pc=0$ gives \cref{eq:TCL2} at second order and \cref{eq:TCL4} at fourth, where the subtracted terms come from $\Pc\tilde\Lc_I\Sigma^2\Pc$ and from the expansion of $\tilde G(s,t)$ inside $\Sigma$.
@@ -137,6 +145,7 @@ The bracket, written as a time-ordered integral, is $-\int\int\int$ of the produ
 
 \paragraph{Exercise~\ref{ex:6-4}.}
 $\hat\rho_{ee}(z)=\widehat{|c_e|^2}(z)\rho_{ee}(0)$ and $\hat K_{ee}(z)=z-1/\widehat{|c_e|^2}(z)$; the Laplace transform of $|c_e|^2$ is a rational function with poles at $-\gamma/2\pm i|d|/2$ and $-\gamma/2$, so $\hat K$ is analytic to the right of them.
+Explicitly, $\hat K_{ee}$ is \cref{eq:Kee-exact}, with poles at $-\tfrac34\gamma\pm i\nu$.
 The generator's rate $\gamma(t)$ has poles on the real $t$ axis, so its Laplace transform does not exist as an ordinary function.
 
 \paragraph{Exercise~\ref{ex:7-1}.}
@@ -155,6 +164,15 @@ Detailed balance: expand to first order in $Q$, $\int_0^\infty\ee^{-i\varepsilon
 \paragraph{Exercise~\ref{ex:7-4}.}
 (a) $\hat K^s(z)$ for the Ohmic kernel is $\Delta^2\int_0^\infty\ee^{-z\tau}(1+\omega_c^2\tau^2)^{-\alpha}\cos(2\alpha\arctan\omega_c\tau)\,\dd\tau$; for $z\ll\omega_c$ it behaves as $\hat K^s(z)\simeq\Delta^2\,\Gamma(1-2\alpha)\cos(\pi\alpha)\,z^{2\alpha-1}\omega_c^{-2\alpha}$, giving poles of $\hat P$ at $z\sim\Delta_r\,\ee^{\pm i\pi/(2-2\alpha)}$ with $\Delta_r=\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}\times O(1)$; for $\alpha\ge\tfrac12$ the poles are on the negative real axis (incoherent decay)~\cite[Sec.~V]{Leggett1987}.
 (b) See Example~7.2.
+
+\paragraph{Exercise~\ref{ex:7-5}.}
+(a) Three bath points $j,k,n$ and arcs $(jk),(kn),(jn)$.
+$U_3$ carries $I_1^{(jk)}I_1^{(kn)}I_2^{(jn)}$; the cut between $j$ and $k$ (the product $U_1U_2$) sets $I_1^{(jk)},I_2^{(jn)}\to1$ and leaves $I_1^{(kn)}$; the cut between $k$ and $n$ leaves $I_1^{(jk)}$; both cuts leave $1$.
+The alternating sum $I_1I_1I_2-I_1^{(kn)}-I_1^{(jk)}+1=(I_2-1)I_1I_1+(I_1^{(jk)}-1)(I_1^{(kn)}-1)$, which is the bracket of \cref{eq:ill-K12}; the system factors $G,F,I_0$ are common to all four terms.
+(b) Enumerating chains (sequences of arcs with strictly increasing ends, first end $0$, last end $n$, consecutive arcs overlapping or abutting) gives $1,2,5,14,42,132,429$ for $n=1,\dots,7$; the no-cut arc sets number $1,5,49,893$ for $n=1,\dots,4$ (script, function \texttt{check\_influence\_kernel}, and the enumeration in the text).
+For a bijection, record for each position $p=0,\dots,n$ whether it is a left end, a right end, both, or neither, and read the result as a ballot sequence; Ivander \emph{et al.} draw the chain arcs as the arches of a Dyck path.
+(c) For $\theta=0$, $G$ and $F$ are diagonal, $F_{xx}=\ee^{-i\omega_0\Delta t}$ on $x=(+,-)$, and $I_n(x,x)=\ee^{-4\Re\eta_n}$ there, so \cref{eq:ill-K} collapses to the quoted scalar sum with $\tilde I_{|a|}=\ee^{-4\Re\eta_{|a|}}-1$; expanding each $\tilde I$ in powers of $\eta\propto g^2$ gives all orders, consistent with Exercise~\ref{ex:5-4}: the coherence kernel is the no-cut part of $\ee^{-\Gamma}$, not its second-order term.
+(d) With diagonal $F$ the dressing $D_n(x',x)$ in \cref{eq:ill-inverse} vanishes for $x'\ne x$, so only $\tilde I_n(x,x)$, which depends on $\Re\eta_n$ alone, can be divided out; for $\theta\ne0$ the off-diagonal $F_{x'x}$ are nonzero, every element of $\tilde I_n$ is reached, and $\Im\eta_n$ follows from $\tilde I_n((+,-),(+,+))=\ee^{-4i\Im\eta_n}-1$.
 
 \paragraph{Exercise~\ref{ex:8-1}.}
 Apply the identity to $i\mathsf LA$: $\dot A(t)=\ee^{i\mathsf Lt}i\mathsf LA=\ee^{i\mathsf Lt}[\mathsf P+\mathsf Q]i\mathsf LA$; the $\mathsf P$ part is $i\Omega A(t)$, the $\mathsf Q$ part is expanded with the identity into $F(t)$ plus $\int_0^t\ee^{i\mathsf L(t-s)}i\mathsf P\mathsf LF(s)\dd s$, and $i\mathsf P\mathsf LF(s)=A(A,A)^{-1}(A,i\mathsf LF(s))=-A(A,A)^{-1}(i\mathsf LA,F(s))=-AM(s)$ using self-adjointness of $\mathsf L$ and $(A,F)=0$.

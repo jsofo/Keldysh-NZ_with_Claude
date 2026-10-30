@@ -52,6 +52,7 @@ Three statements follow from the structure of the formula.
   \end{equation}
 so that the decay rate measured as a function of $\tau$ is $S(\pi/\tau)$ up to harmonics.
 This is noise spectroscopy by dynamical decoupling~\cite{AlvarezSuter2011,Yuge2011}, realized e.g.\ in~\cite{Bylander2011}; the general transfer-function viewpoint is in~\cite{Paz2017}.
+An alternative that uses no control at all is to invert the free dynamics: from the reduced propagators at a few times one can extract the discrete memory kernel and then the influence functions, i.e.\ $C(t)$ on the time grid, as in \cref{sec:ill}; it recovers the response as well as the noise when $\theta\ne0$, but it needs full process tomography at each time and its cost grows exponentially with the number of kernel orders.
 \item The exponent is a quadratic functional of $y$: this is the statement that the influence functional \eqref{eq:FV} is quadratic in $s^\qu$ for a Gaussian bath.
   For a non-Gaussian bath, higher cumulants add terms of higher order in $y$, and the decoupling sequences no longer act as linear filters.
 \end{itemize}

@@ -20,3 +20,35 @@ Theorem 5.4 at fourth order: exact kernel vs K2 + K4 (trapezoid, n=50)
   g=0.10 tau=2.5  |K-K2|=9.42e-04  |K4|=9.61e-04  |K-K2-K4|=2.47e-05
   g=0.20 tau=1.0  |K-K2|=6.26e-03  |K4|=6.50e-03  |K-K2-K4|=2.33e-04
   g=0.20 tau=2.5  |K-K2|=1.32e-02  |K4|=1.54e-02  |K-K2-K4|=2.15e-03
+Damped Jaynes-Cummings model (RWA, T=0, Lorentzian, resonance): exact NZ kernel vs closed forms
+  g=0.10  max|K_ee - formula| = 3.5e-18   max|K_eg - formula| = 2.9e-18
+  g=0.30  max|K_ee - formula| = 2.8e-17   max|K_eg - formula| = 2.9e-17
+  fourth-order check (population):  K - K2  vs  K4 = (8g^4/gamma) tau e^{-gamma tau/2} - (16g^4/gamma^2)(e^{-gamma tau/2} - e^{-gamma tau})
+    g=0.05  max|K-K2| = 6.01e-05  max|K-K2-K4| = 1.39e-06
+    g=0.10  max|K-K2| = 8.97e-04  max|K-K2-K4| = 8.61e-05
+    g=0.20  max|K-K2| = 1.25e-02  max|K-K2-K4| = 4.90e-03
+Influence functional -> memory kernel (Ivander, Lindoy, Lee 2024), S eigenbasis, g=0.30, theta=pi/4
+  (i) Trotterized path sum vs exact pseudomode map:
+     dt=0.20  N=1,2,4: 8.3e-05 1.6e-04 3.2e-04
+     dt=0.10  N=1,2,4: 1.0e-05 2.1e-05 4.1e-05
+     dt=0.05  N=1,2,4: 1.3e-06 2.6e-06 5.2e-06
+  (ii) discrete kernel K_n from EXACT propagators vs continuous K(n dt), tau=1,2 (error O(dt)):
+     dt=0.20  tau=1: 1.50e-02  tau=2: 7.76e-03
+     dt=0.10  tau=1: 7.51e-03  tau=2: 3.88e-03
+     dt=0.05  tau=1: 3.76e-03  tau=2: 1.94e-03
+  (iii) transfer-tensor recursion vs chain rule, dt=0.1:
+     n=0  max|K_ttm - K_chain| = 8.3e-15   (|K_n| = 0.178)
+     n=1  max|K_ttm - K_chain| = 5.1e-14   (|K_n| = 0.347)
+     n=2  max|K_ttm - K_chain| = 6.5e-14   (|K_n| = 0.328)
+     n=3  max|K_ttm - K_chain| = 6.2e-14   (|K_n| = 0.304)
+  (iv) inverse map K -> I (Trotter-consistent data):
+     n=0: 2.2e-16  n=1: 2.4e-15  n=2: 2.1e-15  n=3: 5.3e-15
+     learned: Omega=1.000000 gamma=0.500000 g^2=0.090000   (exact 1.0, 0.5, 0.09)
+  (v) Hamiltonian learning from the EXACT map (Trotter mismatch), dt=0.1: Omega, gamma from eta_{1+m}/eta_1
+     eta_1: relative error 1.32e-02
+     eta_2: relative error 6.27e-03
+     eta_3: relative error 3.87e-03
+     eta_4: relative error 2.62e-03
+     m=1: Omega=0.9300 gamma=0.5024
+     m=2: Omega=0.9529 gamma=0.5020
+     m=3: Omega=0.9644 gamma=0.5019
