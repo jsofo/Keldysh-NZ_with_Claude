@@ -510,7 +510,88 @@ Both agree at short times by construction; the exact generator develops large ex
 \label{fig:kernels}
 \end{figure}
 
+\subsection{Can the kernel be computed exactly?}
+\label{sec:nz-exact}
+
+The question is natural after Theorem~\ref{thm:irreducible}: the kernel is an explicit object, the sum of all irreducible diagrams, so can that sum be done?
+For the spin-boson model with general $\theta$, $J(\omega)$ and $T$ the answer is no in closed form, yes to machine precision.
+No closed form is known because the system vertices $\tilde S^\qu(t_i)$, $\tilde S^\cl(t_i)$ at different times do not commute unless $\theta=0$, so no cancellation or factorization closes the series; the classic exact results for the model (the Toulouse point $\alpha=\tfrac12$ of the Ohmic case, the scaling limits of Leggett \emph{et al.}~\cite{Leggett1987}) give $\avg{\sz(t)}$ in specific regimes, not the $4\times4$ kernel, and the NIBA of \cref{sec:lec7} is the second-order kernel in the polaron frame, a partial resummation.
+What \emph{is} available is the following.
+
+\paragraph{Exact kernels by computation.}
+Three routes give $K(\tau)$ to controllable accuracy for any $J$.
+(i) \emph{The enlarged-space formula.}
+When the bath is a structured one that admits a finite Markovian embedding, as the Lorentzian bath does through its pseudomode (\cref{sec:lec2}), the total Liouvillian is a matrix and $K(\tau)=\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ is evaluated literally; this is how \cref{fig:kernels} was produced, exact up to the truncation of the oscillator, which is checked by increasing it.
+Multi-Lorentzian $J$ need one pseudomode per pole~\cite{Tamascelli2018}, and a bath with an exponentially decomposable $C(t)$ at any temperature is handled in the same spirit by the hierarchical equations of motion, whose auxiliary density operators span the $\Qc$ space~\cite{Tanimura2020}.
+(ii) \emph{Inversion of the exact map.}
+Exercise~\ref{ex:5-4} gives $\hat K(z)=z-\Lc_S-\hat\Pi(z)^{-1}$, so any numerically exact propagator (from the hierarchical equations, the quasi-adiabatic path integral, multilayer multiconfiguration methods, or Monte Carlo) can be converted into a kernel by solving the Volterra equation $\dot\Pi=\Lc_S\Pi+\int_0^tK(t-s)\Pi(s)\dd s$ for $K$; this is the programme of Shi and Geva~\cite{ShiGeva2003} and of Cohen and Rabani~\cite{CohenRabani2011}, and the transfer-tensor method of Cerrillo and Cao~\cite{CerrilloCao2014} is its discrete-time form.
+The inversion amplifies noise in $\Pi$, which is why stochastic propagators need care, and it is only as exact as the propagator fed in.
+On a time lattice the same inversion can be pushed one step further, from the kernel to the discretized influence functional itself and back, which is the construction of Ivander, Lindoy and Lee~\cite{IvanderLindoyLee2024} presented in \cref{sec:ill}.
+(iii) \emph{Direct summation of the irreducible diagrams.}
+The inchworm Monte Carlo method of Cohen, Gull, Reichman and Millis samples the series of Theorem~\ref{thm:irreducible} itself, with the already-summed low-order diagrams as ``bold'' building blocks that tame the sign problem~\cite{CohenGullReichmanMillis2015,ChenCohenReichman2017}.
+Whichever route is used, remember that $K$ depends on the projector: the kernel of \cref{eq:NZ} is tied to $\Pc=\Tr_B[\,\cdot\,]\otimes\rhoB$ and a factorized initial state, and a different reference state gives a different, equally exact, kernel plus an inhomogeneous term (\cref{sec:nz-inhom}).
+
+\paragraph{Exact kernels in closed form.}
+Two special cases of our model can be done by hand, and both are instructive because the answer is \emph{not} ``the Born kernel''.
+For pure dephasing, $\theta=0$, the coherence sector gives $\hat K_{01}(z)=z+i\omega_0-1/\hat\Pi_{01}(z)$ with $\hat\Pi_{01}$ the Laplace transform of $\ee^{-i\omega_0t-\Gamma(t)}$ (Exercise~\ref{ex:5-4}); this is exact and explicit, but $K_{01}(\tau)$ itself is a closed-form function only when that transform is rational, which it is not for the usual spectral densities, and the comparison of this kernel with the (much simpler) exact TCL generator $-\dot\Gamma(t)$ is the subject of Smirne and Vacchini~\cite{SmirneVacchini2010}.
+The second case is the transverse model, $\theta=\pi/2$, in the rotating-wave approximation at $T=0$, the damped Jaynes--Cummings model of \cref{sec:tcl-singular}, whose exact NZ equation was written by Vacchini and Breuer~\cite{Vacchini2010}.
+
+\begin{exbox}[Example 5.4: the exact kernel of the damped Jaynes--Cummings model]
+With $H_I=\sigma_+B^{(+)}+\sigma_-B^{(-)}$, $B^{(+)}=\sum_kg_kb_k$, and the bath in its vacuum, the total excitation number is conserved and the sector spanned by $\ket{e,0}$ and $\ket{g,1_k}$ closes.
+Writing the state as $c_e(t)\ket{e,0}+\sum_kc_k(t)\ket{g,1_k}$ and eliminating the $c_k$ gives, in the frame rotating at $\omega_0$,
+\begin{equation}
+  \dot c_e(t)=-\int_0^t\!\dd s\,f(t-s)\,c_e(s),\qquad f(\tau)=C(\tau)\,\ee^{i\omega_0\tau},
+  \label{eq:ce-volterra}
+\end{equation}
+with $C$ the $T=0$ bath correlation function of \cref{sec:bath-kernels}~\cite[Sec.~10.1]{BreuerPetruccione}.
+The reduced state is $\rho_{ee}(t)=|c_e(t)|^2\rho_{ee}(0)$, $\rho_{eg}(t)=c_e(t)\rho_{eg}(0)$, $\rho_{gg}=1-\rho_{ee}$, so each element has its own scalar kernel, $\hat K_{eg}(z)=z-1/\hat c_e(z)$ and $\hat K_{ee}(z)=z-1/\widehat{|c_e|^2}(z)$.
+
+\smallskip\noindent\emph{Coherence.}
+Laplace transforming \cref{eq:ce-volterra}, $\hat c_e(z)=[z+\hat f(z)]^{-1}$, hence
+\begin{equation}
+  \hat K_{eg}(z)=-\hat f(z),\qquad K_{eg}(\tau)=-C(\tau)\ee^{i\omega_0\tau}\quad\text{for every }J(\omega):
+  \label{eq:Keg-exact}
+\end{equation}
+the exact kernel of the coherence \emph{is} the Born kernel, to all orders and for any spectral density.
+The reason is visible on the contour: $H_I$ annihilates $\ket{g,0}$, so for $\rho_{eg}=\ket{e,0}\bra{g,0}$ every vertex sits on the ket branch, and on that branch the intermediate state $\ket{g,1_k}$ can only return to $\ket{e,0}$.
+The amplitude $c_e$ is therefore a chain of second-order self-energy insertions, its Dyson series is the geometric resummation of the single bubble $\hat f(z)$, and the NZ kernel of this matrix element is that bubble; every irreducible diagram beyond second order vanishes on it.
+
+\smallskip\noindent\emph{Population.}
+Here $|c_e|^2$ is a product, its transform is a convolution in $z$, and nothing cancels.
+For the Lorentzian bath at resonance, $f(\tau)=g^2\ee^{-\gamma\tau/2}$, \cref{eq:ce-volterra} is $\ddot c_e+\tfrac\gamma2\dot c_e+g^2c_e=0$ with the solution quoted in \cref{sec:tcl-singular}, $c_e(t)=\ee^{-\gamma t/4}[\cosh\tfrac{dt}4+\tfrac\gamma d\sinh\tfrac{dt}4]$, $d=\sqrt{\gamma^2-16g^2}$.
+Squaring, Laplace transforming term by term and simplifying,
+\begin{equation}
+  \widehat{|c_e|^2}(z)=\frac{2z^2+3\gamma z+\gamma^2+4g^2}{(2z+\gamma)(z^2+\gamma z+4g^2)},
+  \qquad
+  \boxed{\;\hat K_{ee}(z)=-\frac{2g^2\,(z+\gamma)}{z^2+\tfrac32\gamma z+\tfrac12\gamma^2+2g^2}\;}
+  \label{eq:Kee-exact}
+\end{equation}
+and, with $\nu=\tfrac14\sqrt{32g^2-\gamma^2}$,
+\begin{equation}
+  K_{ee}(\tau)=-2g^2\,\ee^{-3\gamma\tau/4}\Big[\cos\nu\tau+\frac{\gamma}{4\nu}\sin\nu\tau\Big]
+  \label{eq:Kee-exact-t}
+\end{equation}
+(for $32g^2<\gamma^2$ replace $\cos,\sin,\nu$ by $\cosh,\sinh,|\nu|$).
+Compare with the Born kernel of the same element, $K^{(2)}_{ee}(\tau)=-2g^2\ee^{-\gamma\tau/2}$, i.e.\ $\hat K^{(2)}_{ee}=-2g^2/(z+\gamma/2)$: the two agree at $\tau=0$, as Theorem~\ref{thm:irreducible} demands, but the exact kernel decays faster ($3\gamma/4$ instead of $\gamma/2$) and oscillates at $\nu$, a frequency that depends on the coupling.
+Writing \cref{eq:Kee-exact} as
+\begin{equation}
+  \hat K_{ee}(z)=\frac{\hat K^{(2)}_{ee}(z)}{1+x(z)},\qquad x(z)=\frac{2g^2}{(z+\gamma/2)(z+\gamma)},
+  \label{eq:Kee-geometric}
+\end{equation}
+shows that the irreducible diagrams of the population sector form a single geometric family: the fourth-order term is $-\hat K^{(2)}_{ee}x=4g^4/[(z+\gamma/2)^2(z+\gamma)]$, in the time domain $K^{(4)}_{ee}(\tau)=\tfrac{8g^4}\gamma\,\tau\ee^{-\gamma\tau/2}-\tfrac{16g^4}{\gamma^2}(\ee^{-\gamma\tau/2}-\ee^{-\gamma\tau})$, and so on.
+Both closed forms are checked in the script against the literal $\Pc\Lc_I\ee^{\Qc\Lc\tau}\Qc\Lc_I\Pc$ of the rotating-wave pseudomode model (function \texttt{check\_rwa\_kernel}): the agreement is $10^{-17}$ for $g=0.1$ and $0.3$, and $K_{ee}-K^{(2)}_{ee}-K^{(4)}_{ee}$ scales as $g^6$ ($1.4\times10^{-6}$, $8.6\times10^{-5}$, $4.9\times10^{-3}$ for $g=0.05,0.1,0.2$), \cref{sec:numerics}.
+\end{exbox}
+
+The example also answers a question left open in \cref{sec:tcl-singular}: when $c_e(t)$ crosses zero the TCL generator diverges, but \cref{eq:Kee-exact-t} is a bounded, smooth function of $\tau$ for all couplings, and the NZ equation with this kernel reproduces $|c_e|^2$ through its zeros without incident (Exercise~\ref{ex:6-4}).
+
+\begin{keybox}[Key point 5.1]
+The exact NZ kernel of the spin-boson model has no closed form in general, but it is computable: literally, from a Markovian embedding (pseudomodes, hierarchical equations), by inverting the exact propagator ($\hat K=z-\Lc_S-\hat\Pi^{-1}$), or by Monte Carlo summation of the irreducible diagrams.
+In the two cases that can be done by hand the lesson is the same: the coherence of the rotating-wave model has exactly the Born kernel, its population does not, and the pure-dephasing coherence does not either.
+``Exactly second order'' is a property of a matrix element and a projector, not of a model.
+\end{keybox}
+
 \subsection{Correlated initial states and the inhomogeneity}
+\label{sec:nz-inhom}
 
 If $\rho(0)$ is not factorized, $I(t)$ in \cref{eq:NZ} is nonzero.
 It decays on the bath correlation time if the initial correlations are short-ranged, and it can be absorbed into a modified kernel in some cases.
@@ -540,6 +621,10 @@ Then take the nonsecular Redfield generator for $\theta=\pi/2$ and find an initi
 Prove $K(0)=K^{(2)}(0)$ directly from \cref{eq:NZ}.
 Then show that in Laplace space $\hat K(z)=z-\Lc_S-\hat\Pi(z)^{-1}$, so that the exact kernel can be \emph{extracted} from the exact map (this is the route of Shi and Geva~\cite{ShiGeva2003} and of Cohen and Rabani~\cite{CohenRabani2011}).
 Use it to show that for pure dephasing ($\theta=0$) the coherence kernel $\hat K_{01}(z)$ is an infinite series in $g^2$ even though the exact solution \eqref{eq:dephasing-exact} is ``second order'' in a different sense.
+\end{exercise}
+
+\begin{exercise}\label{ex:5-5}
+For the damped Jaynes--Cummings model of Example~5.4: (a) derive \cref{eq:ce-volterra} by eliminating the one-photon amplitudes, and identify $f(\tau)$ with the $T=0$ correlation function of \cref{eq:C}; (b) obtain \cref{eq:Kee-exact} from $c_e(t)$ and verify $K_{ee}(0)=-2g^2=K^{(2)}_{ee}(0)$ from the large-$z$ expansion; (c) invert the fourth-order term of \cref{eq:Kee-geometric} to the time domain and check that it vanishes as $\tau^2$ at small $\tau$, as a fourth-order kernel with two interior integrations must; (d) for a general $J(\omega)$, write $\widehat{|c_e|^2}(z)$ as a Bromwich convolution of $\hat c_e$ with itself and explain why the population kernel is closed-form only when $\hat c_e$ is rational.
 \end{exercise}
 
 \clearpage
