@@ -127,6 +127,140 @@ Conversely, the expansion in $g$ cannot describe the strong-coupling regime wher
 Each projector has its domain.
 \end{exbox}
 
+\subsection{From the influence functional to the memory kernel: the construction of Ivander, Lindoy and Lee}
+\label{sec:ill}
+
+Theorem~\ref{thm:irreducible} expresses the NZ kernel as the sum of irreducible diagrams, with the bath lines written out one by one.
+The influence functional \eqref{eq:FV} keeps the same lines exponentiated.
+It is natural to ask for the kernel directly in terms of $\ee^{\Phi}$, and the question has a practical side: numerically exact path-integral methods (the quasi-adiabatic propagator path integral of Makri and Makarov~\cite{MakriMakarov1995} and its descendants, the small-matrix path integral~\cite{Makri2020}, tensor-network contractions of the influence functional) all work with a time-discretized $\ee^\Phi$, and a generalized master equation needs $K$.
+Ivander, Lindoy and Lee~\cite{IvanderLindoyLee2024} answered it for a discretized path integral: they wrote the discrete-time kernel $K_n$ as an explicit polynomial in the ``influence functions'' $I_k$ into which $\ee^\Phi$ factorizes, organized the terms by Dyck paths, and inverted the relation, so that the $I_k$, and from them the bath correlation function and $J(\omega)$, can be read off from the reduced dynamics.
+Their ``Class 1'', a single coupling operator $S$ per bath, is exactly our model in the $S$ eigenbasis.
+This subsection presents the construction in our notation and proves it from Lemma~\ref{lem:incl-excl}, which makes it the discrete-time version of Theorem~\ref{thm:irreducible}; a numerical check and a Hamiltonian-learning example on the Lorentzian bath follow.
+
+\subsubsection{The discretized path integral}
+
+Work in the eigenbasis of $S$ (the Leggett form \eqref{eq:leggett-form}, $S=\sz'$), with the Liouville index $x=(s^+,s^-)\in\{\pm1\}^2$ labelling the four elements $\ket{s^+}\bra{s^-}$.
+Split each step of length $\Delta t$ symmetrically, $\ee^{-iH\Delta t}\simeq\ee^{-iH_S\Delta t/2}\ee^{-i(H_B+S B)\Delta t}\ee^{-iH_S\Delta t/2}$, with error $O(\Delta t^3)$ per step.
+The middle factor is diagonal in the $S$ eigenbasis, so on a path the system variables are piecewise constant, $s^\pm(t)=s^\pm_k$ on the $k$-th cell, and the bath is a set of oscillators driven by the c-number force $s_k$.
+Tracing it out gives \cref{eq:FV} evaluated on piecewise-constant paths, which is a double sum over cells:
+\begin{equation}
+  \ee^{\Phi}=\prod_{k=1}^{N}I_0(x_k)\prod_{k>k'}I_{k-k'}(x_k,x_{k'}),\qquad
+  I_n(x',x)=\exp\!\big[-(s'^+-s'^-)\big(\eta_n\,s^+-\eta_n^*\,s^-\big)\big],
+  \label{eq:ill-I}
+\end{equation}
+where $x'$ is the later cell, $\eta_n=\int_{\text{cell }k}\!\dd t\int_{\text{cell }k-n}\!\dd t'\,C(t-t')$ for $n\ge1$ and $\eta_0=\int_{\text{cell}}\dd t\int_{\text{cell},\,t'<t}\dd t'\,C(t-t')$ for the self-interaction of one cell; stationarity of the bath makes $\eta$ depend on the cell separation only.
+For the Lorentzian bath at $T=0$, $C(t)=g^2\ee^{-at}$ with $a=i\Omega+\gamma/2$, the integrals are elementary,
+\begin{equation}
+  \eta_n=\frac{4g^2\sinh^2(a\Delta t/2)}{a^2}\,\ee^{-an\Delta t}\ (n\ge1),\qquad
+  \eta_0=\frac{g^2}{a}\Big[\Delta t-\frac{1-\ee^{-a\Delta t}}{a}\Big].
+  \label{eq:ill-eta}
+\end{equation}
+The system enters through the half-step propagator $G=\ee^{\Lc_S\Delta t/2}$, a $4\times4$ matrix in the $x$ basis, and $F=G^2$; the reduced propagator after $N$ steps is the contraction
+\begin{equation}
+  U_N=G\,\Big[\sum_{x_1\dots x_N}\prod_{k}I_0(x_k)\prod_{k=1}^{N-1}F_{x_{k+1}x_k}\prod_{k>k'}I_{k-k'}(x_k,x_{k'})\Big]\,G,
+  \label{eq:ill-U}
+\end{equation}
+with the outer $G$'s attached to the initial and final indices.
+Because the half steps sit at the ends, every object in \cref{eq:ill-U} is translation invariant along the path; this is the point of the symmetric ordering, and it is the convention that makes the kernel below a function of a single time difference.
+With $4^N$ paths the sum is a toy for $N\lesssim8$, which is all we need.
+For $g=0.3$, $\theta=\pi/4$ the script finds $|U_N-\Pi(N\Delta t)|=8\times10^{-5},\ 1\times10^{-5},\ 1.3\times10^{-6}$ at $N=1$ for $\Delta t=0.2,0.1,0.05$, the expected $O(\Delta t^3)$ per step, with $\Pi$ the exact pseudomode map rotated to the $S$ basis.
+
+\subsubsection{The discrete NZ equation and the transfer tensors}
+
+Define the discrete kernels $K_n$ by the discrete-time Nakajima--Zwanzig equation
+\begin{equation}
+  \rhoS(t_N)=F\,\rhoS(t_{N-1})+\Delta t^2\sum_{m=1}^{N}K_{N-m}\,\rhoS(t_{m-1}),\qquad
+  U_N=F\,U_{N-1}+\Delta t^2\sum_{m=1}^{N}K_{N-m}\,U_{m-1},
+  \label{eq:ill-NZ}
+\end{equation}
+which is the rectangle-rule discretization of \cref{eq:NZ} with $F=\ee^{\Lc_S\Delta t}$ as the free step (Ivander \emph{et al.} use $1-i\Lc_S\Delta t$, the same to the order kept).
+Solving \cref{eq:ill-NZ} upward in $N$ gives
+\begin{equation}
+  K_0=\frac{U_1-F}{\Delta t^2},\qquad
+  K_1=\frac{U_2-U_1U_1}{\Delta t^2},\qquad
+  K_2=\frac{U_3-U_2U_1-U_1U_2+U_1U_1U_1}{\Delta t^2},\qquad\dots
+  \label{eq:ill-ttm}
+\end{equation}
+These are the transfer tensors of Cerrillo and Cao~\cite{CerrilloCao2014}, and the pattern is Lemma~\ref{lem:incl-excl} once more: $\Delta t^2K_n$ is the alternating sum, over all subsets $\mathcal C$ of the $n$ interior time points, of the product of propagators cut at $\mathcal C$, $\Delta t^2K_n=\sum_{\mathcal C}(-1)^{|\mathcal C|}U_{\ell_1}U_{\ell_2}\cdots$ with $\ell_i$ the lengths of the segments into which $\mathcal C$ divides $[0,n+1]$.
+It is the discrete form of $\hat K(z)=z-\Lc_S-\hat\Pi(z)^{-1}$ (Exercise~\ref{ex:5-4}), and like it, it extracts a kernel from \emph{any} propagator; fed with the exact $\Pi(n\Delta t)$ instead of $U_n$, it returns $K_n=K(n\Delta t)+O(\Delta t)$ (the script finds errors $1.5\times10^{-2},\,7.5\times10^{-3},\,3.8\times10^{-3}$ at $\tau=1$ for $\Delta t=0.2,0.1,0.05$, against $|K|\approx0.07$).
+
+\subsubsection{The kernel in terms of the influence functions}
+
+Insert \cref{eq:ill-U} into \cref{eq:ill-ttm}.
+A product $U_aU_b$ is the same path sum as $U_{a+b}$, with $GG=F$ at the junction and the $I_0$'s unchanged, except that every $I_{k-k'}$ whose two cells lie on opposite sides of the junction is replaced by $1$.
+Hence cutting at a set $\mathcal C$ of interior points means: set to $1$ every ``arc'' $(k',k)$ that spans a cut.
+Now expand each arc factor as $I=1+\tilde I$, $\tilde I\equiv I-1$, so that the full product becomes a sum over subsets $A$ of arcs of $\prod_{(k',k)\in A}\tilde I_{k-k'}(x_k,x_{k'})$.
+A given $A$ survives the cut at $\mathcal C$ iff no arc of $A$ spans a point of $\mathcal C$, so the alternating sum over $\mathcal C$ is, by Lemma~\ref{lem:incl-excl}, the sum over those $A$ for which \emph{no} cut is possible, i.e.\ every one of the $n$ gaps is spanned by at least one arc of $A$:
+\begin{equation}
+  \boxed{\;K_n=\frac1{\Delta t^2}\,G\Big[\sum_{x_0\dots x_n}\prod_{k=0}^{n}I_0(x_k)\prod_{k=0}^{n-1}F_{x_{k+1}x_k}\!\!\sum_{A\ \text{no cut}}\ \prod_{(k',k)\in A}\tilde I_{k-k'}(x_k,x_{k'})\Big]G\;}
+  \label{eq:ill-K}
+\end{equation}
+for $n\ge1$, and $K_0=G\,\mathrm{diag}(\tilde I_0)\,G/\Delta t^2$.
+This is Theorem~\ref{thm:irreducible} on the lattice: with $\ell$ the sum of the lines joining cells $k'$ and $k$, $\tilde I_{k-k'}=\ee^{-\ell}-1$ is ``at least one line on this arc'', and ``no cut'' is irreducibility.
+The number of no-cut arc sets grows fast ($5,\,49,\,893,\,30\,649$ for $n=2,3,4,5$), but they organize into far fewer terms.
+For a no-cut set $A$ let $\mathcal C(A)$ be its maximal arcs, those not contained in another arc of $A$.
+Ordered by their left ends they form a \emph{chain}: left and right ends both strictly increasing, the first starting at $0$, the last ending at $n$, and consecutive arcs overlapping or abutting (otherwise a gap would be uncovered).
+Every other arc of $A$ lies inside some arc of $\mathcal C(A)$.
+Summing over all $A$ with the same chain $\mathcal C$ therefore gives $\prod_{c\in\mathcal C}\tilde I_c$ times, for every arc nested inside a chain arc, the free factor $(1+\tilde I)=I$, and nothing for the remaining arcs:
+\begin{equation}
+  K_n=\frac1{\Delta t^2}\,G\Big[\sum_{x}\prod I_0\prod F\sum_{\mathcal C\ \text{chain}}\ \prod_{c\in\mathcal C}\tilde I_c\prod_{b\subset\text{some }c\in\mathcal C,\ b\notin\mathcal C}I_b\Big]G .
+  \label{eq:ill-chain}
+\end{equation}
+The chains of $n$ gaps are counted by the Catalan numbers, $1,2,5,14,42,132,\dots$ (Exercise~\ref{ex:7-5}), and they are in bijection with the Dyck paths of semilength $n$ by which Ivander \emph{et al.} enumerate the terms; the Catalan count is their observation that $K_n$ has $C_n$ terms.
+Written out,
+\begin{align}
+  \Delta t^2K_1&=G\,\big[I_0F\tilde I_1I_0\big]\,G,\notag\\
+  \Delta t^2K_2&=G\,\big[I_0FI_0FI_0\,\big(\tilde I_{2}^{(02)}I_1^{(01)}I_1^{(12)}+\tilde I_1^{(01)}\tilde I_1^{(12)}\big)\big]\,G,
+  \label{eq:ill-K12}\\
+  \Delta t^2K_3&=G\,\big[I_0FI_0FI_0FI_0\,\big(\tilde I_3^{(03)}I_2^{(02)}I_2^{(13)}I_1^{(01)}I_1^{(12)}I_1^{(23)}
+  +\tilde I_2^{(02)}\tilde I_2^{(13)}I_1^{(01)}I_1^{(12)}I_1^{(23)}\notag\\
+  &\qquad+\tilde I_1^{(01)}\tilde I_2^{(13)}I_1^{(12)}I_1^{(23)}+\tilde I_2^{(02)}\tilde I_1^{(23)}I_1^{(01)}I_1^{(12)}+\tilde I_1^{(01)}\tilde I_1^{(12)}\tilde I_1^{(23)}\big)\big]\,G,\notag
+\end{align}
+where the superscript names the arc and all factors are evaluated on the summed path indices.
+The first term of each $K_n$, the single arc $(0,n)$ dressed with every shorter $I$, is what Ivander \emph{et al.} call the crest term; it carries the longest-range line, and it dominates when $\tilde I_k$ decays fast with $k$ (their Ohmic examples), while the last term, $\tilde I_1^{\,n}$, is the only one that survives if the influence functions are truncated at one step, which is how the quasi-adiabatic path integral with memory length one is embedded in the exact kernel.
+The script evaluates \cref{eq:ill-chain} for $n\le3$ and compares with \cref{eq:ill-ttm}; they agree to $6\times10^{-14}$, which is the identity \eqref{eq:ill-K} checked with non-commuting $G$'s in place.
+
+\subsubsection{The inverse map, and a degeneracy}
+
+Equation \eqref{eq:ill-chain} is triangular: $K_n$ contains $I_n$ only through the crest term, and there only as the single factor $\tilde I_n(x_n,x_0)$ multiplying a dressing $D_n(x_n,x_0)$ built from $I_0,\dots,I_{n-1}$ and the $F$'s.
+So, recursively,
+\begin{equation}
+  I_0(x)=\big[G^{-1}(\Delta t^2K_0+F)G^{-1}\big]_{xx},\qquad
+  \tilde I_n(x',x)=\frac{\big[G^{-1}\Delta t^2K_nG^{-1}\big]_{x'x}-\big[\text{non-crest terms}\big]_{x'x}}{D_n(x',x)},
+  \label{eq:ill-inverse}
+\end{equation}
+with elementwise division, e.g.\ $\tilde I_1(x',x)=[G^{-1}\Delta t^2K_1G^{-1}]_{x'x}/[I_0(x')F_{x'x}I_0(x)]$.
+This is the map $\rho\to U\to K\to I$ of Ivander \emph{et al.}; it is exact for data generated by the same discretization, and the script recovers $I_0,\dots,I_3$ from the transfer tensors of the Trotterized $U_N$ to $5\times10^{-15}$.
+The division fails where $D_n(x',x)=0$.
+For pure dephasing, $H_S$ is diagonal in the $S$ basis, $G$ and $F$ are diagonal, the path indices are frozen, and $D_n$ is diagonal in $(x',x)$: only $\tilde I_n(x,x)$ can be recovered, which for $x=(+,-)$ is $\ee^{-4\Re\eta_n}-1$, the noise part.
+The response part $\Im\eta_n$ sits in the off-diagonal elements and is invisible, in agreement with \cref{sec:lec10}: a longitudinal sensor measures $S(\omega)$ and nothing of $\chi$.
+Ivander \emph{et al.} note the same degeneracy (``the map is no longer bijective'') and that $J(\omega)$ is still recoverable from the diagonal elements by an inverse cosine transform, which is the statement that $S(\omega)$ determines $J$ at known temperature.
+
+\begin{exbox}[Example 7.3: learning the Lorentzian bath from the reduced dynamics]
+Suppose we are given the reduced propagators $U_n$ of the qubit (process tomography at $n\Delta t$) and $H_S$, but not the bath.
+The chain $U\to K\to I\to\eta$ gives $\eta_1,\eta_2,\dots$, and \cref{eq:ill-eta} shows that two of them fix the Lorentzian: $a=i\Omega+\gamma/2=-\ln(\eta_2/\eta_1)/\Delta t$, then $g^2$ from $|\eta_1|$.
+With Trotter-consistent data ($U_n$ from \cref{eq:ill-U}, $\Delta t=0.1$) the script returns $\Omega=1.000000$, $\gamma=0.500000$, $g^2=0.090000$: the map is an identity.
+With the \emph{exact} $\Pi(n\Delta t)$ as input the picture changes: the recovered $\eta_n$ carry the Trotter mismatch, a relative error $1.3\times10^{-2},\,6.3\times10^{-3},\,3.9\times10^{-3},\,2.6\times10^{-3}$ for $n=1,\dots,4$, almost entirely in the phase (the response part, which the symmetric split places half a cell off), and the exponent extracted from consecutive cells amplifies it by $1/\Delta t$: $\gamma$ comes out right ($0.5024$) but $\Omega=0.930$.
+Using a longer baseline, $a=-\ln(\eta_{1+m}/\eta_1)/(m\Delta t)$, the bias falls as $1/m$: $\Omega=0.930,\,0.953,\,0.964$ for $m=1,2,3$.
+The lesson is the one Ivander \emph{et al.} draw for their Ohmic and sub-Ohmic examples: the inversion is exact, but the precision of a learned $J(\omega)$ is set by the highest kernel order one can afford, and the cost of $K_n$ grows as $4^{n}$ (in general $d^{2n}$) without further approximation.
+\end{exbox}
+
+\subsubsection{Assessment}
+
+What the construction adds to Lectures 5 and 7 is the explicit algebra: Theorem~\ref{thm:irreducible} and the transfer-tensor formula both say ``the kernel is the no-cut part of the propagator'', but \cref{eq:ill-chain} says it in the variables a path-integral code actually stores, and it is invertible.
+Three qualifications are in order.
+First, the kernel is tied to the discretization: a different Trotter ordering changes $K_n$ at $O(\Delta t)$, and the authors' choice is the one that keeps $K_n$ a function of $n$ alone (for a driven system they factor the two-time kernel into a time-dependent system tensor and a time-independent influence tensor).
+That the inversion is exact only for data of the same discretization is the practical limitation seen in Example~7.3.
+Second, priority: the relation between transfer tensors and influence functions is close to the small-matrix path integral of Makri~\cite{Makri2020}, and a Comment by Makri \emph{et al.}~\cite{MakriComment2024} with a Reply~\cite{IvanderReply2024} dispute whether the kernel--influence-function relation, the endpoint conventions and the Dyck-path bookkeeping were new; the reader can form an opinion from \cref{eq:ill-K}, which is the content of both papers in one line, and from Lemma~\ref{lem:incl-excl}, which is the proof.
+Third, scope: \cref{eq:ill-I} needs a Gaussian bath and a single coupling operator per bath (their Class 1); for several non-commuting couplings or a shared bath (Classes 2 and 3) the influence functional no longer factorizes over pairs of cells in one basis, and the authors give generalizations, while for non-diagonalizable couplings (Class 4, the Anderson impurity) there is no basis in which the coupling is a c-number along the path, and the authors use a different bookkeeping that we do not follow here.
+Everything in this subsection is for the single coupling $S$ of \cref{eq:model-intro}, which is Class 1 for any $\theta$.
+
+\begin{keybox}[Key point 7.2]
+On a time lattice the NZ kernel is the no-cut part of the discretized influence functional: $K_n$ is the sum over sets of arcs covering all $n$ gaps of products of $\tilde I=I-1$, dressed with the free propagators (\cref{eq:ill-K}), which regroups into the Catalan-many chain (Dyck-path) terms of \cref{eq:ill-chain}.
+The relation is triangular, hence invertible: the influence functions, and with them $C(t)$ on the grid, follow from the reduced dynamics.
+It is exact for the discretization it is derived in, blind to the response part under pure dephasing, and limited in practice by the exponential cost of high kernel orders.
+\end{keybox}
+
 \subsection{What the Keldysh field theory adds}
 
 Reading \cref{eq:NIBA} from the Keldysh side: $K^s$ is built from the real part of the dressed propagator $\ee^{-Q}$ (the Keldysh component), $K^a$ from the imaginary part (the retarded component).
@@ -152,6 +286,13 @@ Check the sign of $Q_1$ by verifying the detailed-balance relation of Example~7.
 
 \begin{exercise}\label{ex:7-4}
 Solve \cref{eq:NIBA} in Laplace space, $\hat P(z)=[P(0)-\hat K^a(z)/z]/[z+\hat K^s(z)]$, and analyze (a) $\varepsilon=0$, $J$ Ohmic at $T=0$, where $Q_2=\alpha\ln(1+\omega_c^2\tau^2)$, $Q_1=2\alpha\arctan\omega_c\tau$ and $K^s(\tau)=\Delta^2(1+\omega_c^2\tau^2)^{-\alpha}\cos[2\alpha\arctan\omega_c\tau]$ in Leggett's normalization (replace $\alpha\to4\alpha$ for ours): find the renormalized tunnelling frequency $\Delta_r\propto\Delta(\Delta/\omega_c)^{\alpha/(1-\alpha)}$ and show that the dynamics is incoherent for $\alpha\ge\tfrac12$; (b) the weak-coupling biased case of Example~7.2.
+\end{exercise}
+
+\begin{exercise}\label{ex:7-5}
+(a) Derive the $K_2$ line of \cref{eq:ill-K12} from \cref{eq:ill-ttm} by the cut-and-expand argument, keeping track of which arcs are set to $1$ by each cut.
+(b) Verify by enumeration (a ten-line program) that the number of chains of $n$ gaps is $c_n=1,2,5,14,42,132$ for $n=1,\dots,6$, the Catalan numbers, and count the no-cut arc sets for $n\le4$; then find a bijection between chains and Dyck paths of semilength $n$, the bookkeeping Ivander \emph{et al.} use.
+(c) For pure dephasing ($\theta=0$) write $K_n$ from \cref{eq:ill-K} on the coherence $x=(+,-)$ and show that $\Delta t^2K_n=\ee^{-i\omega_0(n+1)\Delta t}\sum_{A\ \text{no cut}}\prod_{a\in A}(\ee^{-4\Re\eta_{|a|}}-1)$ up to the self-interaction factors; compare with the Laplace-domain statement of Exercise~\ref{ex:5-4} that the coherence kernel is an infinite series in $g^2$.
+(d) Explain why the inverse map is blind to $\Im\eta_n$ in that case, and why it is not for $\theta\ne0$.
 \end{exercise}
 
 \clearpage
