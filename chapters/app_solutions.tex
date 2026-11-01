@@ -137,7 +137,8 @@ Expanding $\hat G$, $\tilde G$ and $[1-\Sigma]^{-1}$ and using $\Pc\tilde\Lc_I\P
 Odd orders have an odd number of $B$'s.
 
 \paragraph{Exercise~\ref{ex:6-2}.}
-$\int_0^tS(\tau)\dd\tau=g^2\,\Re\big[(1-\ee^{-(\gamma/2-i\Omega)t})/(\gamma/2-i\Omega)\big]$; negative windows exist when $\Omega>\gamma/2$, the first around $\Omega t\in(\pi,2\pi)$ for small $\gamma/\Omega$.
+$\int_0^tS(\tau)\dd\tau=g^2\,\Re\big[(1-\ee^{-(\gamma/2-i\Omega)t})/(\gamma/2-i\Omega)\big]$, which is \cref{eq:rate-rwa} with $\delta\to\Omega$: negative windows exist iff $\Omega>1.82\,\gamma$ (\cref{eq:memory-threshold}), the first centred at $\Omega t=3\pi/2$, with depth \eqref{eq:dip-depth}; for the running example $\Omega/\gamma=2$ gives a first dip $23\%$ below zero relative to the Markov value.
+$\Gamma_1(t)$ at resonance is monotonic (the integrand $\tfrac{g^2}{2}\ee^{-\gamma\tau/2}[1+\cos2\Omega\tau]$ is nonnegative).
 
 \paragraph{Exercise~\ref{ex:6-3}.}
 With $\Pi^{(2)}(t)=\int_0^t\dd t_1\int_0^{t_1}\dd t_2\,\Pi_0(t-t_1)K^{(2)}(t_1-t_2)\Pi_0(t_2)$ and $\Pi^{-1}=\Pi_0^{-1}-\Pi_0^{-1}\Pi^{(2)}\Pi_0^{-1}+\dots$, the fourth-order term of \cref{eq:TCLNZ} is $\int K^{(4)}(t-s)\Pi_0(s)\Pi_0(t)^{-1}+\int K^{(2)}(t-s)[\Pi^{(2)}(s)\Pi_0(t)^{-1}-\Pi_0(s)\Pi_0(t)^{-1}\Pi^{(2)}(t)\Pi_0(t)^{-1}]$.
@@ -147,6 +148,14 @@ The bracket, written as a time-ordered integral, is $-\int\int\int$ of the produ
 $\hat\rho_{ee}(z)=\widehat{|c_e|^2}(z)\rho_{ee}(0)$ and $\hat K_{ee}(z)=z-1/\widehat{|c_e|^2}(z)$; the Laplace transform of $|c_e|^2$ is a rational function with poles at $-\gamma/2\pm i|d|/2$ and $-\gamma/2$, so $\hat K$ is analytic to the right of them.
 Explicitly, $\hat K_{ee}$ is \cref{eq:Kee-exact}, with poles at $-\tfrac34\gamma\pm i\nu$.
 The generator's rate $\gamma(t)$ has poles on the real $t$ axis, so its Laplace transform does not exist as an ordinary function.
+
+\paragraph{Exercise~\ref{ex:6-5}.}
+(a) $\cos\Omega\tau\cos\omega_0\tau=\tfrac12[\cos\delta\tau+\cos(\omega_0+\Omega)\tau]$ and $\int_0^t\ee^{-\gamma\tau/2}\cos\nu\tau\,\dd\tau=\Re[(1-\ee^{-(\gamma/2-i\nu)t})/(\gamma/2-i\nu)]$.
+Writing $(\gamma/2)\cos\delta t-\delta\sin\delta t=R\cos(\delta t+\varphi)$ gives \cref{eq:rate-rwa}; $\dd/\dd t$ of $\ee^{-\gamma t/2}\cos(\delta t+\varphi)$ vanishes where $\tan(\delta t+\varphi)=-\gamma/2\delta=-\cot\varphi$, i.e.\ $\delta t+\varphi=2\pi n-\pi/2+\varphi$, so $\delta t=3\pi/2+2\pi(n-1)$ for the minima (and $\pi/2+2\pi n$ for the maxima).
+(b) At $\delta t=3\pi/2$, $\cos(\delta t+\varphi)=\cos(2\pi-\arctan\kappa)=(1+\kappa^2)^{-1/2}$ and $R=(\gamma/2)\sqrt{1+\kappa^2}/\kappa$, so $R\ee^{-\gamma t_*/2}\cos(\cdot)=(\gamma/2)\ee^{-3\pi\kappa/2}/\kappa$, which gives \cref{eq:dip-depth}; it is negative iff $\kappa\ee^{3\pi\kappa/2}<1$, i.e.\ $\tfrac{3\pi}{2}\kappa\,\ee^{3\pi\kappa/2}<\tfrac{3\pi}{2}$, $\kappa<\tfrac{2}{3\pi}W(3\pi/2)$; $W(4.712)=1.293$, $\kappa_c=0.2744$, $\delta_c/\gamma=1/2\kappa_c=1.822$.
+(c) $P=\sz\otimes(-1)^{a^\dagger a}$ commutes with $\sz$, with $a^\dagger a$, and with $\sx(a+a^\dagger)$ (both factors anticommute with their parts of $P$), and the dissipator $\gamma\Dc[a]$ preserves parity sectors of the density matrix; hence $\Pi(t)$ maps the even block $\{\ket e\bra e,\ket g\bra g\}$ into itself and the generator has the same block structure.
+With $\dot p_e=-\Gamma_\downarrow p_e+\Gamma_\uparrow(1-p_e)$ for both initial states, $\Delta=p_e^{(1)}-p_e^{(2)}$ obeys $\dot\Delta=-(\Gamma_\downarrow+\Gamma_\uparrow)\Delta=-\Gamma_1\Delta$, and the trace distance of two diagonal qubit states is $|\Delta|$.
+(d) The counter-rotating term adds $2\sin^2\theta g^2\Re[(1-\ee^{-bt})/b]$ with $b=\gamma/2+i(\omega_0+\Omega)$; for $\delta=1.5$, $\Omega=1$ it deepens the first dip from $-1.74$ (\cref{eq:dip-depth} with $\kappa=1/6$) to $-2.31$ Markov units (the script's closed-form curve), against $-2.36$ from the exact generator; the exact threshold at $g=0.1$ lies between $\delta/\gamma=1.5$ and $2$, slightly below $1.82$ (the $O(g^2)$ correction to the rate is of the same sign as the dip).
 
 \paragraph{Exercise~\ref{ex:7-1}.}
 Substitute $s^\pm=s^\cl\pm\tfrac12s^\qu$ and $C=S-\tfrac i2\chi$: $(s^+_1-s^-_1)[Cs^+_2-C^*s^-_2]=s^\qu_1[S(s^+_2-s^-_2)-\tfrac i2\chi(s^+_2+s^-_2)]=s^\qu_1[Ss^\qu_2-i\chi s^\cl_2]$.
