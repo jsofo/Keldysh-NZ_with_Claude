@@ -55,6 +55,7 @@ It runs in a few seconds.
 \paragraph{Memory at weak coupling (\cref{fig:memory}).}
 The function \texttt{fig\_memory} builds the pseudomode model for a transverse qubit ($\theta=\pi/2$) with splitting $\omega_0=\Omega+\delta$, computes the exact generator $\Gc(t)=\dot\Pi\Pi^{-1}-\Lc_S$ and its element $\Gamma_1(t)=-\Gc_{zz}(t)$, the excited-state population, the TCL2 generator with the same $\Lc_S$, and the closed forms \eqref{eq:rate-detuned} and \eqref{eq:rate-rwa}; the right panel plots the depth of the first dip of the rate (its minimum after its first maximum) relative to the Markov value, for the closed forms and for the exact generator at $\delta/\gamma=1,1.5,2,3,4$ ($N=10$ oscillator levels, $g=0.1$).
 Printed: the minimum rate and its time ($\delta t_*=1.49\pi$), the exact--TCL2 difference ($5\times10^{-4}$ against rates of order $10^{-2}$), and the largest re-growth rate of the population.
+Besides \texttt{fig\_memory.pdf}, the script writes the three panels as text, \texttt{fig\_memory\_a,b,c.pgf} (matplotlib's \texttt{pgf} backend), which the source includes with \verb|\input| so that the figure is versioned together with the text.
 
 \paragraph{Filter functions.}
 \Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling $\tfrac12\sz\otimes B$) and $g=0.2$, for Ramsey, Hahn and CPMG-4 sequences.
