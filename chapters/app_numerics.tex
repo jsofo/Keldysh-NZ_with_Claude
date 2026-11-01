@@ -52,6 +52,10 @@ The function \texttt{check\_rwa\_kernel} builds the rotating-wave pseudomode mod
 The function \texttt{check\_influence\_kernel} builds the discretized Feynman--Vernon path sum \eqref{eq:ill-U} in the $S$ eigenbasis for the Lorentzian bath ($\eta_n$ from \cref{eq:ill-eta}, $4^N$ paths) and prints: (i) $|U_N-\Pi(N\Delta t)|$ for $\Delta t=0.2,0.1,0.05$; (ii) the transfer tensors \eqref{eq:ill-ttm} computed from the exact $\Pi$ against the continuous kernel $K(n\Delta t)$; (iii) the transfer tensors of the Trotterized $U_N$ against the chain formula \eqref{eq:ill-chain} for $n\le3$; (iv) the inverse map \eqref{eq:ill-inverse}; (v) the Hamiltonian-learning numbers of Example~7.3, with Trotter-consistent and with exact input.
 It runs in a few seconds.
 
+\paragraph{Memory at weak coupling (\cref{fig:memory}).}
+The function \texttt{fig\_memory} builds the pseudomode model for a transverse qubit ($\theta=\pi/2$) with splitting $\omega_0=\Omega+\delta$, computes the exact generator $\Gc(t)=\dot\Pi\Pi^{-1}-\Lc_S$ and its element $\Gamma_1(t)=-\Gc_{zz}(t)$, the excited-state population, the TCL2 generator with the same $\Lc_S$, and the closed forms \eqref{eq:rate-detuned} and \eqref{eq:rate-rwa}; the right panel plots the depth of the first dip of the rate (its minimum after its first maximum) relative to the Markov value, for the closed forms and for the exact generator at $\delta/\gamma=1,1.5,2,3,4$ ($N=10$ oscillator levels, $g=0.1$).
+Printed: the minimum rate and its time ($\delta t_*=1.49\pi$), the exact--TCL2 difference ($5\times10^{-4}$ against rates of order $10^{-2}$), and the largest re-growth rate of the population.
+
 \paragraph{Filter functions.}
 \Cref{fig:filter} evaluates \cref{eq:filter} with the $1/\pi$ normalization (coupling $\tfrac12\sz\otimes B$) and $g=0.2$, for Ramsey, Hahn and CPMG-4 sequences.
 

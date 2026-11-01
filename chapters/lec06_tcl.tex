@@ -66,13 +66,79 @@ Repeating the secular reduction of Example~5.3 with $\int_0^t$ instead of $\int_
 Three features are general.
 (i) All rates vanish at $t=0$ as $t^1$ (since $K(0)\ne0$): decay is initially quadratic in time, the Zeno regime.
 (ii) They approach their Markov values on the bath correlation time $\tau_B$ ($=2/\gamma$ for the Lorentzian, $1/\omega_c$ or $1/\pi T$ for the Ohmic bath).
-(iii) In between they can \emph{overshoot} and even become negative: for the Lorentzian bath, $\Gamma_1(t)\propto\int_0^tS(\tau)\cos\omega_0\tau\,\dd\tau$ with $S(\tau)\cos\omega_0\tau=\tfrac{g^2}2\ee^{-\gamma\tau/2}[1+\cos2\omega_0\tau]$ at resonance is monotonic, but $\Gamma_\varphi(t)\propto\int_0^tS(\tau)\dd\tau=g^2\int_0^t\ee^{-\gamma\tau/2}\cos\Omega\tau\,\dd\tau$ oscillates and is negative in windows when $\Omega>\gamma/2$.
+(iii) In between they can \emph{overshoot} and even become negative: for the Lorentzian bath, $\Gamma_1(t)\propto\int_0^tS(\tau)\cos\omega_0\tau\,\dd\tau$ with $S(\tau)\cos\omega_0\tau=\tfrac{g^2}2\ee^{-\gamma\tau/2}[1+\cos2\omega_0\tau]$ at resonance is monotonic, but $\Gamma_\varphi(t)\propto\int_0^tS(\tau)\dd\tau=g^2\int_0^t\ee^{-\gamma\tau/2}\cos\Omega\tau\,\dd\tau$ oscillates and is negative in windows once the line is narrow enough compared with its frequency, $\Omega>1.82\,\gamma$ (the threshold is derived in \cref{sec:memory-weak}).
 A negative rate in a time-local generator is the standard signature of information flowing back from the bath~\cite{deVega2017}.
 \end{exbox}
 
 For pure dephasing ($\theta=0$) TCL2 is \emph{exact}: the generator on the coherence is $-i\omega_0-\dot\Gamma(t)$ with $\Gamma$ of \cref{eq:dephasing-exact}, and $\dot\Gamma(t)=4\int_0^tS(\tau)\dd\tau=\Gamma_\varphi(t)$.
 All higher ordered cumulants \eqref{eq:TCL4} vanish because the vertices commute and the full fourth-order moment equals the sum of the three pair products.
 This is the cleanest demonstration that ``order $n$'' means different things in different schemes: the same model is second order in TCL and infinite order in NZ (Exercise~\ref{ex:5-4}).
+
+\subsection{Memory at weak coupling: the detuned qubit}
+\label{sec:memory-weak}
+
+The most convincing demonstration of memory is one in which the coupling is weak, so that nothing of \cref{sec:lec5} is in doubt, and the dynamics is nevertheless impossible for any Markovian semigroup.
+The running rates provide it, and the cleanest case is a transverse qubit ($\theta=\pi/2$) whose splitting is \emph{detuned} from the bath line by $\delta=\omega_0-\Omega$.
+Insert $S(\tau)=g^2\ee^{-\gamma\tau/2}\cos\Omega\tau$ into \cref{eq:running-rates} and split $\cos\Omega\tau\cos\omega_0\tau$ into its rotating and counter-rotating halves:
+\begin{equation}
+  \Gamma_1(t)=2\sin^2\theta\,g^2\,\Re\bigg[\frac{1-\ee^{-(\gamma/2-i\delta)t}}{\gamma/2-i\delta}+\frac{1-\ee^{-(\gamma/2+i(\omega_0+\Omega))t}}{\gamma/2+i(\omega_0+\Omega)}\bigg].
+  \label{eq:rate-detuned}
+\end{equation}
+The second term is the Bloch--Siegert-type contribution, smaller by $\delta/(\omega_0+\Omega)$ and oscillating faster; keep the first, which is the Kofman--Kurizki filter of \cref{sec:lec10} sampling the Lorentzian at distance $\delta$ from its centre.
+With $R=\sqrt{\gamma^2/4+\delta^2}$ and $\tan\varphi=2\delta/\gamma$ it reads
+\begin{equation}
+  \Gamma_1(t)\simeq\frac{2\sin^2\theta\,g^2}{R^2}\Big[\frac\gamma2-R\,\ee^{-\gamma t/2}\cos(\delta t+\varphi)\Big],
+  \label{eq:rate-rwa}
+\end{equation}
+which starts at zero, rises, and then oscillates at the detuning with a decaying amplitude around its Markov value $2\sin^2\theta g^2(\gamma/2)/R^2=2\sin^2\theta J(\omega_0)$.
+The rate is negative wherever $\ee^{-\gamma t/2}\cos(\delta t+\varphi)>\cos\varphi$.
+The extrema of the left side are at $\tan(\delta t+\varphi)=-\gamma/2\delta$, i.e.\ at $\delta t=3\pi/2,\,7\pi/2,\dots$ exactly, and at the first of them, with $\kappa\equiv\gamma/2\delta$,
+\begin{equation}
+  \frac{\Gamma_1(t_*)}{\Gamma_1(\infty)}=1-\frac{\ee^{-3\pi\kappa/2}}{\kappa},\qquad t_*=\frac{3\pi}{2\delta}.
+  \label{eq:dip-depth}
+\end{equation}
+The rate therefore goes negative if and only if $\kappa\,\ee^{3\pi\kappa/2}<1$, i.e.
+\begin{equation}
+  \boxed{\;|\delta|>\delta_c=\frac{\gamma}{2\kappa_c}=1.82\,\gamma,\qquad \kappa_c=\frac{2}{3\pi}\,W\!\Big(\frac{3\pi}{2}\Big)=0.2744,\;}
+  \label{eq:memory-threshold}
+\end{equation}
+with $W$ the Lambert function: the qubit must be detuned from the bath line by almost two linewidths.
+Two features make this a good result.
+First, $g$ has dropped out: the coupling sets the scale of the rate but not its sign, so the effect exists at arbitrarily weak coupling, where TCL2 is exact to the order that matters and the pseudomode solution confirms it (\cref{fig:memory}).
+Second, the threshold is set by the bath alone, by the ratio of its correlation time $2/\gamma$ to the beating period $1/\delta$, which is what one means by ``the bath remembers''.
+The same formula with $\delta\to\Omega$ governs the dephasing rate $\Gamma_\varphi(t)\propto\int_0^tS$ at resonance (Exercise~\ref{ex:6-2}), so the pure-dephasing channel of the running example, with $\Omega/\gamma=2>1.82$, is just above threshold.
+
+\begin{figure}[t]
+\centering
+\input{figures/fig_memory.pgf}
+\caption{Memory at weak coupling: a transverse qubit ($\theta=\pi/2$) detuned by $\delta=\omega_0-\Omega=1.5\,\Omega=3\gamma$ from the Lorentzian line, $g=0.1$, $\gamma=0.5$.
+Left: population leaked from the excited state, exact (pseudomode) versus TCL2 and Markov; the steps are the windows in which the population flows \emph{back} into the excited state.
+Middle: the exact relaxation rate $\Gamma_1(t)=-\Gc_{zz}(t)$ from the exact generator, TCL2 \eqref{eq:rate-detuned} and the rotating-wave formula \eqref{eq:rate-rwa}; the rate is negative in the shaded windows, the first centred at $\delta t=3\pi/2$ as \cref{eq:dip-depth} predicts.
+Right: depth of the first dip relative to the Markov rate as a function of $\delta/\gamma$: the closed forms \eqref{eq:rate-detuned} and \eqref{eq:rate-rwa}, the exact generator at $g=0.1$, and the threshold \eqref{eq:memory-threshold}.}
+\label{fig:memory}
+\end{figure}
+
+What a negative rate means can be stated without approximation for this geometry.
+For $\theta=\pi/2$ the model conserves the parity $\sz\otimes(-1)^{a^\dagger a}$, so the exact generator never mixes populations with coherences, and the populations obey $\dot p_e=-\Gamma_\downarrow(t)p_e+\Gamma_\uparrow(t)p_g$ with the exact time-dependent rates.
+For two initial states the population difference then obeys $\dot\Delta=-\Gamma_1(t)\Delta$, so the trace distance between the states prepared in $\ket e$ and $\ket g$ is exactly
+\begin{equation}
+  D(t)=\exp\Big[-\int_0^t\Gamma_1(s)\,\dd s\Big],
+  \label{eq:trace-distance}
+\end{equation}
+and it \emph{grows} in every window where $\Gamma_1<0$.
+That growth is the Breuer--Laine--Piilo signature of non-Markovianity, information returning from the bath to the system~\cite{BLP2009}, and a negative rate in a generator of GKSL form is the Rivas--Huelga--Plenio criterion for the failure of CP-divisibility~\cite{RHP2010}; the two notions do not coincide in general~\cite{BLPV2016,deVega2017}, but here they do, and both are decided by \cref{eq:memory-threshold}.
+No time-independent generator, however fitted, can produce a non-monotonic $D(t)$, which is why the left panel of \cref{fig:memory} is not a matter of better rates: the Markov curve is wrong in kind, not in degree.
+In the time-nonlocal language the same effect is the oscillation of the kernel: $K_{zz}(\tau)\propto-S(\tau)\cos\omega_0\tau$ changes sign at the beating frequency $\delta$, and a window of negative rate is a window over which the kernel integrates to the ``wrong'' sign, which is possible only because the kernel has not yet decayed, i.e.\ because $t<\tau_B$.
+In the frequency language it is the filter of \cref{eq:kofman}, of width $1/t$, sweeping through the line: the non-Markovian transient and the spectroscopic signal of \cref{sec:lec10} are the same thing.
+
+The contrast with strong coupling is instructive.
+At $g>\gamma/4$ on resonance the qubit and the mode hybridize, $c_e(t)$ oscillates through zero and the generator does not exist at isolated times (\cref{sec:tcl-singular}); that is memory too, but it is the memory of a two-mode system that happens to be described as a qubit plus a bath.
+The detuned weak-coupling effect is of a different kind: the map is invertible, the rates are small and perturbative, and the only non-Markovian ingredient is the finite correlation time of the environment.
+
+\begin{keybox}[Key point 6.1]
+A detuned qubit coupled weakly to a Lorentzian bath has a relaxation rate that is negative in time windows centred at $\delta t=3\pi/2+2\pi n$ if and only if $|\delta|>1.82\,\gamma$, independently of the coupling strength.
+There the trace distance between two states grows, the map is not CP-divisible, and no Markovian description exists; the effect is set by the bath's correlation time alone, and it is the time-domain face of the spectroscopy of \cref{sec:lec10}.
+\end{keybox}
 
 \subsection{The NZ--TCL map}
 
@@ -129,6 +195,13 @@ Expand \cref{eq:TCLNZ} to fourth order using $\Pi=\Pi_0+\Pi^{(2)}+\dots$ and $K=
 \begin{exercise}\label{ex:6-4}
 For the rotating-wave model of \cref{sec:tcl-singular}, compute the exact NZ kernel $\hat K_{ee}(z)$ for the population and show that it is finite and analytic for $\Re z>-\gamma/4$ even when $c_e$ has zeros.
 Where are the singularities of $\hat\Gc$, if one tries to define it by Laplace transform?
+\end{exercise}
+
+\begin{exercise}\label{ex:6-5}
+(a) Derive \cref{eq:rate-detuned,eq:rate-rwa} from \cref{eq:running-rates}, and show that the extrema of the rotating-wave rate are at $\delta t=3\pi/2+n\pi$ exactly.
+(b) Derive the dip depth \eqref{eq:dip-depth} and the threshold \eqref{eq:memory-threshold}; evaluate $\kappa_c$ numerically.
+(c) Show that for $\theta=\pi/2$ the exact generator does not couple populations to coherences (find the conserved parity), and derive \cref{eq:trace-distance}.
+(d) Estimate the first-dip depth including the counter-rotating term of \cref{eq:rate-detuned} for the parameters of \cref{fig:memory} and compare with the exact points of its right panel; where does the exact threshold move at $g=0.1$?
 \end{exercise}
 
 \clearpage
