@@ -1,3 +1,6 @@
+Detuned qubit (delta=1.5, g=0.1, theta=pi/2): min Gamma_1 = -6.0693e-03 at t=3.12 (delta t = 1.49 pi), Markov 2.5539e-03; exact-TCL2 max diff 5.0e-04
+  first dip / Markov (delta/gamma: exact, TCL2 closed form): 1.0: +0.630, +0.775, 1.5: +0.135, +0.250, 2.0: -0.210, -0.073, 3.0: -2.363, -2.312, 4.0: -3.475, -3.482
+  population re-growth: max over t of d rho_ee/dt = 7.60e-05 (re-excitation window)
 Second-order Markov generator in the Pauli basis (I,x,y,z), g = 0.30, theta = pi/4
 [[-0.      0.     -0.     -0.    ]
  [ 0.3544 -0.0424 -1.      0.3655]

@@ -23,6 +23,8 @@ Produces (in the directory of this file):
   fig_dynamics.pdf          <sigma_z>(t), |rho_01|(t): exact vs NZ2, TCL2, Markov (Redfield)
   fig_kernels.pdf           exact memory kernel / TCL generator vs second order
   fig_filter.pdf            filter functions and dephasing Gamma(t) for Ramsey / echo / CPMG
+  fig_memory.pdf            memory at weak coupling: negative running rate of a detuned qubit
+                            (also fig_memory_{a,b,c}.pgf, the three panels as text for the LaTeX source)
 and prints a table of second-order rates used in the text.
 """
 import numpy as np
@@ -595,6 +597,138 @@ def check_influence_kernel():
         print("     m=%d: Omega=%.4f gamma=%.4f" % (mm, a.imag, 2 * a.real))
 
 
+
+def memory_setup(w0_, theta_, g, N):
+    """Pseudomode model for a qubit of splitting w0_ and coupling angle theta_ (bath parameters global)."""
+    a = np.diag(np.sqrt(np.arange(1, N)), 1).astype(complex); IN = np.eye(N)
+    HS = 0.5 * w0_ * sz; Sop = np.cos(theta_) * sz + np.sin(theta_) * sx
+    H = np.kron(HS, IN) + Omega * np.kron(I2, a.conj().T @ a) + g * np.kron(Sop, a + a.conj().T)
+    Ltot = liouvillian(H) + dissipator(np.kron(I2, a), gamma)
+    return liouvillian(HS), qu(Sop), cl(Sop), Ltot
+
+
+def memory_rates(delta, g, ts, theta_=np.pi / 2, N=10):
+    """Exact TCL rate Gamma_1(t) = -G_zz(t) (from Pi, dPi) and the excited-state population from |e>,
+    for a qubit detuned by delta = w0 - Omega from the Lorentzian line; plus the TCL2 and Markov counterparts."""
+    w0_ = Omega + delta
+    LS, Sq_, Sc_, Ltot = memory_setup(w0_, theta_, g, N)
+    dt = ts[1] - ts[0]; U = expm(Ltot * dt)
+    cols = []
+    for j in range(2):
+        for i in range(2):
+            E = np.zeros((2, 2), complex); E[i, j] = 1; cols.append(embed(E, N))
+    cur = np.array(cols).T
+    G1ex, pee_ex = [], []
+    for n in range(len(ts)):
+        Pi = np.array([vec(partial_trace_osc(cur[:, k], N)) for k in range(4)]).T
+        dPi = np.array([vec(partial_trace_osc((Ltot @ cur)[:, k], N)) for k in range(4)]).T
+        Gex = (dPi - LS @ Pi) @ np.linalg.inv(Pi)
+        G1ex.append(-np.real(bloch_component(Gex, 3, 3)))
+        pee_ex.append(np.real(unvec(Pi @ vec(np.diag([1, 0]).astype(complex)), 2)[0, 0]))
+        cur = U @ cur
+    # TCL2: G2(t) = int_0^t K2(tau) e^{-LS tau} dtau with the local K2
+    K2loc = lambda tau: -Sq_ @ expm(LS * tau) @ (S_noise(tau, g) * Sq_ - 1j * chi_resp(tau, g) * Sc_)
+    integrand = np.array([K2loc(tau) @ expm(-LS * tau) for tau in ts])
+    G2 = np.zeros_like(integrand)
+    for n in range(1, len(ts)):
+        G2[n] = G2[n - 1] + 0.5 * (integrand[n] + integrand[n - 1]) * dt
+    G1tcl2 = np.array([-np.real(bloch_component(G2[n], 3, 3)) for n in range(len(ts))])
+    def propagate(Gs):
+        r = vec(np.diag([1, 0]).astype(complex)); out = [r]
+        for n in range(1, len(ts)):
+            r = expm((LS + 0.5 * (Gs[n] + Gs[n - 1])) * dt) @ r; out.append(r)
+        return np.array([np.real(unvec(x, 2)[0, 0]) for x in out])
+    pee_tcl2 = propagate(G2)
+    pee_mark = propagate(np.array([G2[-1]] * len(ts)))
+    return dict(G1ex=np.array(G1ex), G1tcl2=G1tcl2, G1mark=G1tcl2[-1], pee_ex=np.array(pee_ex), pee_tcl2=pee_tcl2, pee_mark=pee_mark)
+
+
+def rate_rwa(delta, g, t, theta_=np.pi / 2):
+    """Rotating-wave part of the TCL2 relaxation rate: 2 sin^2(theta) g^2 Re[(1 - e^{-(gamma/2 - i delta) t})/(gamma/2 - i delta)]."""
+    a = gamma / 2 - 1j * delta
+    return 2 * np.sin(theta_) ** 2 * g ** 2 * np.real((1 - np.exp(-a * t)) / a)
+
+
+def rate_tcl2(delta, g, t, theta_=np.pi / 2):
+    """Full TCL2 relaxation rate of a detuned qubit (rotating + counter-rotating term), closed form."""
+    a = gamma / 2 - 1j * delta; b = gamma / 2 + 1j * (2 * Omega + delta)
+    return 2 * np.sin(theta_) ** 2 * g ** 2 * np.real((1 - np.exp(-a * t)) / a + (1 - np.exp(-b * t)) / b)
+
+
+def first_dip(rate):
+    """Minimum of a rate after its first maximum (depth of the first dip)."""
+    i = np.argmax(rate[: len(rate) // 2])
+    return rate[i:].min()
+
+
+def fig_memory():
+    """Lecture 6, Sec. 'Memory at weak coupling: the detuned qubit'."""
+    g, delta = 0.1, 1.5
+    ts = np.arange(0, 25.0001, 0.02)
+    R = memory_rates(delta, g, ts)
+    # (c) depth of the first dip of the rate, relative to the Markov value, vs delta/gamma
+    rr = np.linspace(0.3, 5, 95); tt = np.linspace(0, 80, 80001)
+    d_full = [first_dip(rate_tcl2(r * gamma, g, tt)) / rate_tcl2(r * gamma, g, 1e6) for r in rr]
+    d_rwa = [first_dip(rate_rwa(r * gamma, g, tt)) / rate_rwa(r * gamma, g, 1e6) for r in rr]
+    rpts = (1.0, 1.5, 2.0, 3.0, 4.0); pts = []
+    for r in rpts:
+        Rr = memory_rates(r * gamma, g, np.arange(0, 40.0001, 0.02))
+        pts.append(first_dip(Rr["G1ex"]) / Rr["G1mark"])
+
+    def style(a, small, loc):
+        """Font sizes: the PDF (small=False) or the one-panel .pgf text versions (small=True)."""
+        a.title.set_fontsize(7 if small else 9)
+        if small:
+            a.tick_params(labelsize=6); a.xaxis.label.set_fontsize(7); a.yaxis.label.set_fontsize(7)
+        a.legend(frameon=False, fontsize=5 if small else 7, loc=loc)
+
+    def panel_a(a, small=False):  # excited-state population from |e>, zoomed on the decay
+        a.plot(ts, 1 - R["pee_ex"], "C0", label="exact (pseudomode)")
+        a.plot(ts, 1 - R["pee_tcl2"], "C1--", label="TCL2")
+        a.plot(ts, 1 - R["pee_mark"], "k:", label="Markov")
+        a.set_xlabel(r"$t\,\Omega$"); a.set_ylabel(r"$1-\rho_{ee}(t)$")
+        a.set_title(r"population leaked, $\delta=3\gamma$, $g=0.1$"); style(a, small, "upper left")
+
+    def panel_b(a, small=False):  # running rate
+        a.plot(ts, R["G1ex"], "C0", label=r"$\Gamma_1(t)$ exact")
+        a.plot(ts, R["G1tcl2"], "C1--", label="TCL2")
+        a.plot(ts, rate_rwa(delta, g, ts), "C2-.", lw=1, label="rotating-wave formula")
+        a.axhline(R["G1mark"], color="k", ls=":", lw=1, label="Markov")
+        a.axhline(0, color="k", lw=0.5)
+        neg = np.flatnonzero(np.diff((R["G1ex"] < 0).astype(int)))  # edges of the windows where the rate is negative
+        for k, (i, j) in enumerate(zip(neg[::2], neg[1::2])):
+            a.axvspan(ts[i + 1], ts[j], color="C3", alpha=0.2, lw=0, label="negative windows" if k == 0 else None)
+        a.set_ylim(-0.0085, 0.016)
+        a.set_xlabel(r"$t\,\Omega$"); a.set_ylabel(r"$\Gamma_1(t)$"); a.set_title("relaxation rate"); style(a, small, "upper right")
+
+    def panel_c(a, small=False):  # first dip vs detuning
+        a.plot(rr, d_full, "C1", label="TCL2, closed form")
+        a.plot(rr, d_rwa, "C2-.", lw=1, label="rotating-wave formula")
+        a.plot(rpts, pts, "C0o", label="exact generator")
+        a.axvline(1.8221, color="C3", ls="--", lw=1, label=r"$\delta_c=1.82\,\gamma$")
+        a.axhline(0, color="k", lw=0.5)
+        a.set_xlabel(r"$\delta/\gamma$"); a.set_ylabel(r"first dip / Markov rate")
+        a.set_title("where the rate goes negative"); style(a, small, "lower left")
+
+    panels = (panel_a, panel_b, panel_c)
+    fig, ax = plt.subplots(1, 3, figsize=(9.6, 3.3))
+    for a, draw in zip(ax, panels):
+        draw(a)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "fig_memory.pdf")); plt.close(fig)
+    # text version for the LaTeX source: one .pgf file per panel, small enough to live in git as text
+    with plt.rc_context({"pgf.texsystem": "pdflatex", "pgf.rcfonts": False, "path.simplify": True, "path.simplify_threshold": 1.0}):
+        for draw, tag in zip(panels, "abc"):
+            f, a = plt.subplots(figsize=(2.1, 2.3))
+            draw(a, small=True)
+            f.tight_layout(pad=0.3); f.savefig(os.path.join(HERE, "fig_memory_%s.pgf" % tag)); plt.close(f)
+    i0 = np.argmin(R["G1ex"][5:]) + 5
+    print("Detuned qubit (delta=%.1f, g=%.1f, theta=pi/2): min Gamma_1 = %.4e at t=%.2f (delta t = %.2f pi), Markov %.4e; exact-TCL2 max diff %.1e" % (
+        delta, g, R["G1ex"][i0], ts[i0], delta * ts[i0] / np.pi, R["G1mark"], np.abs(R["G1ex"] - R["G1tcl2"]).max()))
+    print("  first dip / Markov (delta/gamma: exact, TCL2 closed form): " + ", ".join(
+        "%.1f: %+.3f, %+.3f" % (r, m, first_dip(rate_tcl2(r * gamma, g, tt)) / rate_tcl2(r * gamma, g, 1e6)) for r, m in zip(rpts, pts)))
+    print("  population re-growth: max over t of d rho_ee/dt = %.2e (re-excitation window)" % np.diff(R["pee_ex"]).max())
+
+
 # ----------------------------------------------------------------------------
 def main():
     ts = np.arange(0, T_MAX + DT / 2, DT)
@@ -606,6 +740,7 @@ def main():
     fig_dynamics(results, ts)
     fig_kernels(results, ts)
     fig_filter()
+    fig_memory()
 
     # ---- table of second-order Markov rates (Bloch form) and comparison with analytic formulas
     print("Second-order Markov generator in the Pauli basis (I,x,y,z), g = %.2f, theta = pi/4" % g_strong)
