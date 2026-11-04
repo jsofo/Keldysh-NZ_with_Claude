@@ -3,7 +3,7 @@
 \label{sec:lec5}
 
 The Nakajima--Zwanzig (NZ) equation is an exact, closed equation of motion for $\rhoS(t)$.
-It is derived in five lines with a projection operator, and its memory kernel $K$ looks at first like a formal object.
+It is derived in three short steps with a projection operator, and its memory kernel $K$ looks at first like a formal object.
 The content of this lecture is that $K$ is exactly the sum of the irreducible diagrams of \cref{sec:lec4}, so that the NZ equation is the Dyson equation of the real-time expansion.
 We then evaluate $K$ at second order for the qubit and recover the Bloch--Redfield description, with every rate and shift expressed through $S$ and $\chi$.
 
@@ -12,36 +12,119 @@ We then evaluate $K$ at second order for the qubit and recover the Bloch--Redfie
 
 Define the Nakajima--Zwanzig projector~\cite{Nakajima1958,Zwanzig1960}
 \begin{equation}
-  \Pc X=\rhoB\otimes\Tr_B X,\qquad \Qc=1-\Pc,\qquad \Pc^2=\Pc .
+  \Pc X=\rhoB\otimes\Tr_B X,\qquad \Qc=1-\Pc,\qquad \Pc^2=\Pc,\quad \Qc^2=\Qc,\quad \Pc\Qc=\Qc\Pc=0 .
   \label{eq:P}
 \end{equation}
-$\Pc$ keeps the ``relevant'' part, the reduced state tensored with the fixed reference bath state.
-Three facts follow from $[H_B,\rhoB]=0$ and $\avg{B}=0$:
+$\Pc$ keeps the ``relevant'' part, the reduced state tensored with the fixed reference bath state; $\Pc^2=\Pc$ because $\Tr_B\rhoB=1$, and the other two identities follow from it.
+Applied to the full state, $\Pc\rho(t)=\rhoB\otimes\rhoS(t)$ carries exactly the object we want, while $\Qc\rho(t)=\rho(t)-\rhoB\otimes\rhoS(t)$ is the system--bath correlation, which is traceless over the bath, $\Tr_B\Qc\rho=0$.
+(The order of the two factors in a tensor product is a matter of notation; we write $\rhoB\otimes X$ or $X\otimes\rhoB$ as reads better.)
+
+\paragraph{Three facts about $\Pc$.}
+Write $\Lc=\Lc_S+\Lc_B+\Lc_I$ with $\Lc_SX=-i[H_S,X]$, $\Lc_BX=-i[H_B,X]$ and $\Lc_IX=-i[S\otimes B,X]$.
+The reference state has two properties, $[H_B,\rhoB]=0$ and $\avg{B}=\Tr_B(B\rhoB)=0$, and they give
 \begin{equation}
-  \Pc\Lc_S=\Lc_S\Pc,\qquad \Pc\Lc_B=\Lc_B\Pc=0\ \text{on the range of }\Pc,\qquad \Pc\Lc_I\Pc=0 .
+  \Pc\Lc_S=\Lc_S\Pc,\qquad \Pc\Lc_B=0=\Lc_B\Pc,\qquad \Pc\Lc_I\Pc=0 .
   \label{eq:P-facts}
 \end{equation}
-(The last one: $\Pc\Lc_I\Pc X=\rhoB\otimes\Tr_B[-i(S B\otimes\rhoB X'-\dots)]\propto\avg{B}=0$.)
-Split the von Neumann equation $\dot\rho=\Lc\rho$ into its $\Pc$ and $\Qc$ components:
+\emph{Proof.}
+(i) The partial trace is linear and $H_S$ acts on the system alone, so $\Tr_B[H_S,X]=[H_S,\Tr_BX]$ and $\Pc\Lc_SX=\rhoB\otimes(-i[H_S,\Tr_BX])=\Lc_S(\rhoB\otimes\Tr_BX)=\Lc_S\Pc X$.
+(ii) The partial trace over $B$ is cyclic with respect to operators acting on $B$ alone, $\Tr_B(H_BX)=\Tr_B(XH_B)$, so $\Tr_B[H_B,X]=0$ for every $X$ and $\Pc\Lc_B=0$; in the other order, $\Lc_B\Pc X=-i[H_B,\rhoB]\otimes\Tr_BX=0$ because $\rhoB$ is stationary.
+(iii) With $Y=\Tr_BX$, $\Lc_I\Pc X=-i\big(SY\otimes B\rhoB-YS\otimes\rhoB B\big)$, and the partial trace of this is $-i[S,Y]\,\Tr_B(B\rhoB)=-i[S,Y]\avg{B}=0$, so $\Pc\Lc_I\Pc=0$.
+$\square$
+
+Three consequences are used below.
+$\Lc_S$ commutes with $\Pc$, hence also with $\Qc$; $\Pc\Lc_B=\Lc_B\Pc=0$ means that $\Lc_B$ acts entirely inside the irrelevant space; and $\Qc\Lc_I\Pc=\Lc_I\Pc-\Pc\Lc_I\Pc=\Lc_I\Pc$.
+Therefore
+\begin{equation}
+  \Pc\Lc\Pc=\Lc_S\Pc,\qquad
+  \Pc\Lc\Qc=\Pc\Lc_I\Qc,\qquad
+  \Qc\Lc\Pc=\Qc\Lc_I\Pc=\Lc_I\Pc .
+  \label{eq:PLQ}
+\end{equation}
+In words: on the relevant part the full Liouvillian reduces to the free system evolution; the relevant and the irrelevant parts talk to each other only through $\Lc_I$; and a single coupling vertex acting on an uncorrelated state produces a correlation and nothing else (it cannot change $\rhoS$, because $\avg{B}=0$).
+The remaining block, $\Qc\Lc\Qc$, contains all three pieces of $\Lc$ and does not simplify.
+
+\paragraph{Step 1: two coupled equations.}
+Apply $\Pc$ and $\Qc$ to the von Neumann equation $\dot\rho=\Lc\rho$.
+Both projectors are time independent, so they pass through $\partial_t$, and inserting $1=\Pc+\Qc$ between $\Lc$ and $\rho$ gives
 \begin{equation}
   \partial_t\Pc\rho=\Pc\Lc\Pc\rho+\Pc\Lc\Qc\rho,\qquad
-  \partial_t\Qc\rho=\Qc\Lc\Pc\rho+\Qc\Lc\Qc\rho .
+  \partial_t\Qc\rho=\Qc\Lc\Pc\rho+\Qc\Lc\Qc\rho,
+  \label{eq:PQ-split}
 \end{equation}
-The second is a linear inhomogeneous equation for $\Qc\rho$ with the known source $\Qc\Lc\Pc\rho(s)$:
+or, with \cref{eq:PLQ} and $\Qc\rho=\Qc\,\Qc\rho$,
 \begin{equation}
-  \Qc\rho(t)=\ee^{\Qc\Lc t}\Qc\rho(0)+\int_0^t\!\dd s\,\ee^{\Qc\Lc(t-s)}\,\Qc\Lc\Pc\rho(s).
+  \partial_t\Pc\rho=\Lc_S\,\Pc\rho+\Pc\Lc_I\,\Qc\rho,\qquad
+  \partial_t\Qc\rho=\Qc\Lc\Qc\,\Qc\rho+\Lc_I\,\Pc\rho .
+  \label{eq:PQ-split2}
 \end{equation}
-Insert into the first and use \cref{eq:P-facts}:
+Nothing has been lost: the pair \eqref{eq:PQ-split} is the von Neumann equation written in the two blocks $\Pc\rho$ and $\Qc\rho$.
+The first equation says that the reduced state evolves freely except for a drive by the correlations, which enters only through $\Lc_I$.
+The second says that the correlations are created from the uncorrelated part by $\Lc_I$ and then propagate with the generator $\Qc\Lc\Qc$ of the irrelevant space.
+
+\paragraph{Step 2: solve the $\Qc$ equation.}
+The second equation of \eqref{eq:PQ-split2} is a linear first-order equation for $\Qc\rho(t)$ with the constant generator $\Qc\Lc\Qc$ and the source $\Lc_I\Pc\rho(t)$, which we treat as known.
+It is solved by variation of constants.
+Write $\Qc\rho(t)=\ee^{\Qc\Lc\Qc\,t}\,Y(t)$; then $\partial_t\Qc\rho=\Qc\Lc\Qc\,\Qc\rho+\ee^{\Qc\Lc\Qc\,t}\dot Y$, so the equation reduces to $\dot Y(t)=\ee^{-\Qc\Lc\Qc\,t}\Lc_I\Pc\rho(t)$ with $Y(0)=\Qc\rho(0)$, and integrating from $0$ to $t$,
+\begin{equation}
+  \Qc\rho(t)=\ee^{\Qc\Lc\Qc\,t}\,\Qc\rho(0)+\int_0^t\!\dd s\,\ee^{\Qc\Lc\Qc\,(t-s)}\,\Lc_I\Pc\rho(s).
+  \label{eq:Q-solution}
+\end{equation}
+(Check by differentiation: the upper limit of the integral gives $\Lc_I\Pc\rho(t)$, the integrand gives $\Qc\Lc\Qc$ times the integral, and at $t=0$ the right-hand side is $\Qc\rho(0)$.)
+Both $\Qc\rho(0)$ and $\Lc_I\Pc\rho(s)=\Qc\Lc_I\Pc\rho(s)$ lie in the range of $\Qc$, and on that range the exponentials of $\Qc\Lc\Qc$ and of $\Qc\Lc$ coincide: expanding both and using $\Qc^2=\Qc$, $(\Qc\Lc\Qc)^n\Qc=(\Qc\Lc)^n\Qc$ for every $n$, so that
+\begin{equation}
+  \ee^{\Qc\Lc\Qc\,t}\,\Qc=\ee^{\Qc\Lc t}\,\Qc=\Qc\,\ee^{\Qc\Lc t}\,\Qc .
+  \label{eq:expQLQ}
+\end{equation}
+With this, \cref{eq:Q-solution} takes the form in which it is usually quoted,
+\begin{equation}
+  \Qc\rho(t)=\ee^{\Qc\Lc t}\,\Qc\rho(0)+\int_0^t\!\dd s\,\ee^{\Qc\Lc(t-s)}\,\Qc\Lc_I\,\Pc\rho(s)
+  \label{eq:Q-solution2}
+\end{equation}
+(the $\Qc$ in front of $\Lc_I$ is redundant by \cref{eq:PLQ}; it is kept because it displays where the state lives).
+The correlations at time $t$ are the propagated initial correlations plus the correlations created by $\Lc_I$ at every earlier time $s$ out of the uncorrelated state $\rhoB\otimes\rhoS(s)$ and propagated from $s$ to $t$ inside the irrelevant space.
+
+\paragraph{Step 3: insert and trace out the bath.}
+Put \cref{eq:Q-solution2} into the first equation of \eqref{eq:PQ-split2}:
+\begin{equation}
+  \partial_t\Pc\rho(t)=\Lc_S\,\Pc\rho(t)+\int_0^t\!\dd s\,\Pc\Lc_I\,\ee^{\Qc\Lc(t-s)}\,\Qc\Lc_I\,\Pc\rho(s)+\Pc\Lc_I\,\ee^{\Qc\Lc t}\,\Qc\rho(0).
+  \label{eq:NZ-P}
+\end{equation}
+This is already the result: an exact, closed equation for the relevant part $\Pc\rho(t)$, in which the irrelevant part has been eliminated at the price of a memory integral.
+Every term of \cref{eq:NZ-P} is of the form $\rhoB\otimes(\cdots)$, and the system factor is extracted by taking $\Tr_B$ of both sides, using $\Tr_B\Pc X=\Tr_BX$ (because $\Tr_B\rhoB=1$) and $\Pc\rho(s)=\rhoB\otimes\rhoS(s)$:
+\begin{align*}
+  \Tr_B\,\partial_t\Pc\rho(t)&=\dot\rhoS(t),\\
+  \Tr_B\,\Lc_S\,\Pc\rho(t)&=\Tr_B\big[\rhoB\otimes(-i[H_S,\rhoS(t)])\big]=\Lc_S\rhoS(t),\\
+  \Tr_B\,\Pc\Lc_I\,\ee^{\Qc\Lc(t-s)}\,\Qc\Lc_I\,\Pc\rho(s)&=\Tr_B\Big[\Lc_I\,\ee^{\Qc\Lc(t-s)}\,\Qc\Lc_I\big(\rhoS(s)\otimes\rhoB\big)\Big]\equiv K(t-s)\,\rhoS(s).
+\end{align*}
+The result is
 \begin{equation}
   \boxed{\;\dot\rhoS(t)=\Lc_S\rhoS(t)+\int_0^t\!\dd s\,K(t-s)\,\rhoS(s)+I(t),\qquad
   K(\tau)X=\Tr_B\!\Big[\Lc_I\,\ee^{\Qc\Lc\tau}\,\Qc\Lc_I\big(X\otimes\rhoB\big)\Big],\;}
   \label{eq:NZ}
 \end{equation}
 with the inhomogeneity $I(t)=\Tr_B[\Lc_I\ee^{\Qc\Lc t}\Qc\rho(0)]$, which vanishes for a factorized initial state ($\Qc\rho(0)=0$).
-This is the NZ equation~\cite[Sec.~9.1]{BreuerPetruccione}.
+This is the NZ equation~\cite[Sec.~9.1]{BreuerPetruccione}, \cite[Ch.~8]{ZwanzigBook}.
 It is exact.
 Nothing has been assumed about the strength of the coupling, the Gaussianity of the bath or the size of the system.
-The kernel $K(\tau)$ is a superoperator on the system; it depends on $\tau$ only (stationary bath, time-independent $H$) and it contains the full $\Lc$ inside the exponential, which is where all the difficulty hides.
+
+\paragraph{Reading the kernel.}
+Before the bath trace, the kernel is the superoperator
+\begin{equation}
+  \Pc\Lc_I\,\ee^{\Qc\Lc\tau}\,\Qc\Lc_I\,\Pc
+  =\Pc\Lc\Qc\;\ee^{\Qc\Lc\Qc\,\tau}\;\Qc\Lc\Pc ,
+  \label{eq:K-PLQ}
+\end{equation}
+where the right-hand side follows from \cref{eq:PLQ,eq:expQLQ}.
+Read from right to left: leave the relevant space with one coupling vertex, propagate for a time $\tau$ inside the irrelevant space with the full Liouvillian projected onto it, and come back with a second vertex.
+Four remarks.
+(i) $K$ depends on $\tau=t-s$ only because $\Lc$ and $\Pc$ are time independent (for a driven system, $H_S(t)$, the same steps go through with time-ordered exponentials and give a kernel $K(t,s)$).
+(ii) At zero delay the exponential is the identity and $K(0)X=\Tr_B[\Lc_I\Lc_I(X\otimes\rhoB)]$ is of second order in the coupling; the full $\Lc$ inside the exponential matters only for $\tau>0$.
+(iii) The projector in the exponent is essential.
+With $\ee^{\Lc\tau}$ in its place the intermediate propagation would pass through the relevant space, i.e.\ through states of the form $\rhoB\otimes X$, whose evolution is what the equation is supposed to determine, and those contributions are already generated by the convolution with $\rhoS(s)$.
+$\Qc$ removes them, and \cref{sec:nz-irreducible} shows that what is left is exactly the sum of the irreducible diagrams.
+(iv) Since \cref{eq:NZ} is linear in $\rhoS$ with a kernel that does not depend on the initial state, it holds equally for the dynamical map, $\dot\Pi(t)=\Lc_S\Pi(t)+\int_0^t\dd s\,K(t-s)\Pi(s)$ with $\Pi(0)=1$ for a factorized initial state; this is the form used in the next paragraph.
+The kernel $K(\tau)$ is a superoperator on the system, and it contains the full $\Lc$ inside the exponential, which is where all the difficulty hides.
 
 \paragraph{Laplace form.}
 With $\hat f(z)=\int_0^\infty\dd t\,\ee^{-zt}f(t)$ (Re$\,z>0$), the convolution becomes a product and \cref{eq:NZ} for the map reads
