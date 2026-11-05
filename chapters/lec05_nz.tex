@@ -28,7 +28,10 @@ The reference state has two properties, $[H_B,\rhoB]=0$ and $\avg{B}=\Tr_B(B\rho
 \end{equation}
 \emph{Proof.}
 (i) The partial trace is linear and $H_S$ acts on the system alone, so $\Tr_B[H_S,X]=[H_S,\Tr_BX]$ and $\Pc\Lc_SX=\rhoB\otimes(-i[H_S,\Tr_BX])=\Lc_S(\rhoB\otimes\Tr_BX)=\Lc_S\Pc X$.
-(ii) The partial trace over $B$ is cyclic with respect to operators acting on $B$ alone, $\Tr_B(H_BX)=\Tr_B(XH_B)$, so $\Tr_B[H_B,X]=0$ for every $X$ and $\Pc\Lc_B=0$; in the other order, $\Lc_B\Pc X=-i[H_B,\rhoB]\otimes\Tr_BX=0$ because $\rhoB$ is stationary.
+(ii) The partial trace over $B$ is cyclic with respect to operators acting on $B$ alone, $\Tr_B(H_BX)=\Tr_B(XH_B)$,\footnote{Proof.
+$\Tr_BX$ is the unique operator on $\mathcal H_S$ with $\Tr_S[Y\,\Tr_BX]=\Tr[(Y\otimes\Id)X]$ for every system operator $Y$ (take $Y=\ket{i}\bra{j}$ to read off its matrix elements).
+For an operator $A$ on the bath, $\Tr_S\big[Y\,\Tr_B[(\Id\otimes A)X]\big]=\Tr[(Y\otimes A)X]=\Tr[X(Y\otimes A)]=\Tr[(Y\otimes\Id)X(\Id\otimes A)]=\Tr_S\big[Y\,\Tr_B[X(\Id\otimes A)]\big]$, using the cyclicity of the full trace and $(Y\otimes\Id)(\Id\otimes A)=Y\otimes A=(\Id\otimes A)(Y\otimes\Id)$; since this holds for every $Y$, $\Tr_B[(\Id\otimes A)X]=\Tr_B[X(\Id\otimes A)]$.
+The second ingredient is what fails for a system operator: $\Tr_B[(Y'\otimes\Id)X]=Y'\Tr_BX$ while $\Tr_B[X(Y'\otimes\Id)]=(\Tr_BX)Y'$.} so $\Tr_B[H_B,X]=0$ for every $X$ and $\Pc\Lc_B=0$; in the other order, $\Lc_B\Pc X=-i[H_B,\rhoB]\otimes\Tr_BX=0$ because $\rhoB$ is stationary.
 (iii) With $Y=\Tr_BX$, $\Lc_I\Pc X=-i\big(SY\otimes B\rhoB-YS\otimes\rhoB B\big)$, and the partial trace of this is $-i[S,Y]\,\Tr_B(B\rhoB)=-i[S,Y]\avg{B}=0$, so $\Pc\Lc_I\Pc=0$.
 $\square$
 
